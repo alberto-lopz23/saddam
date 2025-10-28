@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>perfumparadiserd</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- Menú lateral para móviles -->
+    <div
+      class="mobile-menu-overlay"
+      id="mobileMenuOverlay"
+      onclick="toggleMobileMenu()"
+    ></div>
+    <div class="mobile-menu" id="mobileMenu">
+      <div class="mobile-menu-header">
+        <h3>Filtros</h3>
+        <button class="close-menu" onclick="toggleMobileMenu()">×</button>
+      </div>
+      <div class="mobile-menu-content">
+        <div class="mobile-filter-section">
+          <h4>Categorías</h4>
+          <button
+            class="mobile-filter-btn active"
+            onclick="filtrarCategoriaMobile('todos', this)"
+          >
+            Todos
+          </button>
+          <button
+            class="mobile-filter-btn"
+            onclick="filtrarCategoriaMobile('arabes', this)"
+          >
+            Árabes
+          </button>
+          <button
+            class="mobile-filter-btn"
+            onclick="filtrarCategoriaMobile('disenador', this)"
+          >
+            Diseñador
+          </button>
+          <button
+            class="mobile-filter-btn"
+            onclick="filtrarCategoriaMobile('sets', this)"
+          >
+            Sets
+          </button>
+          <button
+            class="mobile-filter-btn"
+            onclick="filtrarCategoriaMobile('nichos', this)"
+          >
+            Nichos
+          </button>
+        </div>
+        <div class="mobile-subfilters" id="mobileSubfilters"></div>
+      </div>
+    </div>
+
+    <header>
+      <div class="header-top">
+        <!-- Contenedor móvil con menú, título y logo -->
+        <div class="mobile-header-container">
+          <button
+            class="hamburger-menu"
+            id="hamburgerMenu"
+            onclick="toggleMobileMenu()"
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+          <h1>perfumparadiserd</h1>
+          <a href="#">
+            <img src="logo.jpeg" alt="Perfum Paradise RD" class="header-logo" />
+          </a>
+        </div>
+
+        <!-- Contenedor desktop (solo título y logo) -->
+        <div class="logo-title-container">
+          <h1>perfumparadiserd</h1>
+          <a href="#">
+            <img src="logo.jpeg" alt="Perfum Paradise RD" class="header-logo" />
+          </a>
+        </div>
+      </div>
+
+      <!-- Filtros desktop (ocultos en móvil) -->
+      <div class="buttons desktop-filters">
+        <button class="btn active" onclick="filtrarCategoria('todos', this)">
+          Todos
+        </button>
+        <button class="btn" onclick="filtrarCategoria('arabes', this)">
+          Árabes
+        </button>
+        <button class="btn" onclick="filtrarCategoria('disenador', this)">
+          Diseñador
+        </button>
+        <button class="btn" onclick="filtrarCategoria('sets', this)">
+          Sets
+        </button>
+        <button class="btn" onclick="filtrarCategoria('nichos', this)">
+          Nichos
+        </button>
+      </div>
+
+      <!-- Subfiltros desktop -->
+      <div class="subfilters desktop-subfilters" id="subfilters"></div>
+
+      <!-- Buscador -->
+      <div class="search-container">
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Buscar perfume..."
+          onkeyup="buscarPerfumes()"
+        />
+      </div>
+    </header>
+
+    <section class="container" id="galeria"></section>
+
+    <footer
+      style="
+        text-align: center;
+        padding: 20px;
+        background-color: white;
+        box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.05);
+      "
+    >
+      <a href="https://wa.me/18091234567" class="whatsapp-btn"
+        >Contáctanos por WhatsApp</a
+      >
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
