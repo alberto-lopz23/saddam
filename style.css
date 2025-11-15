@@ -6,21 +6,31 @@ body {
 }
 
 header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   text-align: center;
-  padding: 20px 20px;
-  background-color: white;
+  padding: 10px 5px;
+  background-color: rgba(255, 255, 255, 0.95);
+  background-image: url("logo2.jpeg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
   position: sticky;
   top: 0;
   z-index: 100;
   backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  min-height: 80px;
 }
 
 .header-top {
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
   margin-bottom: 18px;
 }
 
@@ -65,9 +75,18 @@ h1 {
   font-size: 22px;
 }
 
-.buttons,
+/* .buttons,
 .subfilters {
-  margin-top: 12px;
+  margin-top: 40px;
+} */
+
+/* Alinear las pestañas de filtros de escritorio a la izquierda dentro del header */
+.buttons.desktop-filters {
+  align-self: flex-start; /* sobrescribe el align-items: center del header */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  padding-left: 4px; /* pequeño ajuste para separar del borde */
 }
 
 .btn,
