@@ -3,8 +3,103 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>perfumparadiserd</title>
+    <title>PerfumParadiseRD | Catálogo de Perfumes</title>
     <link rel="stylesheet" href="style.css" />
+    <link rel="icon" type="image/png" href="logo2.jpeg" />
+
+    <!-- SEO / Open Graph -->
+    <meta
+      name="description"
+      content="PerfumParadiseRD — Catálogo de perfumes: árabes, diseñador, nicho y sets. Compra y consulta por WhatsApp."
+    />
+    <meta
+      name="keywords"
+      content="perfumes, perfumes árabes, diseñador, nicho, sets, PerfumParadiseRD, fragancias"
+    />
+    <link rel="canonical" href="https://www.perfumparadiserd.com/" />
+    <meta name="robots" content="index,follow" />
+
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:title"
+      content="PerfumParadiseRD | Catálogo de Perfumes"
+    />
+    <meta
+      property="og:description"
+      content="PerfumParadiseRD — Catálogo de perfumes: árabes, diseñador, nicho y sets. Consulta por WhatsApp."
+    />
+    <meta
+      property="og:image"
+      content="https://www.perfumparadiserd.com/logo2.jpeg"
+    />
+    <meta property="og:url" content="https://www.perfumparadiserd.com/" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="PerfumParadiseRD | Catálogo de Perfumes"
+    />
+    <meta
+      name="twitter:description"
+      content="Catálogo de perfumes: árabes, diseñador, nicho y sets. Consulta por WhatsApp."
+    />
+    <meta
+      name="twitter:image"
+      content="https://www.perfumparadiserd.com/logo2.jpeg"
+    />
+
+    <!-- JSON-LD structured data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "PerfumParadiseRD",
+        "url": "https://www.perfumparadiserd.com/",
+        "description": "Catálogo de perfumes: árabes, diseñador, nicho y sets en República Dominicana",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://www.perfumparadiserd.com/?s={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      }
+    </script>
+
+    <!-- Script: anteponer el nombre del sitio al título si no está presente y observar cambios -->
+    <script>
+      (function () {
+        const SITE_NAME = "PerfumParadiseRD";
+        function ensurePrefix() {
+          const titleEl = document.querySelector("title");
+          if (!titleEl) return;
+          const current = (titleEl.textContent || document.title || "").trim();
+          if (!current) return;
+          if (!current.startsWith(SITE_NAME)) {
+            const newTitle = SITE_NAME + (current ? " | " + current : "");
+            titleEl.textContent = newTitle;
+            document.title = newTitle;
+          }
+        }
+        ensurePrefix();
+        // Observar cambios al elemento title para reaplicar prefijo si otro script cambia el título
+        const titleNode =
+          document.querySelector("title") ||
+          (function () {
+            const t = document.createElement("title");
+            document.head.appendChild(t);
+            return t;
+          })();
+        const obs = new MutationObserver(function (muts) {
+          muts.forEach(() => ensurePrefix());
+        });
+        obs.observe(titleNode, {
+          characterData: true,
+          childList: true,
+          subtree: true,
+        });
+        document.addEventListener("DOMContentLoaded", ensurePrefix);
+      })();
+    </script>
   </head>
   <body>
     <!-- Menú lateral para móviles -->

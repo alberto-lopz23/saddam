@@ -1,4 +1,4 @@
-const NUMERO_WHATSAPP = "18091234567";
+const NUMERO_WHATSAPP = "+18298914134";
 
 // Variables globales
 let todosLosPerfumes = [];
@@ -144,7 +144,7 @@ function mostrarPerfumes(lista) {
     const whatsappLink = `https://wa.me/${NUMERO_WHATSAPP}?text=${mensaje}`;
 
     card.innerHTML = `
-      <img src="${perfume.imagen}" alt="${perfume.nombre}" onerror="this.src='https://via.placeholder.com/400x500/f0f0f0/666?text=Perfume'">
+      <img src="${perfume.imagen}" alt="${perfume.nombre}" onerror="this.src='https://placehold.co/400x500?text=Perfume'">
       <h3>${perfume.nombre}</h3>
       <p class="marca">${perfume.marca}</p>
       <p class="precio">${precio}</p>
