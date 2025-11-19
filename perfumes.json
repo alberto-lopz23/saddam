@@ -477,7 +477,7 @@
           "descripcion": "Elegancia aterciopelada que acaricia los sentidos suavemente."
         },
         {
-          "nombre": "Lattafa Kamrah",
+          "nombre": "Lattafa Khamrah",
           "precio": 1900,
           "imagen": "https://i.pinimg.com/1200x/a7/07/4d/a7074db255118fd5d3da095e079ba330.jpg",
           "notas": {
@@ -576,7 +576,7 @@
           "descripcion": "Intensidad magnética que atrae miradas y genera conversaciones."
         },
         {
-          "nombre": "Kamrah Dukhan",
+          "nombre": "Khamrah Dukhan",
           "precio": 2300,
           "imagen": "https://i.pinimg.com/1200x/7e/14/b6/7e14b667c098635a36c7975d6e377d20.jpg",
           "notas": {
@@ -587,7 +587,7 @@
           "descripcion": "Lujo parisino al alcance de tu mano. Chic y sofisticado."
         },
         {
-          "nombre": "Lattafa Kamrah Qahwa",
+          "nombre": "Lattafa Khamrah Qahwa",
           "precio": 2000,
           "imagen": "https://i.pinimg.com/1200x/5e/93/86/5e93864f981ba8bc467814877c576116.jpg",
           "notas": {
@@ -3605,7 +3605,7 @@
         {
           "nombre": "Set MontBlanc Explorer Platinum",
           "precio": 4000,
-          "imagen": "https://images.unsplash.com/photo-1581591524425-c7e0978865fc?w=400&h=500&fit=crop",
+          "imagen": "https://i.pinimg.com/1200x/89/0e/47/890e47195b7e20eacc56cc2af9d1a15f.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
             "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
@@ -3616,53 +3616,9 @@
       ],
       "arabes": [
         {
-          "nombre": "Set Kamrah",
+          "nombre": "Set Khamrah",
           "precio": 3000,
-          "imagen": "https://images.unsplash.com/photo-1522338242992-e1a54906a8da?w=400&h=500&fit=crop",
-          "notas": {
-            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
-            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
-            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
-          },
-          "descripcion": "Lujo accesible que no compromete calidad. Tu mejor inversión en estilo personal."
-        },
-        {
-          "nombre": "Set Kamrah Coffee",
-          "precio": 3200,
-          "imagen": "https://images.unsplash.com/photo-1520637736862-4d197d17c963?w=400&h=500&fit=crop",
-          "notas": {
-            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
-            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
-            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
-          },
-          "descripcion": "Madera y especias en armonía perfecta para el hombre moderno."
-        },
-        {
-          "nombre": "Set Tobacco Touch",
-          "precio": 2700,
-          "imagen": "https://images.unsplash.com/photo-1594736797933-d0fce2d35650?w=400&h=500&fit=crop",
-          "notas": {
-            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
-            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
-            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
-          },
-          "descripcion": "Sofisticación masculina que redefine la elegancia contemporánea."
-        },
-        {
-          "nombre": "Set Tux",
-          "precio": 2900,
-          "imagen": "https://images.unsplash.com/photo-1615634260167-c8cdede054de?w=400&h=500&fit=crop",
-          "notas": {
-            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
-            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
-            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
-          },
-          "descripcion": "Sofisticación masculina que redefine la elegancia contemporánea."
-        },
-        {
-          "nombre": "Set Porto Neroli",
-          "precio": 2800,
-          "imagen": "https://images.unsplash.com/photo-1606220838315-056192d5d9e1?w=400&h=500&fit=crop",
+          "imagen": "https://i.pinimg.com/1200x/61/e1/76/61e176cf853836567ee76cf5ca86bbd0.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
             "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
