@@ -2557,6 +2557,28 @@
           },
           "descripcion": "Frescura cítrica que revitaliza y refresca en cada spray."
         }
+        {
+          "nombre": "Salvatore Ferragamo Uomo Casual Life",
+          "precio": 5000,
+          "imagen": "https://i.pinimg.com/1200x/ea/cc/75/eacc75628d6e47697ffde574c9a324ef.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Frescura cítrica que revitaliza y refresca en cada spray."
+        }
+        {
+          "nombre": "Salvatore Ferragamo Uomo Urban Feel",
+          "precio": 5000,
+          "imagen": "https://i.pinimg.com/1200x/91/3c/0e/913c0edecf15f2f70dbc40b58b9405dd.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Frescura cítrica que revitaliza y refresca en cada spray."
+        }
       ],
       "carolinaHerrera": [
         {
