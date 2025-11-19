@@ -2606,7 +2606,18 @@
         {
           "nombre": "VIP 212 EDT WOMAN",
           "precio": 5500,
-          "imagen": "https://i.pinimg.com/1200x/d9/0b/1a/d90b1a32f1593fbc8bbd24ccc224ac51.jpg",
+          "imagen": "https://i.pinimg.com/736x/47/9e/f2/479ef2c016f0709c175a644085e5d628.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Despierta admiración dondequiera que vayas con esta composición magistral."
+        },
+        {
+          "nombre": "VIP 212 Sexy MEN EDT",
+          "precio": 5500,
+          "imagen": "https://i.pinimg.com/736x/e2/21/b9/e221b992f5704b268fa4daa0b702ccd8.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
             "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
