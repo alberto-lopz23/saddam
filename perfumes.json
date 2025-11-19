@@ -185,6 +185,28 @@
           "descripcion": "Vitalidad tropical que te transporta a playas de ensueño."
         },
         {
+          "nombre": "Club de Nuit Bling EDP",
+          "precio": 2500,
+          "imagen": "https://i.pinimg.com/1200x/f0/0f/54/f00f54c64743160d69e4e46d3e9474a3.jpg",
+          "notas": {
+            "salida": "🍋 Bergamota, 🍎 Manzana, 🌿 Lavanda, 🌶️ Pimienta",
+            "corazon": "🌸 Geranio, 🌹 Rosa, 🌿 Salvia",
+            "fondo": "🪵 Sándalo, 🌲 Cedro, 🍦 Almizcle, 🌲 Vetiver"
+          },
+          "descripcion": "Vitalidad tropical que te transporta a playas de ensueño."
+        },
+        {
+          "nombre": "Club de Nuit ICO/NIC",
+          "precio": 2500,
+          "imagen": "https://i.pinimg.com/1200x/af/fb/00/affb00da2f85192028b89d0f6bd795ff.jpg",
+          "notas": {
+            "salida": "🍋 Bergamota, 🍎 Manzana, 🌿 Lavanda, 🌶️ Pimienta",
+            "corazon": "🌸 Geranio, 🌹 Rosa, 🌿 Salvia",
+            "fondo": "🪵 Sándalo, 🌲 Cedro, 🍦 Almizcle, 🌲 Vetiver"
+          },
+          "descripcion": "Vitalidad tropical que te transporta a playas de ensueño."
+        },
+        {
           "nombre": "Club de Nuit Imperiale",
           "precio": 2400,
           "imagen": "https://i.pinimg.com/1200x/4b/2f/d1/4b2fd1c712245f283159cb8d0ecac692.jpg",
@@ -466,6 +488,94 @@
           "descripcion": "Intensidad magnética que atrae miradas y genera conversaciones."
         },
         {
+          "nombre": "Lattafa His Confession",
+          "precio": 1900,
+          "imagen": "https://i.pinimg.com/1200x/b3/05/a6/b305a6d29b4e2249e593f0f7331a3305.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Intensidad magnética que atrae miradas y genera conversaciones."
+        },
+        {
+          "nombre": "Lattafa Her Confession",
+          "precio": 1900,
+          "imagen": "https://i.pinimg.com/1200x/78/ea/fd/78eafde220fe2b3453b8a857b3ef1cf7.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Intensidad magnética que atrae miradas y genera conversaciones."
+        },
+        {
+          "nombre": "Lattafa Her Confession",
+          "precio": 1900,
+          "imagen": "https://i.pinimg.com/1200x/78/ea/fd/78eafde220fe2b3453b8a857b3ef1cf7.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Intensidad magnética que atrae miradas y genera conversaciones."
+        },
+        {
+          "nombre": "Lattafa Nishaneal Qiam Gold",
+          "precio": 1900,
+          "imagen": "https://i.pinimg.com/1200x/b4/b9/38/b4b938d0b97aa4cef08e2aaacc7b8305.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Intensidad magnética que atrae miradas y genera conversaciones."
+        },
+        {
+          "nombre": "Lattafa Maahir legacy EDP",
+          "precio": 1900,
+          "imagen": "https://i.pinimg.com/1200x/5c/dd/1c/5cdd1cd0d79523d7018a0fe1604da30a.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Intensidad magnética que atrae miradas y genera conversaciones."
+        },
+        {
+          "nombre": "Lattafa Ishq Al Shuyukh Gold EDP",
+          "precio": 1900,
+          "imagen": "https://i.pinimg.com/1200x/7a/d9/93/7ad99313716ce25d8753c6832b28c968.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Intensidad magnética que atrae miradas y genera conversaciones."
+        },
+        {
+          "nombre": "Lattafa Ishq Al Shuyukh silver",
+          "precio": 1900,
+          "imagen": "https://i.pinimg.com/1200x/93/65/58/9365583e943a1266f6a6a61c86c094ab.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Intensidad magnética que atrae miradas y genera conversaciones."
+        },
+        {
+          "nombre": "Lattafa  Qaed al fursan",
+          "precio": 1900,
+          "imagen": "https://i.pinimg.com/736x/ab/e8/ff/abe8ff23e724f6a43ef762145d9e7445.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Intensidad magnética que atrae miradas y genera conversaciones."
+        },
+        {
           "nombre": "Kamrah Dukhan",
           "precio": 2300,
           "imagen": "https://i.pinimg.com/1200x/7e/14/b6/7e14b667c098635a36c7975d6e377d20.jpg",
@@ -579,6 +689,17 @@
           "nombre": "Lataffa Asad",
           "precio": 1600,
           "imagen": "https://i.pinimg.com/1200x/6f/4d/c7/6f4dc738ad2ba1772c737163f439c3e1.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Frescura matutina que te prepara para conquistar el día con actitud."
+        },
+        {
+          "nombre": "Lataffa Asad Elixir",
+          "precio": 1600,
+          "imagen": "https://i.pinimg.com/1200x/32/8f/1b/328f1be3741ac2397ac37a4f3119e744.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
             "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
@@ -1095,6 +1216,28 @@
           "nombre": "Jean Lowe Immortal",
           "precio": 1900,
           "imagen": "https://i.pinimg.com/1200x/9e/e4/d0/9ee4d0cc24871a996c6d956a37f45531.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Misterio envolvente que deja preguntas sin responder."
+        },
+        {
+          "nombre": "Jean Lowe Azure",
+          "precio": 1900,
+          "imagen": "https://i.pinimg.com/736x/c9/c2/f6/c9c2f6040121ff35426f032fde455af3.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Misterio envolvente que deja preguntas sin responder."
+        },
+        {
+          "nombre": "Jean Lowe vibe",
+          "precio": 1900,
+          "imagen": "https://i.pinimg.com/1200x/e1/55/4c/e1554c4e929c269515d9560c02c55b0d.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
             "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
