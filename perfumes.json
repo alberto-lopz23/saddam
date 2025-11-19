@@ -1482,6 +1482,41 @@
           "descripcion": "Un toque de clase que eleva cualquier ocasión a memorable."
         },
         {
+          "nombre": "Le Belle 125ML",
+          "precio": 5000,
+          "imagen": "https://i.pinimg.com/1200x/f8/50/99/f85099c8a94326a5c978e5f89eda0255.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Un toque de clase que eleva cualquier ocasión a memorable."
+        },
+        {
+          "nombre": "Scandal Intense 100ML",
+          "precio": 5000,
+          "imagen": "https://i.pinimg.com/1200x/96/1d/40/961d4058db1024a40275d3ca23b28123.jpg
+",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Un toque de clase que eleva cualquier ocasión a memorable."
+        },
+        {
+          "nombre": "Scandal absolu 100ML",
+          "precio": 5000,
+          "imagen": "https://i.pinimg.com/736x/61/0d/bd/610dbda0e043b55d637c83cce22ec9d8.jpg
+",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Un toque de clase que eleva cualquier ocasión a memorable."
+        },
+        {
           "nombre": "Le Male Le Parfum 125ML",
           "precio": 6500,
           "imagen": "https://i.pinimg.com/736x/20/95/d2/2095d2f54b7651ae63d8426219eb020a.jpg",
@@ -1493,9 +1528,10 @@
           "descripcion": "Lujo parisino al alcance de tu mano. Chic y sofisticado."
         },
         {
-          "nombre": "Garden 125ML",
+          "nombre": "Paradise Garden 125ML",
           "precio": 7000,
-          "imagen": "https://i.pinimg.com/1200x/41/a4/e3/41a4e3ffb43d7081f251d2b5d44be9f0.jpg",
+          "imagen": "https://i.pinimg.com/1200x/f5/17/5d/f5175d9c6cf9153bf1df2bd89a4bbd3a.jpg
+",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
             "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
@@ -1504,9 +1540,9 @@
           "descripcion": "Exclusividad y distinción para quienes aprecian lo extraordinario."
         },
         {
-          "nombre": "Le Beau 125ML",
+          "nombre": "Le Beau le Parfum 125ML",
           "precio": 5500,
-          "imagen": "https://i.pinimg.com/1200x/bf/2a/2a/bf2a2adb00ccf797f4cc55acd7a85ff0.jpg",
+          "imagen": "https://i.pinimg.com/1200x/41/a4/e3/41a4e3ffb43d7081f251d2b5d44be9f0.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
             "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
