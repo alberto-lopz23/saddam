@@ -1460,26 +1460,15 @@
       ],
       "jeanPaulGaultier": [
         {
-          "nombre": "Ultra Male 75ML",
+          "nombre": "Ultra Male 75ML/125ML",
           "precio": 3500,
-          "imagen": "https://i.pinimg.com/736x/7a/66/b9/7a66b9c62142c2cfd880366a21cb23e1.jpg",
+          "imagen": "https://i.pinimg.com/1200x/e9/c1/ed/e9c1ed37cd5020e988a7197a09d409c6.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
             "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
             "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
           },
           "descripcion": "Aventura y libertad capturadas en una fragancia que inspira."
-        },
-        {
-          "nombre": "Ultra Male 125ML",
-          "precio": 5000,
-          "imagen": "https://i.pinimg.com/1200x/8d/9e/8a/8d9e8ae5604d78544ef7d64b8d92b721.jpg",
-          "notas": {
-            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
-            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
-            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
-          },
-          "descripcion": "Un toque de clase que eleva cualquier ocasión a memorable."
         },
         {
           "nombre": "Le Belle 125ML",
