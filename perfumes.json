@@ -386,19 +386,7 @@
           "descripcion": "Dulzura envolvente que crea momentos mágicos y recuerdos memorables."
         }
       ],
-      "mast": [
-        {
-          "nombre": "Mast Perfume Sweet Velvet",
-          "precio": 1700,
-          "imagen": "https://i.pinimg.com/1200x/4e/a1/23/4ea1235df4c5be330a22eb04e1254303.jpg",
-          "notas": {
-            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
-            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
-            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
-          },
-          "descripcion": "Lujo parisino al alcance de tu mano. Chic y sofisticado."
-        }
-      ],
+      
       "lattafa": [
         {
           "nombre": "lattafa art of universe",
@@ -735,17 +723,7 @@
           },
           "descripcion": "Un aroma hipnótico que fusiona tradición y modernidad en perfecta armonía."
         },
-        {
-          "nombre": "Lattafa Pleasure",
-          "precio": 2500,
-          "imagen": "https://i.pinimg.com/1200x/7d/1a/01/7d1a01a5ef2039274934167d2778313b.jpg",
-          "notas": {
-            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
-            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
-            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
-          },
-          "descripcion": "Aventura y libertad capturadas en una fragancia que inspira."
-        },
+        
         {
           "nombre": "Lattafa Vanilla Freak",
           "precio": 2500,
@@ -1092,9 +1070,9 @@
           "descripcion": "Lujo accesible que no compromete calidad. Tu mejor inversión en estilo personal."
         }
       ],
-      "milano": [
+      "Jo Milano": [
         {
-          "nombre": "Game of Spades Boss",
+          "nombre": "Game of Spades Wildcard",
           "precio": 3700,
           "imagen": "https://i.pinimg.com/1200x/e1/0e/8f/e10e8fb1ec08c3bd2308b1a55621ea33.jpg",
           "notas": {
@@ -1127,9 +1105,53 @@
           "descripcion": "Pureza y delicadeza en una composición celestial."
         },
         {
-          "nombre": "Game of Spades Wild Card",
+          "nombre": "Game of Spades Bonus",
+          "precio": 4000,
+          "imagen": "https://i.pinimg.com/1200x/7d/6e/a3/7d6ea334a21f0c8490530d164baf8f7e.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Pureza y delicadeza en una composición celestial."
+        },
+         {
+          "nombre": "Game of Spades BLIND-BID",
           "precio": 3700,
-          "imagen": "https://i.pinimg.com/1200x/4a/eb/55/4aeb55e874aa40f828d437c38ec13f33.jpg",
+          "imagen": "https://i.pinimg.com/736x/44/89/4d/44894da3fbf620828618e09455bc7082.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Pureza y delicadeza en una composición celestial."
+        },
+        {
+          "nombre": "Game of Spades Jackpot",
+          "precio": 3700,
+          "imagen": "https://i.pinimg.com/1200x/dd/6d/cb/dd6dcb6f8bc07fba449456eced9927cf.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Pureza y delicadeza en una composición celestial."
+        },
+        {
+          "nombre": "Game of Spades ACE/Platinum",
+          "precio": 3700,
+          "imagen": "https://i.pinimg.com/1200x/75/8f/94/758f941a57c7c163cd255f58d3250af7.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Pureza y delicadeza en una composición celestial."
+        },
+        {
+          "nombre": "Game of Spades Rouge Parfum",
+          "precio": 3700,
+          "imagen": "https://i.pinimg.com/1200x/4b/6d/fd/4b6dfdb435e5efebe636850014afba36.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
             "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
@@ -1162,7 +1184,7 @@
         {
           "nombre": "Game of Spades Wind",
           "precio": 3500,
-          "imagen": "https://images.unsplash.com/photo-1605289982774-9a6fef564df8?w=400&h=500&fit=crop",
+          "imagen": "https://i.pinimg.com/736x/39/12/4d/39124db451e5db86eb9925ca110dd0e2.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
             "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
@@ -1193,15 +1215,81 @@
           "descripcion": "Seduce sin palabras. Esta fragancia habla por ti con elegancia y distinción."
         },
         {
-          "nombre": "Game of Spades Rouge Caja Negra",
-          "precio": 3300,
-          "imagen": "https://i.pinimg.com/1200x/36/2b/37/362b37047c95ffc2f35d7b4fea944798.jpg",
+          "nombre": "Game of Spades NO LIMIT",
+          "precio": 4000,
+          "imagen": "https://i.pinimg.com/1200x/8f/16/ac/8f16ac949e6f6a5e49115e98d162a452.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
             "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
             "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
           },
-          "descripcion": "La esencia del lujo oriental fusionada con elegancia moderna."
+          "descripcion": "Seduce sin palabras. Esta fragancia habla por ti con elegancia y distinción."
+        },
+        {
+          "nombre": "Game of Spades OPAL",
+          "precio": 4000,
+          "imagen": "https://i.pinimg.com/1200x/d1/7d/73/d17d73eebd3d561a7c4d990a74cba5ab.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Seduce sin palabras. Esta fragancia habla por ti con elegancia y distinción."
+        },
+        {
+          "nombre": "Game of Spades HIGH ROLLER",
+          "precio": 4000,
+          "imagen": "https://i.pinimg.com/1200x/fe/68/ef/fe68efe72b73f55295e7de9c3bd0df04.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Seduce sin palabras. Esta fragancia habla por ti con elegancia y distinción."
+        },
+        {
+          "nombre": "Game of Spades EMERALD",
+          "precio": 4000,
+          "imagen": "https://i.pinimg.com/736x/63/eb/d5/63ebd50aee5ae96199faae43cc29235a.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Seduce sin palabras. Esta fragancia habla por ti con elegancia y distinción."
+        },
+         {
+          "nombre": "Game of Spades DIAMOND",
+          "precio": 4000,
+          "imagen": "https://i.pinimg.com/1200x/ff/e2/0a/ffe20a047ec41a44a6d31207b47e76eb.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Seduce sin palabras. Esta fragancia habla por ti con elegancia y distinción."
+        },
+        {
+          "nombre": "Game of Spades FULL HOUSE",
+          "precio": 4000,
+          "imagen": "https://i.pinimg.com/1200x/fc/ff/cc/fcffccff75a7ad38baca4142e1dcdeef.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Seduce sin palabras. Esta fragancia habla por ti con elegancia y distinción."
+        },
+        {
+          "nombre": "Game of Spades QUEEN",
+          "precio": 3800,
+          "imagen": "https://i.pinimg.com/1200x/03/df/cc/03dfcc75ca5ecc53ea05e2f1fa39810f.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Seduce sin palabras. Esta fragancia habla por ti con elegancia y distinción."
         },
         {
           "nombre": "Game of Spades Rouge Extracto",
@@ -1214,28 +1302,7 @@
           },
           "descripcion": "Lujo parisino al alcance de tu mano. Chic y sofisticado."
         },
-        {
-          "nombre": "Game of Spades Legend",
-          "precio": 3500,
-          "imagen": "https://images.unsplash.com/photo-1615634260167-c8cdede054de?w=400&h=500&fit=crop",
-          "notas": {
-            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
-            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
-            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
-          },
-          "descripcion": "Rebeldía sofisticada para espíritus libres que marcan tendencia."
-        },
-        {
-          "nombre": "Game of Spades Fire",
-          "precio": 3700,
-          "imagen": "https://images.unsplash.com/photo-1606220838315-056192d5d9e1?w=400&h=500&fit=crop",
-          "notas": {
-            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
-            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
-            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
-          },
-          "descripcion": "Seducción pura envuelta en notas irresistibles que cautivan instantáneamente."
-        }
+        
       ]
     },
     "disenador": {
@@ -1276,6 +1343,17 @@
           "descripcion": "Una experiencia olfativa que despierta los sentidos y cautiva corazones."
         },
         {
+          "nombre": "Armani Code Parfum Men 100ML",
+          "precio": 6500,
+          "imagen": "https://i.pinimg.com/1200x/dc/2c/1d/dc2c1d1acae4b4e8b74516553610d52e.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Una experiencia olfativa que despierta los sentidos y cautiva corazones."
+        },
+        {
           "nombre": "My Way Refill",
           "precio": 6000,
           "imagen": "https://i.pinimg.com/1200x/a5/7b/19/a57b1921d093e0797b52e7975f211b4d.jpg",
@@ -1285,17 +1363,6 @@
             "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
           },
           "descripcion": "Seduce sin palabras. Esta fragancia habla por ti con elegancia y distinción."
-        },
-        {
-          "nombre": "Acqua di Gio",
-          "precio": 4300,
-          "imagen": "https://i.pinimg.com/1200x/b3/71/b0/b371b0bbb6c9af6a476abbf6ecac4ac0.jpg",
-          "notas": {
-            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
-            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
-            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
-          },
-          "descripcion": "Elegancia atemporal que conquista con su presencia única. {notes_desc}"
         },
         {
           "nombre": "EMPORIO ARMANI Acqua Di Gió Profondo",
@@ -1333,7 +1400,7 @@
       ],
       "azzaro": [
         {
-          "nombre": "Azzaro Parfum",
+          "nombre": "Azzaro THA MOST WANTED Parfum",
           "precio": 4500,
           "imagen": "https://i.pinimg.com/736x/51/0a/cd/510acd2d06d402f5060df446cd806400.jpg",
           "notas": {
@@ -1344,15 +1411,15 @@
           "descripcion": "Un aroma hipnótico que fusiona tradición y modernidad en perfecta armonía."
         },
         {
-          "nombre": "Azzaro Parfum Intense",
-          "precio": 4000,
-          "imagen": "https://i.pinimg.com/1200x/5a/d9/9f/5ad99ffdf11b255182cdde2751a8500b.jpg",
+          "nombre": "Azzaro  THE MOST WANTED EDT INTENSE",
+          "precio": 5500,
+          "imagen": "https://i.pinimg.com/1200x/39/94/78/399478f64511c21cdb09bf7c8cd20c26.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
             "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
             "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
           },
-          "descripcion": "Dulzura envolvente que crea momentos mágicos y recuerdos memorables."
+          "descripcion": "Un aroma hipnótico que fusiona tradición y modernidad en perfecta armonía."
         },
         {
           "nombre": "Azzaro wanted EDP",
@@ -1366,9 +1433,9 @@
           "descripcion": "Intensidad magnética que atrae miradas y genera conversaciones."
         },
         {
-          "nombre": "Azzaro The Most Wanted.",
+          "nombre": "Azzaro Wanted 100ML",
           "precio": 4000,
-          "imagen": "https://i.pinimg.com/1200x/73/29/2b/73292bf3d921fd41077af5e8e4de5ed0.jpg",
+          "imagen": "https://i.pinimg.com/1200x/07/68/1a/07681ac1c631f655219d192d9134390d.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
             "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
@@ -1399,7 +1466,7 @@
           "descripcion": "Vitalidad tropical que te transporta a playas de ensueño."
         }
       ],
-      "ysl": [
+      "Yves saint Laurent": [
         {
           "nombre": "Y EDP 100ML",
           "precio": 5500,
@@ -1411,6 +1478,105 @@
           },
           "descripcion": "Elegancia discreta que susurra clase y buen gusto."
         },
+        {
+          "nombre": "Yves Saint Laurent Libre Intense Eau de Parfum",
+          "precio": 6000,
+          "imagen": "https://i.pinimg.com/1200x/49/2d/50/492d508ab322b4eb60fe4c08654c6180.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Frescura matutina que te prepara para conquistar el día con actitud."
+        },
+        {
+          "nombre": "Yves Saint Laurent Libre EDP",
+          "precio": 5500,
+          "imagen": "https://i.pinimg.com/736x/ab/32/e1/ab32e1f1f68682c52ca7c6bebeea0083.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Sensualidad y misterio envueltos en una esencia cautivadora que deja huella."
+        },
+        {
+          "nombre": "Yves Saint Laurent Libre EDT",
+          "precio": 5000,
+          "imagen": "https://i.pinimg.com/736x/32/bf/1c/32bf1cb8bac6e6e8a040c2d35641ef3b.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Lujo accesible que no compromete calidad. Tu mejor inversión en estilo personal."
+        },
+        {
+          "nombre": "Yves Saint Laurent La Nuit De L'Homme EDT",
+          "precio": 5000,
+          "imagen": "https://i.pinimg.com/1200x/93/20/41/932041463aa97ff7358a9344f77ef3bd.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Frescura matutina que te prepara para conquistar el día con actitud."
+        },
+        {
+          "nombre": "Yves Saint Laurent La Nuit De L'Homme EDP",
+          "precio": 5500,
+          "imagen": "https://i.pinimg.com/736x/01/a1/eb/01a1eb70687865153b4c34182093c527.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Intensidad ahumada con carácter y personalidad definida."
+        },
+        {
+          "nombre": "Yves Saint Laurent La Nuit De L'Homme LE PARFUM",
+          "precio": 6000,
+          "imagen": "https://i.pinimg.com/736x/a9/a5/e4/a9a5e42c311db3cb74dc06c5da447368.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Frescura vibrante que te acompaña todo el día con estilo y confianza."
+        },
+        {
+          "nombre": "Yves Saint Laurent black opium edp glitter",
+          "precio": 5500,
+          "imagen": "https://i.pinimg.com/1200x/a6/a8/6d/a6a86d0bc7fd2a169aaec11545842e0e.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Poder y presencia en cada spray. El complemento perfecto para tu éxito."
+        },
+        {
+          "nombre": "Yves Saint Laurent Ysl Myslf Eau de Parfum",
+          "precio": 5500,
+          "imagen": "https://i.pinimg.com/736x/d8/4f/ae/d84faeb03981274e83fd38f914ae153d.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Elegancia aterciopelada que acaricia los sentidos suavemente."
+        },
+        {
+          "nombre": "Yves Saint Laurent Ysl Myslf Absolu",
+          "precio": 6000,
+          "imagen": "https://i.pinimg.com/736x/ba/a0/2d/baa02dfb4f3717da619c16bfe104d072.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Sensualidad y misterio envueltos en una esencia cautivadora que deja huella."
+        }
         {
           "nombre": "Yves Saint Laurent Y EDT",
           "precio": 3500,
@@ -2218,6 +2384,39 @@
           },
           "descripcion": "Despierta admiración dondequiera que vayas con esta composición magistral."
         },
+         {
+          "nombre": "212 Men For ever Young",
+          "precio": 5500,
+          "imagen": "https://i.pinimg.com/1200x/fa/96/2f/fa962f2eb93e33d6af56f18e2b6882b8.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Despierta admiración dondequiera que vayas con esta composición magistral."
+        },
+        {
+          "nombre": "212 Heroes Forever Young woman",
+          "precio": 5500,
+          "imagen": "https://i.pinimg.com/1200x/d9/0b/1a/d90b1a32f1593fbc8bbd24ccc224ac51.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Despierta admiración dondequiera que vayas con esta composición magistral."
+        },
+        {
+          "nombre": "VIP 212 EDT WOMAN",
+          "precio": 5500,
+          "imagen": "https://i.pinimg.com/1200x/d9/0b/1a/d90b1a32f1593fbc8bbd24ccc224ac51.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Despierta admiración dondequiera que vayas con esta composición magistral."
+        },
         {
           "nombre": "Carolina Herrera Bad Boy EDT",
           "precio": 4500,
@@ -2429,105 +2628,7 @@
           },
           "descripcion": "Romanticismo en su máxima expresión. Perfecta para conquistar y enamorar."
         },
-        {
-          "nombre": "Yves Saint Laurent Libre Intense Eau de Parfum",
-          "precio": 6000,
-          "imagen": "https://i.pinimg.com/1200x/49/2d/50/492d508ab322b4eb60fe4c08654c6180.jpg",
-          "notas": {
-            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
-            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
-            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
-          },
-          "descripcion": "Frescura matutina que te prepara para conquistar el día con actitud."
-        },
-        {
-          "nombre": "Yves Saint Laurent Libre EDP",
-          "precio": 5500,
-          "imagen": "https://i.pinimg.com/736x/ab/32/e1/ab32e1f1f68682c52ca7c6bebeea0083.jpg",
-          "notas": {
-            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
-            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
-            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
-          },
-          "descripcion": "Sensualidad y misterio envueltos en una esencia cautivadora que deja huella."
-        },
-        {
-          "nombre": "Yves Saint Laurent Libre EDT",
-          "precio": 5000,
-          "imagen": "https://i.pinimg.com/736x/32/bf/1c/32bf1cb8bac6e6e8a040c2d35641ef3b.jpg",
-          "notas": {
-            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
-            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
-            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
-          },
-          "descripcion": "Lujo accesible que no compromete calidad. Tu mejor inversión en estilo personal."
-        },
-        {
-          "nombre": "Yves Saint Laurent La Nuit De L'Homme EDT",
-          "precio": 5000,
-          "imagen": "https://i.pinimg.com/1200x/93/20/41/932041463aa97ff7358a9344f77ef3bd.jpg",
-          "notas": {
-            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
-            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
-            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
-          },
-          "descripcion": "Frescura matutina que te prepara para conquistar el día con actitud."
-        },
-        {
-          "nombre": "Yves Saint Laurent La Nuit De L'Homme EDP",
-          "precio": 5500,
-          "imagen": "https://i.pinimg.com/736x/01/a1/eb/01a1eb70687865153b4c34182093c527.jpg",
-          "notas": {
-            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
-            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
-            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
-          },
-          "descripcion": "Intensidad ahumada con carácter y personalidad definida."
-        },
-        {
-          "nombre": "Yves Saint Laurent La Nuit De L'Homme LE PARFUM",
-          "precio": 6000,
-          "imagen": "https://i.pinimg.com/736x/a9/a5/e4/a9a5e42c311db3cb74dc06c5da447368.jpg",
-          "notas": {
-            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
-            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
-            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
-          },
-          "descripcion": "Frescura vibrante que te acompaña todo el día con estilo y confianza."
-        },
-        {
-          "nombre": "Yves Saint Laurent black opium edp glitter",
-          "precio": 5500,
-          "imagen": "https://i.pinimg.com/1200x/a6/a8/6d/a6a86d0bc7fd2a169aaec11545842e0e.jpg",
-          "notas": {
-            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
-            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
-            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
-          },
-          "descripcion": "Poder y presencia en cada spray. El complemento perfecto para tu éxito."
-        },
-        {
-          "nombre": "Yves Saint Laurent Ysl Myslf Eau de Parfum",
-          "precio": 5500,
-          "imagen": "https://i.pinimg.com/736x/d8/4f/ae/d84faeb03981274e83fd38f914ae153d.jpg",
-          "notas": {
-            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
-            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
-            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
-          },
-          "descripcion": "Elegancia aterciopelada que acaricia los sentidos suavemente."
-        },
-        {
-          "nombre": "Yves Saint Laurent Ysl Myslf Absolu",
-          "precio": 6000,
-          "imagen": "https://i.pinimg.com/736x/ba/a0/2d/baa02dfb4f3717da619c16bfe104d072.jpg",
-          "notas": {
-            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
-            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
-            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
-          },
-          "descripcion": "Sensualidad y misterio envueltos en una esencia cautivadora que deja huella."
-        }
+        
       ],
       "bvlgari": [
         {
@@ -3320,7 +3421,7 @@
         {
           "nombre": "Set Sillage",
           "precio": 3000,
-          "imagen": "https://images.unsplash.com/photo-1592840066710-6e1c3179c10b?w=400&h=500&fit=crop",
+          "imagen": "https://i.pinimg.com/1200x/aa/10/2e/aa102eed4b18b308c53faa651aed56c1.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
             "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
@@ -3430,7 +3531,7 @@
         {
           "nombre": "Set Club de Nuit Sillage",
           "precio": 2800,
-          "imagen": "https://i.pinimg.com/736x/b6/65/d4/b665d44648892ceaddad637365432810.jpg",
+          "imagen": "https://i.pinimg.com/1200x/fb/a1/ce/fba1ce8a2afc01713e3e92ff0b3f104b.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
             "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
