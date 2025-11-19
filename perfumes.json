@@ -48,6 +48,61 @@
             "fondo": "🪵 Almizcle, 🍦 Ámbar, 🌲 Cedro"
           }
         },
+         {
+          "nombre": "Hawas Rasasi Fire",
+          "precio": 2000,
+          "imagen": "https://i.pinimg.com/1200x/d3/f9/a2/d3f9a22c7fea724b73f1a6531b677ee6.jpg",
+          "descripcion": "Una brisa glacial de elegancia y energía. La menta refrescante se fusiona con acordes acuáticos para crear un aroma vigorizante que te mantiene fresco todo el día bajo el sol caribeño.",
+          "notas": {
+            "salida": "🍋 Bergamota, 🌿 Menta, 🍎 Manzana Verde",
+            "corazon": "🌊 Notas Acuáticas, 🌸 Lavanda, 🌿 Geranio",
+            "fondo": "🪵 Almizcle, 🍦 Ámbar, 🌲 Cedro"
+          }
+        },
+        {
+          "nombre": "Hawas Rasasi Malibu",
+          "precio": 2000,
+          "imagen": "https://i.pinimg.com/1200x/0f/1d/12/0f1d120f87ae0328220810ca3bda1cec.jpg",
+          "descripcion": "Una brisa glacial de elegancia y energía. La menta refrescante se fusiona con acordes acuáticos para crear un aroma vigorizante que te mantiene fresco todo el día bajo el sol caribeño.",
+          "notas": {
+            "salida": "🍋 Bergamota, 🌿 Menta, 🍎 Manzana Verde",
+            "corazon": "🌊 Notas Acuáticas, 🌸 Lavanda, 🌿 Geranio",
+            "fondo": "🪵 Almizcle, 🍦 Ámbar, 🌲 Cedro"
+          }
+        },
+        {
+          "nombre": "Hawas Rasasi Elixir",
+          "precio": 2000,
+          "imagen": "https://i.pinimg.com/1200x/a7/23/a9/a723a95c95500ab6a0a3c216fad80c6a.jpg",
+          "descripcion": "Una brisa glacial de elegancia y energía. La menta refrescante se fusiona con acordes acuáticos para crear un aroma vigorizante que te mantiene fresco todo el día bajo el sol caribeño.",
+          "notas": {
+            "salida": "🍋 Bergamota, 🌿 Menta, 🍎 Manzana Verde",
+            "corazon": "🌊 Notas Acuáticas, 🌸 Lavanda, 🌿 Geranio",
+            "fondo": "🪵 Almizcle, 🍦 Ámbar, 🌲 Cedro"
+          }
+        },
+        {
+          "nombre": "Hawas Rasasi Tropical",
+          "precio": 2000,
+          "imagen": "https://i.pinimg.com/1200x/0b/0f/bc/0b0fbc61cf3ccc8f7b0c200adbab2f53.jpg",
+          "descripcion": "Una brisa glacial de elegancia y energía. La menta refrescante se fusiona con acordes acuáticos para crear un aroma vigorizante que te mantiene fresco todo el día bajo el sol caribeño.",
+          "notas": {
+            "salida": "🍋 Bergamota, 🌿 Menta, 🍎 Manzana Verde",
+            "corazon": "🌊 Notas Acuáticas, 🌸 Lavanda, 🌿 Geranio",
+            "fondo": "🪵 Almizcle, 🍦 Ámbar, 🌲 Cedro"
+          }
+        },
+        {
+          "nombre": "Hawas Rasasi Diva",
+          "precio": 2000,
+          "imagen": "https://i.pinimg.com/736x/5b/fb/e6/5bfbe60f4ed6342279da0b708e62adcc.jpg",
+          "descripcion": "Una brisa glacial de elegancia y energía. La menta refrescante se fusiona con acordes acuáticos para crear un aroma vigorizante que te mantiene fresco todo el día bajo el sol caribeño.",
+          "notas": {
+            "salida": "🍋 Bergamota, 🌿 Menta, 🍎 Manzana Verde",
+            "corazon": "🌊 Notas Acuáticas, 🌸 Lavanda, 🌿 Geranio",
+            "fondo": "🪵 Almizcle, 🍦 Ámbar, 🌲 Cedro"
+          }
+        },
         {
           "nombre": "Hawas Rasasi Black",
           "precio": 2300,
