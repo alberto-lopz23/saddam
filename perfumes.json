@@ -1482,6 +1482,17 @@
           "descripcion": "Un toque de clase que eleva cualquier ocasión a memorable."
         },
         {
+          "nombre": "Le MALE 75ML/125ML",
+          "precio": 5000,
+          "imagen": "https://i.pinimg.com/736x/4a/95/24/4a95248a6179416bef796704dac9ecb5.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Un toque de clase que eleva cualquier ocasión a memorable."
+        },
+        {
           "nombre": "Scandal Intense 100ML",
           "precio": 5000,
           "imagen": "https://i.pinimg.com/1200x/96/1d/40/961d4058db1024a40275d3ca23b28123.jpg",
@@ -1504,6 +1515,28 @@
           "descripcion": "Un toque de clase que eleva cualquier ocasión a memorable."
         },
         {
+          "nombre": "Scandal WOMAN 100ML",
+          "precio": 5000,
+          "imagen": "https://i.pinimg.com/1200x/8e/0d/6a/8e0d6a14559a97a193dde404583a9bf6.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Un toque de clase que eleva cualquier ocasión a memorable."
+        },
+        {
+          "nombre": "Scandal WOMAN EDP 100ML",
+          "precio": 5000,
+          "imagen": "https://i.pinimg.com/736x/6a/d0/a8/6ad0a868ad1c25c2780435ec9370b602.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Un toque de clase que eleva cualquier ocasión a memorable."
+        },
+        {
           "nombre": "Le Male Le Parfum 125ML",
           "precio": 6500,
           "imagen": "https://i.pinimg.com/736x/20/95/d2/2095d2f54b7651ae63d8426219eb020a.jpg",
@@ -1518,6 +1551,28 @@
           "nombre": "le belle Paradise Garden 125ML",
           "precio": 7000,
           "imagen": "https://i.pinimg.com/1200x/f5/17/5d/f5175d9c6cf9153bf1df2bd89a4bbd3a.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Exclusividad y distinción para quienes aprecian lo extraordinario."
+        },
+        {
+          "nombre": "LE BEAU Paradise Garden 125ML",
+          "precio": 7000,
+          "imagen": "https://i.pinimg.com/736x/e9/8d/11/e98d1107d684033bba731fadf5dae8f6.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Exclusividad y distinción para quienes aprecian lo extraordinario."
+        },
+        {
+          "nombre": "SCANDAL LE PARFUM 100ML",
+          "precio": 7000,
+          "imagen": "https://i.pinimg.com/736x/6b/77/3a/6b773a43d77058fdbcbb6d22ad0a8d22.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
             "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
@@ -1594,9 +1649,31 @@
           "descripcion": "Sofisticación masculina que redefine la elegancia contemporánea."
         },
         {
-          "nombre": "Phantom EDT",
+          "nombre": "Phantom EDT 100ML",
           "precio": 3500,
           "imagen": "https://i.pinimg.com/1200x/8c/90/ec/8c90ecebd8e18cc348940fe7be45afdd.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Exclusividad y distinción para quienes aprecian lo extraordinario."
+        },
+        {
+          "nombre": "Phantom Parfum 100ML",
+          "precio": 3500,
+          "imagen": "https://i.pinimg.com/1200x/75/24/5c/75245c1703476f71ecb01cdaa7f1852c.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Exclusividad y distinción para quienes aprecian lo extraordinario."
+        },
+        {
+          "nombre": "Phantom Intense 100ML",
+          "precio": 3500,
+          "imagen": "https://i.pinimg.com/1200x/b2/97/94/b297947c2ade09c10aeb7e255ecfaa34.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
             "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
@@ -1649,9 +1726,31 @@
           "descripcion": "Frescura mediterránea que transporta tus sentidos a costas paradisíacas."
         },
         {
-          "nombre": "Paco Rabanne One Million EDT",
+          "nombre": "INVICTUS VICTORY ELIXIR 100ML",
           "precio": 4000,
-          "imagen": "https://i.pinimg.com/1200x/1a/55/9e/1a559eb1c82196305747c43ccab047b4.jpg",
+          "imagen": "https://i.pinimg.com/1200x/69/b5/f4/69b5f4f2d24a57791ee203e42f18260a.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Romanticismo en su máxima expresión. Perfecta para conquistar y enamorar."
+        },
+        {
+          "nombre": "INVICTUS VICTORY EDP 100ML",
+          "precio": 4000,
+          "imagen": "https://i.pinimg.com/736x/5a/8e/bd/5a8ebd82c2f54cca8d480467673c1ee9.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Romanticismo en su máxima expresión. Perfecta para conquistar y enamorar."
+        },
+        {
+          "nombre": "INVICTUS VICTORY PLATINIUM 100ML",
+          "precio": 4000,
+          "imagen": "https://i.pinimg.com/1200x/8e/9e/f8/8e9ef829c1d264fed4f3e5c459f494ed.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
             "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
@@ -1777,6 +1876,17 @@
           "nombre": "Toy 2 Blanco",
           "precio": 3000,
           "imagen": "https://i.pinimg.com/736x/33/ed/c0/33edc0cd5cf8503f8e53ca7dedd8a70b.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Un toque de clase que eleva cualquier ocasión a memorable."
+        },
+        {
+          "nombre": "Toy 2 Pearl EDP 100ML",
+          "precio": 3000,
+          "imagen": "https://i.pinimg.com/1200x/99/0e/0a/990e0a1d8715078f39c5d5298ee40de7.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
             "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
@@ -2186,6 +2296,28 @@
           "descripcion": "Dulzura envolvente que crea momentos mágicos y recuerdos memorables."
         },
         {
+          "nombre": "212 VIP ROSE WOMAN 100ML",
+          "precio": 5500,
+          "imagen": "https://i.pinimg.com/1200x/a7/52/7a/a7527ad52b2a3c6e642e6803e1bbf65a.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Dulzura envolvente que crea momentos mágicos y recuerdos memorables."
+        },
+        {
+          "nombre": "212 VIP WOMAN 100ML",
+          "precio": 5500,
+          "imagen": "https://i.pinimg.com/736x/2b/b1/7b/2bb17b109c648d320f11c36340b82fe3.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Dulzura envolvente que crea momentos mágicos y recuerdos memorables."
+        },
+        {
           "nombre": "Carolina Herrera Very Good Girl Glam",
           "precio": 5500,
           "imagen": "https://i.pinimg.com/736x/4f/05/66/4f0566c12d72e26f61e58dcc4449541d.jpg",
@@ -2479,6 +2611,29 @@
           },
           "descripcion": "Intensidad magnética que atrae miradas y genera conversaciones."
         },
+        {
+          "nombre": "Dolce&Gabbana LIGHT BLUE 100ML",
+          "precio": 5500,
+          "imagen": "https://i.pinimg.com/1200x/78/ac/ae/78acae585d265ee6b49e528d99f796eb.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Intensidad magnética que atrae miradas y genera conversaciones."
+        },
+         {
+          "nombre": "Dolce&Gabbana LIGHT BLUE 100ML WOMAN",
+          "precio": 5500,
+          "imagen": "https://i.pinimg.com/1200x/6d/1e/ac/6d1eac95e0ddb46489b8b115dd42dcde.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Intensidad magnética que atrae miradas y genera conversaciones."
+        },
+        
         {
           "nombre": "Dolce & Gabbana Queen Eau De Parfum",
           "precio": 5500,
