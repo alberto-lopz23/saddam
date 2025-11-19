@@ -1070,6 +1070,239 @@
           "descripcion": "Lujo accesible que no compromete calidad. Tu mejor inversión en estilo personal."
         }
       ],
+      "Jo Milano": [
+        {
+          "nombre": "Game of Spades Wildcard",
+          "precio": 3700,
+          "imagen": "https://i.pinimg.com/1200x/e1/0e/8f/e10e8fb1ec08c3bd2308b1a55621ea33.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Intensidad magnética que atrae miradas y genera conversaciones."
+        },
+        {
+          "nombre": "Game of Spades Rouge",
+          "precio": 4000,
+          "imagen": "https://i.pinimg.com/1200x/b8/2a/ad/b82aad65f4710a4e6570a5f8438a4d2d.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Un aroma hipnótico que fusiona tradición y modernidad en perfecta armonía."
+        },
+        {
+          "nombre": "Game of Spades Royale",
+          "precio": 3700,
+          "imagen": "https://i.pinimg.com/1200x/94/d6/3e/94d63ef33c09cda51979c213150854d6.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Pureza y delicadeza en una composición celestial."
+        },
+        {
+          "nombre": "Game of Spades Bonus",
+          "precio": 4000,
+          "imagen": "https://i.pinimg.com/1200x/7d/6e/a3/7d6ea334a21f0c8490530d164baf8f7e.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Pureza y delicadeza en una composición celestial."
+        },
+         {
+          "nombre": "Game of Spades BLIND-BID",
+          "precio": 3700,
+          "imagen": "https://i.pinimg.com/736x/44/89/4d/44894da3fbf620828618e09455bc7082.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Pureza y delicadeza en una composición celestial."
+        },
+        {
+          "nombre": "Game of Spades Jackpot",
+          "precio": 3700,
+          "imagen": "https://i.pinimg.com/1200x/dd/6d/cb/dd6dcb6f8bc07fba449456eced9927cf.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Pureza y delicadeza en una composición celestial."
+        },
+        {
+          "nombre": "Game of Spades ACE/Platinum",
+          "precio": 3700,
+          "imagen": "https://i.pinimg.com/1200x/75/8f/94/758f941a57c7c163cd255f58d3250af7.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Pureza y delicadeza en una composición celestial."
+        },
+        {
+          "nombre": "Game of Spades Rouge Parfum",
+          "precio": 3700,
+          "imagen": "https://i.pinimg.com/1200x/4b/6d/fd/4b6dfdb435e5efebe636850014afba36.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Flores en primavera embotelladas. Delicadeza que enamora."
+        },
+        {
+          "nombre": "Game of Spades Boston",
+          "precio": 3700,
+          "imagen": "https://i.pinimg.com/1200x/25/e6/7f/25e67f71aa2f270890648f2e144543b3.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Seduce sin palabras. Esta fragancia habla por ti con elegancia y distinción."
+        },
+        {
+          "nombre": "Game of Spades Moon",
+          "precio": 3700,
+          "imagen": "https://i.pinimg.com/1200x/8b/d0/20/8bd0203385873d31c104ee07d5f1bb80.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Romanticismo en su máxima expresión. Perfecta para conquistar y enamorar."
+        },
+        {
+          "nombre": "Game of Spades Wind",
+          "precio": 3500,
+          "imagen": "https://i.pinimg.com/736x/39/12/4d/39124db451e5db86eb9925ca110dd0e2.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Vitalidad tropical que te transporta a playas de ensueño."
+        },
+        {
+          "nombre": "Game of Spades King",
+          "precio": 3300,
+          "imagen": "https://i.pinimg.com/1200x/7f/19/3b/7f193bd5338016367e91821f052a5c16.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Seduce sin palabras. Esta fragancia habla por ti con elegancia y distinción."
+        },
+        {
+          "nombre": "Game of Spades Bid",
+          "precio": 3500,
+          "imagen": "https://i.pinimg.com/1200x/56/90/df/5690df5c94acefa8029855de286adcbe.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Seduce sin palabras. Esta fragancia habla por ti con elegancia y distinción."
+        },
+        {
+          "nombre": "Game of Spades NO LIMIT",
+          "precio": 4000,
+          "imagen": "https://i.pinimg.com/1200x/8f/16/ac/8f16ac949e6f6a5e49115e98d162a452.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Seduce sin palabras. Esta fragancia habla por ti con elegancia y distinción."
+        },
+        {
+          "nombre": "Game of Spades OPAL",
+          "precio": 4000,
+          "imagen": "https://i.pinimg.com/1200x/d1/7d/73/d17d73eebd3d561a7c4d990a74cba5ab.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Seduce sin palabras. Esta fragancia habla por ti con elegancia y distinción."
+        },
+        {
+          "nombre": "Game of Spades HIGH ROLLER",
+          "precio": 4000,
+          "imagen": "https://i.pinimg.com/1200x/fe/68/ef/fe68efe72b73f55295e7de9c3bd0df04.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Seduce sin palabras. Esta fragancia habla por ti con elegancia y distinción."
+        },
+        {
+          "nombre": "Game of Spades EMERALD",
+          "precio": 4000,
+          "imagen": "https://i.pinimg.com/736x/63/eb/d5/63ebd50aee5ae96199faae43cc29235a.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Seduce sin palabras. Esta fragancia habla por ti con elegancia y distinción."
+        },
+         {
+          "nombre": "Game of Spades DIAMOND",
+          "precio": 4000,
+          "imagen": "https://i.pinimg.com/1200x/ff/e2/0a/ffe20a047ec41a44a6d31207b47e76eb.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Seduce sin palabras. Esta fragancia habla por ti con elegancia y distinción."
+        },
+        {
+          "nombre": "Game of Spades FULL HOUSE",
+          "precio": 4000,
+          "imagen": "https://i.pinimg.com/1200x/fc/ff/cc/fcffccff75a7ad38baca4142e1dcdeef.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Seduce sin palabras. Esta fragancia habla por ti con elegancia y distinción."
+        },
+        {
+          "nombre": "Game of Spades QUEEN",
+          "precio": 3800,
+          "imagen": "https://i.pinimg.com/1200x/03/df/cc/03dfcc75ca5ecc53ea05e2f1fa39810f.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Seduce sin palabras. Esta fragancia habla por ti con elegancia y distinción."
+        },
+        {
+          "nombre": "Game of Spades Rouge Extracto",
+          "precio": 4000,
+          "imagen": "https://i.pinimg.com/736x/9f/52/34/9f5234d34b960c62a85c8005b050c1ee.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Lujo parisino al alcance de tu mano. Chic y sofisticado."
+        }
+      ],
       
     "disenador": {
       "victoriasecret": [
