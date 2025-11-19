@@ -12,8 +12,8 @@ header {
   align-items: center;
   text-align: center;
   padding: 10px 5px;
-  background-color: rgba(255, 255, 255, 0.95);
-  background-image: url("logo2.jpeg");
+  background-color: rgba(255, 255, 255, 0.98);
+  background-image: none;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -23,7 +23,9 @@ header {
   z-index: 100;
   backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  min-height: 80px;
+  min-height: 100px;
+  height: auto;
+  position: relative; /* Para posicionamiento absoluto del search */
 }
 
 .header-top {
@@ -44,29 +46,66 @@ header {
 .mobile-header-container {
   display: none;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   width: 100%;
-  padding: 0 5px;
+  padding: 0;
   gap: 10px;
+  position: absolute;
+  top: 50px;
+  left: 0;
+  z-index: 200;
+  padding-left: 15px;
 }
 
 .mobile-header-container h1 {
-  flex: 1;
+  display: none;
   text-align: center;
   margin: 0 10px;
   font-size: 18px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  color: #f48c8c;
+}
+
+.mobile-logo {
+  display: none;
 }
 
 .header-logo {
-  width: 40px;
-  height: 40px;
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid #f48c8c;
-  box-shadow: 0 2px 8px rgba(244, 140, 140, 0.3);
+  background: white;
+  border: 3px solid #f48c8c;
+  box-shadow: 0 4px 12px rgba(244, 140, 140, 0.4);
+  padding: 3px;
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+}
+
+.brand-name {
+  margin: 0;
+  color: #f48c8c;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-shadow: 1px 1px 2px rgba(244, 140, 140, 0.2);
+}
+
+.brand-slogan {
+  margin: 0;
+  color: #666;
+  font-size: 13px;
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: 0.3px;
 }
 
 h1 {
@@ -127,7 +166,7 @@ h1 {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 30px;
-  padding: 0 15px;
+  padding: 0 15px 100px 15px;
 }
 
 .card {
@@ -173,7 +212,7 @@ h1 {
 }
 
 .card .precio {
-  color: #f48c8c;
+  color: #060606;
   font-size: 16px;
   font-weight: bold;
   margin: 8px 0;
@@ -185,24 +224,67 @@ h1 {
   margin-bottom: 15px;
 }
 
+/* Contenedor de búsqueda con lupa expandible - esquina superior derecha */
 .search-container {
-  margin: 8px 0;
+  position: absolute;
+  top: 8px;
+  right: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  z-index: 200;
 }
 
-#searchInput {
-  padding: 8px 12px;
-  border: 1px solid #ddd;
-  border-radius: 18px;
-  width: 280px;
-  max-width: 90%;
-  font-size: 13px;
+.search-toggle-btn {
+  background: #141414;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: white;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  z-index: 2;
+}
+
+.search-toggle-btn:hover {
+  background: #676464;
+  transform: scale(1.05);
+}
+
+.search-input {
+  position: absolute;
+  right: 0;
+  padding: 10px 50px 10px 16px;
+  border: 2px solid #333;
+  border-radius: 25px;
+  width: 0;
+  opacity: 0;
+  font-size: 14px;
   outline: none;
-  transition: border-color 0.3s ease;
+  transition: all 0.4s ease;
+  background: white;
+  pointer-events: none;
 }
 
-#searchInput:focus {
-  border-color: #f48c8c;
-  box-shadow: 0 0 5px rgba(244, 140, 140, 0.3);
+.search-container.active .search-input {
+  width: 320px;
+  max-width: calc(100vw - 80px);
+  opacity: 1;
+  pointer-events: all;
+}
+
+.search-container.active .search-toggle-btn {
+  background: #5f5d5d;
+}
+
+.search-input:focus {
+  border-color: #4e4a4a;
+  box-shadow: 0 0 8px rgba(41, 40, 40, 0.4);
 }
 
 .whatsapp-btn {
@@ -231,7 +313,7 @@ h1 {
 /* Botón hamburguesa */
 .hamburger-menu {
   display: none;
-  background: #f48c8c;
+  background: #000000;
   border: none;
   border-radius: 8px;
   width: 40px;
@@ -246,7 +328,7 @@ h1 {
 }
 
 .hamburger-menu:hover {
-  background: #e67373;
+  background: #010101;
 }
 
 .hamburger-menu span {
@@ -298,7 +380,7 @@ h1 {
   justify-content: space-between;
   align-items: center;
   padding: 20px;
-  background: #f48c8c;
+  background: #000000;
   color: white;
 }
 
@@ -331,6 +413,9 @@ h1 {
 
 .mobile-menu-content {
   padding: 20px;
+  overflow-y: auto;
+  max-height: calc(100vh - 80px);
+  -webkit-overflow-scrolling: touch;
 }
 
 .mobile-filter-section {
@@ -342,7 +427,7 @@ h1 {
   color: #333;
   font-size: 16px;
   font-weight: 600;
-  border-bottom: 2px solid #f48c8c;
+  border-bottom: 2px solid #545353;
   padding-bottom: 8px;
 }
 
@@ -368,13 +453,13 @@ h1 {
 .mobile-filter-btn:hover,
 .mobile-subfilter-btn:hover {
   background: #f8f8f8;
-  border-color: #f48c8c;
+  border-color: #000000;
 }
 
 .mobile-filter-btn.active {
-  background: #f48c8c;
+  background: #000000;
   color: white;
-  border-color: #f48c8c;
+  border-color: #8d8a8a;
 }
 
 .mobile-subfilter-btn {
@@ -412,44 +497,54 @@ body.menu-open {
 
   /* Ajustar header */
   header {
-    padding: 20px 15px 12px 15px;
+    padding: 15px 0 12px 0;
+    width: 100%;
+    background-image: url("logo2.jpeg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
   }
 
   .header-top {
     margin-bottom: 8px;
+    width: 100%;
+    padding: 0;
   }
 
   .logo-title-container {
-    gap: 15px;
-    align-items: center;
-    justify-content: space-between;
+    display: none !important;
   }
 
-  .header-logo {
-    width: 32px;
-    height: 32px;
+  .mobile-logo {
+    display: none !important;
   }
 
-  header h1 {
-    font-size: 18px;
-    margin-bottom: 0;
+  .mobile-header-container h1 {
+    display: none !important;
   }
 
-  /* Ajustar búsqueda */
+  /* Ajustar búsqueda en móvil */
   .search-container {
-    margin: 6px 0 12px 0;
+    display: block;
+    right: 10px;
+    top: 80px;
   }
 
-  #searchInput {
-    width: 100%;
-    max-width: none;
-    padding: 12px 15px;
+  .search-toggle-btn {
+    width: 36px;
+    height: 36px;
+  }
+
+  .search-container.active .search-input {
+    width: 280px;
+    max-width: calc(100vw - 60px);
+    padding: 10px 45px 10px 14px;
     font-size: 16px; /* Evita zoom en iOS */
   }
 
   /* Ajustar galería */
   .container {
-    padding: 0 10px;
+    padding: 0 10px 120px 10px;
     gap: 20px;
     grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
   }
@@ -568,7 +663,462 @@ body.menu-open {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-/* versión móvil */
+/* ============ MODAL DE PERFUME ============ */
+.perfume-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.perfume-modal.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(5px);
+}
+
+.modal-content {
+  position: relative;
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+  border: 2px solid #444;
+  border-radius: 30px;
+  max-width: 400px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.1);
+  transform: scale(0.8);
+  transition: transform 0.3s ease;
+  padding: 30px;
+}
+
+.perfume-modal.active .modal-content {
+  transform: scale(1);
+}
+
+.modal-close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  font-size: 28px;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  line-height: 1;
+  font-weight: bold;
+}
+
+.modal-close:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: rotate(90deg);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.modal-image {
+  width: 100%;
+  border-radius: 20px;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 20px;
+  box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.modal-image img {
+  width: 100%;
+  height: 280px;
+  object-fit: contain;
+  border-radius: 15px;
+}
+
+.modal-info {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  text-align: center;
+}
+
+.modal-info h2 {
+  margin: 0;
+  font-size: 24px;
+  color: #ffffff;
+  font-weight: 700;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.modal-marca {
+  margin: 0;
+  font-size: 14px;
+  color: #cccccc;
+  font-weight: 500;
+}
+
+.modal-description,
+.modal-notes {
+  margin: 0;
+  font-size: 14px;
+  color: #e0e0e0;
+  line-height: 1.6;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.notes-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.note-item {
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  border-left: 3px solid rgba(255, 255, 255, 0.3);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.note-item strong {
+  color: #ffffff;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.modal-precio {
+  margin: 10px 0;
+  font-size: 28px;
+  font-weight: bold;
+  color: #ffffff;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.modal-info .whatsapp-btn {
+  margin-top: 10px;
+  padding: 12px 20px;
+  font-size: 16px;
+}
+
+/* Responsive modal */
+@media (max-width: 480px) {
+  .modal-content {
+    padding: 20px;
+    max-width: 95%;
+  }
+
+  .modal-image img {
+    height: 220px;
+  }
+
+  .modal-info h2 {
+    font-size: 20px;
+  }
+
+  .modal-precio {
+    font-size: 24px;
+  }
+}
+
+/* ============ PÁGINA DE DETALLE DEL PERFUME ============ */
+.perfume-detail-page {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+  z-index: 10000;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px 15px 120px 15px;
+  -webkit-overflow-scrolling: touch;
+  box-sizing: border-box;
+}
+
+.detail-back-btn {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  padding: 12px 20px;
+  border-radius: 25px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  z-index: 10001;
+  backdrop-filter: blur(10px);
+}
+
+.detail-back-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateX(-5px);
+}
+
+.detail-container {
+  max-width: 1200px;
+  margin: 80px auto 60px;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 60px;
+  align-items: start;
+  box-sizing: border-box;
+}
+
+.detail-image-section {
+  position: sticky;
+  top: 100px;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 30px;
+  border-radius: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  box-sizing: border-box;
+  max-width: 100%;
+}
+
+.detail-image-section img {
+  width: 100%;
+  height: auto;
+  max-height: 600px;
+  object-fit: contain;
+  border-radius: 15px;
+}
+
+.detail-info-section {
+  color: white;
+}
+
+.detail-header {
+  margin-bottom: 40px;
+}
+
+.detail-marca {
+  font-size: 16px;
+  color: #aaa;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin: 0 0 10px 0;
+  font-weight: 600;
+}
+
+.detail-nombre {
+  font-size: 42px;
+  color: white;
+  margin: 0 0 20px 0;
+  font-weight: 700;
+  line-height: 1.2;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.detail-precio {
+  font-size: 36px;
+  color: #ffffff;
+  font-weight: bold;
+  margin: 0;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.detail-description,
+.detail-notes-section {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  padding: 25px;
+  margin-bottom: 30px;
+}
+
+.detail-description h3,
+.detail-notes-section h3 {
+  margin: 0 0 15px 0;
+  font-size: 20px;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.detail-description p {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.8;
+  color: #e0e0e0;
+}
+
+.detail-note-item {
+  margin-bottom: 20px;
+  padding: 15px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  border-left: 4px solid rgba(255, 255, 255, 0.4);
+}
+
+.detail-note-item:last-child {
+  margin-bottom: 0;
+}
+
+.detail-note-item strong {
+  display: block;
+  font-size: 14px;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+  font-weight: 700;
+}
+
+.detail-note-item p {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.6;
+  color: #e0e0e0;
+}
+
+.detail-whatsapp-btn {
+  display: inline-block;
+  background: #25d366;
+  color: white;
+  padding: 18px 40px;
+  border-radius: 30px;
+  font-size: 18px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+  margin-top: 20px;
+}
+
+.detail-whatsapp-btn:hover {
+  background: #128c7e;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+}
+
+/* Responsive para página de detalle */
+@media (max-width: 768px) {
+  .perfume-detail-page {
+    padding: 10px 10px 150px 10px;
+  }
+
+  .detail-container {
+    grid-template-columns: 1fr;
+    gap: 25px;
+    margin: 70px auto 40px;
+    padding: 0;
+    width: 100%;
+  }
+
+  .detail-image-section {
+    position: relative;
+    top: 0;
+    padding: 15px;
+    margin: 0 5px;
+  }
+
+  .detail-image-section img {
+    max-height: 400px;
+  }
+
+  .detail-nombre {
+    font-size: 32px;
+  }
+
+  .detail-precio {
+    font-size: 28px;
+  }
+
+  .detail-back-btn {
+    padding: 10px 16px;
+    font-size: 13px;
+  }
+}
+@media (max-width: 480px) {
+  .perfume-detail-page {
+    padding: 10px 5px 180px 5px;
+  }
+
+  .detail-container {
+    margin: 60px auto 40px;
+    gap: 15px;
+    padding: 0;
+    width: 100%;
+  }
+
+  .detail-image-section {
+    padding: 10px;
+    margin: 0 2px;
+  }
+
+  .detail-info-section {
+    padding: 0 5px;
+  }
+
+  .detail-whatsapp-btn {
+    padding: 12px 20px;
+    font-size: 14px;
+    margin-top: 10px;
+  }
+  .detail-nombre {
+    font-size: 26px;
+  }
+
+  .detail-precio {
+    font-size: 24px;
+  }
+
+  .detail-description,
+  .detail-notes-section {
+    padding: 20px;
+  }
+
+  .detail-whatsapp-btn {
+    width: 80%;
+    text-align: center;
+    padding: 14px 25px;
+    font-size: 15px;
+    margin-top: 15px;
+  }
+} /* versión móvil */
 @media (max-width: 600px) {
   .header-logo-link {
     float: none;

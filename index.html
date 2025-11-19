@@ -164,10 +164,49 @@
             <span></span>
             <span></span>
           </button>
+          <img src="logo2.jpeg" alt="Logo" class="mobile-logo" />
+          <h1>PerfumParadiseRD</h1>
+        </div>
+
+        <!-- Buscador con lupa expandible (esquina superior derecha) -->
+        <div class="search-container" id="searchContainer">
+          <button
+            class="search-toggle-btn"
+            id="searchToggleBtn"
+            onclick="toggleSearch()"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="11" cy="11" r="8"></circle>
+              <path d="m21 21-4.35-4.35"></path>
+            </svg>
+          </button>
+          <input
+            type="text"
+            id="searchInput"
+            class="search-input"
+            placeholder="Buscar perfume..."
+            onkeyup="buscarPerfumes()"
+          />
         </div>
 
         <!-- Contenedor desktop vacío -->
-        <div class="logo-title-container"></div>
+        <div class="logo-title-container">
+          <img src="logo2.jpeg" alt="Logo" class="header-logo" />
+          <div class="brand-text">
+            <h1 class="brand-name">PerfumParadiseRD</h1>
+            <p class="brand-slogan">Fragancias de lujo a tu alcance</p>
+          </div>
+        </div>
       </div>
 
       <!-- Filtros desktop (ocultos en móvil) -->
@@ -191,41 +230,38 @@
 
       <!-- Subfiltros desktop -->
       <div class="subfilters desktop-subfilters" id="subfilters"></div>
-
-      <!-- Buscador -->
-      <div class="search-container">
-        <input
-          type="text"
-          id="searchInput"
-          placeholder="Buscar perfume..."
-          onkeyup="buscarPerfumes()"
-        />
-      </div>
     </header>
 
     <h1 style="text-align: center; margin: 20px 0">
       Perfumes de Alta Calidad en República Dominicana
     </h1>
 
-    <section class="container" id="galeria">
-      <img
-        src="${perfume.imagen}"
-        alt="Perfume ${perfume.nombre} de ${perfume.marca} - PerfumParadiseRD"
-      />
-    </section>
+    <section class="container" id="galeria"></section>
 
-    <footer
-      style="
-        text-align: center;
-        padding: 20px;
-        background-color: white;
-        box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.05);
-      "
-    >
-      <a href="https://wa.me/18091234567" class="whatsapp-btn"
-        >Contáctanos por WhatsApp</a
-      >
-    </footer>
+    <!-- Modal de detalle del perfume -->
+    <div class="perfume-modal" id="perfumeModal">
+      <div class="modal-overlay" onclick="closeModal()"></div>
+      <div class="modal-content">
+        <button class="modal-close" onclick="closeModal()">×</button>
+        <div class="modal-body">
+          <div class="modal-image">
+            <img id="modalImage" src="" alt="Perfume" />
+          </div>
+          <div class="modal-info">
+            <h2 id="modalNombre"></h2>
+            <p class="modal-marca" id="modalMarca"></p>
+            <p class="modal-description" id="modalDescription">
+              Descripción del perfume
+            </p>
+            <p class="modal-notes" id="modalNotes">Notas del perfume</p>
+            <p class="modal-precio" id="modalPrecio"></p>
+            <a href="#" id="modalWhatsapp" target="_blank" class="whatsapp-btn"
+              >Consultar por WhatsApp</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
 
     <script src="script.js"></script>
   </body>

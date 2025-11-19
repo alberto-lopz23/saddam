@@ -138,22 +138,186 @@ function mostrarPerfumes(lista) {
     card.className = "card";
 
     const precio = calcularPrecioFinal(perfume);
-    const mensaje = encodeURIComponent(
-      `Hola, estoy interesado/a en ${perfume.nombre} de ${perfume.marca}. ¿Me podrías dar más detalles?`
-    );
-    const whatsappLink = `https://wa.me/${NUMERO_WHATSAPP}?text=${mensaje}`;
 
     card.innerHTML = `
       <img src="${perfume.imagen}" alt="${perfume.nombre}" onerror="this.src='https://placehold.co/400x500?text=Perfume'">
       <h3>${perfume.nombre}</h3>
       <p class="marca">${perfume.marca}</p>
       <p class="precio">${precio}</p>
-      <a href="${whatsappLink}" target="_blank" class="whatsapp-btn">Consultar por WhatsApp</a>
     `;
+
+    // Hacer la card clickeable para abrir página de detalle
+    card.addEventListener("click", () => mostrarPaginaPerfume(perfume, precio));
 
     galeria.appendChild(card);
     setTimeout(() => card.classList.add("is-visible"), index * 50);
   });
+}
+
+// Mostrar página completa del perfume
+function mostrarPaginaPerfume(perfume, precio) {
+  // Guardar estado actual
+  sessionStorage.setItem("perfumeActual", JSON.stringify(perfume));
+  sessionStorage.setItem("precioActual", precio);
+
+  // Ocultar la galería y header principal
+  document.getElementById("galeria").style.display = "none";
+  document.querySelector("header").style.display = "none";
+  const h1Element = document.querySelector("h1");
+  if (h1Element) h1Element.style.display = "none";
+
+  // Crear o mostrar página de detalle
+  let detallePage = document.getElementById("perfumeDetailPage");
+  if (!detallePage) {
+    detallePage = document.createElement("div");
+    detallePage.id = "perfumeDetailPage";
+    detallePage.className = "perfume-detail-page";
+    document.body.appendChild(detallePage);
+  }
+
+  // Construir HTML de la página
+  const mensaje = encodeURIComponent(
+    `Hola, estoy interesado/a en ${perfume.nombre} de ${perfume.marca}. ¿Me podrías dar más detalles?`
+  );
+  const whatsappLink = `https://wa.me/${NUMERO_WHATSAPP}?text=${mensaje}`;
+
+  let notasHTML = "";
+  if (perfume.notas && typeof perfume.notas === "object") {
+    notasHTML = `
+      <div class="detail-notes-section">
+        <h3>🌸 Notas Olfativas</h3>
+        <div class="detail-note-item">
+          <strong>Notas de Salida</strong>
+          <p>${perfume.notas.salida || "N/A"}</p>
+        </div>
+        <div class="detail-note-item">
+          <strong>Notas de Corazón</strong>
+          <p>${perfume.notas.corazon || "N/A"}</p>
+        </div>
+        <div class="detail-note-item">
+          <strong>Notas de Fondo</strong>
+          <p>${perfume.notas.fondo || "N/A"}</p>
+        </div>
+      </div>
+    `;
+  } else {
+    notasHTML = `<p class="detail-notes-fallback">${
+      perfume.notas || "Consulta notas disponibles"
+    }</p>`;
+  }
+
+  detallePage.innerHTML = `
+    <button class="detail-back-btn" onclick="volverACatalogo()">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M19 12H5M12 19l-7-7 7-7"/>
+      </svg>
+      Volver al Catálogo
+    </button>
+    
+    <div class="detail-container">
+      <div class="detail-image-section">
+        <img src="${
+          perfume.imagen || "https://placehold.co/400x500?text=Perfume"
+        }" alt="${
+    perfume.nombre
+  }" onerror="this.src='https://placehold.co/400x500?text=Perfume'">
+      </div>
+      
+      <div class="detail-info-section">
+        <div class="detail-header">
+          <p class="detail-marca">${perfume.marca}</p>
+          <h1 class="detail-nombre">${perfume.nombre}</h1>
+          <p class="detail-precio">${precio}</p>
+        </div>
+        
+        <div class="detail-description">
+          <h3>Descripción</h3>
+          <p>${
+            perfume.descripcion ||
+            "Fragancia de alta calidad con una composición única y sofisticada."
+          }</p>
+        </div>
+        
+        ${notasHTML}
+        
+        <a href="${whatsappLink}" target="_blank" class="detail-whatsapp-btn">
+          📞 Consultar por WhatsApp
+        </a>
+      </div>
+    </div>
+  `;
+
+  detallePage.style.display = "block";
+  window.scrollTo(0, 0);
+}
+
+// Volver al catálogo
+function volverACatalogo() {
+  const detallePage = document.getElementById("perfumeDetailPage");
+  if (detallePage) {
+    detallePage.style.display = "none";
+  }
+
+  // Restaurar elementos principales
+  document.getElementById("galeria").style.display = "grid";
+  document.querySelector("header").style.display = "flex";
+  const h1Element = document.querySelector("h1");
+  if (h1Element) h1Element.style.display = "block";
+
+  window.scrollTo(0, 0);
+}
+
+// FUNCIÓN OBSOLETA - mantener por compatibilidad pero ya no se usa
+function openModal(perfume, precio) {
+  const modal = document.getElementById("perfumeModal");
+  const mensaje = encodeURIComponent(
+    `Hola, estoy interesado/a en ${perfume.nombre} de ${perfume.marca}. ¿Me podrías dar más detalles?`
+  );
+  const whatsappLink = `https://wa.me/${NUMERO_WHATSAPP}?text=${mensaje}`;
+
+  // Rellenar el modal con la información
+  document.getElementById("modalImage").src =
+    perfume.imagen || "https://placehold.co/400x500?text=Perfume";
+  document.getElementById("modalNombre").textContent = perfume.nombre;
+  document.getElementById("modalMarca").textContent = perfume.marca;
+  document.getElementById("modalDescription").textContent =
+    perfume.descripcion || "Fragancia de alta calidad";
+
+  // Formatear notas de perfume con estructura bonita
+  const notesElement = document.getElementById("modalNotes");
+  if (perfume.notas && typeof perfume.notas === "object") {
+    notesElement.innerHTML = `
+      <div class="notes-section">
+        <div class="note-item">
+          <strong>Notas de Salida:</strong><br>${perfume.notas.salida || "N/A"}
+        </div>
+        <div class="note-item">
+          <strong>Notas de Corazón:</strong><br>${
+            perfume.notas.corazon || "N/A"
+          }
+        </div>
+        <div class="note-item">
+          <strong>Notas de Fondo:</strong><br>${perfume.notas.fondo || "N/A"}
+        </div>
+      </div>
+    `;
+  } else {
+    notesElement.textContent = perfume.notas || "Consulta notas disponibles";
+  }
+
+  document.getElementById("modalPrecio").textContent = precio;
+  document.getElementById("modalWhatsapp").href = whatsappLink;
+
+  // Mostrar modal
+  modal.classList.add("active");
+  document.body.style.overflow = "hidden"; // Prevenir scroll
+}
+
+// Cerrar modal
+function closeModal() {
+  const modal = document.getElementById("perfumeModal");
+  modal.classList.remove("active");
+  document.body.style.overflow = ""; // Restaurar scroll
 }
 
 // Filtrar por categoría principal
@@ -279,6 +443,37 @@ function buscarPerfumes() {
 
   mostrarPerfumes(resultados);
 }
+
+// Toggle del buscador expandible
+function toggleSearch() {
+  const container = document.getElementById("searchContainer");
+  const input = document.getElementById("searchInput");
+
+  container.classList.toggle("active");
+
+  if (container.classList.contains("active")) {
+    // Dar foco al input cuando se expande
+    setTimeout(() => input.focus(), 100);
+  } else {
+    // Limpiar búsqueda al cerrar si está vacío
+    if (input.value.trim() === "") {
+      input.value = "";
+      buscarPerfumes();
+    }
+  }
+}
+
+// Cerrar búsqueda al hacer clic fuera
+document.addEventListener("click", function (e) {
+  const container = document.getElementById("searchContainer");
+  const input = document.getElementById("searchInput");
+
+  if (container && !container.contains(e.target)) {
+    if (input.value.trim() === "") {
+      container.classList.remove("active");
+    }
+  }
+});
 
 // Inicializar cuando carga la página
 document.addEventListener("DOMContentLoaded", cargarCatalogo);
