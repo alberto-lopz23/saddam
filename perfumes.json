@@ -2626,7 +2626,29 @@
           "descripcion": "Despierta admiración dondequiera que vayas con esta composición magistral."
         },
         {
-          "nombre": "VIP 212 Sexy MEN EDT",
+          "nombre": "VIP 212 EDT MEN",
+          "precio": 5500,
+          "imagen": "https://i.pinimg.com/1200x/e9/79/55/e97955ca9d4fb90f0c94d506ef588f01.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Despierta admiración dondequiera que vayas con esta composición magistral."
+        },
+         {
+          "nombre": "212 MEN EDT",
+          "precio": 5500,
+          "imagen": "https://i.pinimg.com/1200x/40/c6/a4/40c6a49d807ce6efe41efa23ff6ba6e1.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Despierta admiración dondequiera que vayas con esta composición magistral."
+        },
+        {
+          "nombre": "212 Sexy MEN EDT",
           "precio": 5500,
           "imagen": "https://i.pinimg.com/736x/e2/21/b9/e221b992f5704b268fa4daa0b702ccd8.jpg",
           "notas": {
