@@ -1070,7 +1070,7 @@
           "descripcion": "Lujo accesible que no compromete calidad. Tu mejor inversión en estilo personal."
         }
       ],
-      "Jo Milano": [
+      "JoMilano": [
         {
           "nombre": "Game of Spades Wildcard",
           "precio": 3700,
@@ -1303,6 +1303,7 @@
           "descripcion": "Lujo parisino al alcance de tu mano. Chic y sofisticado."
         }
       ],
+    
     "disenador": {
       "victoriasecret": [
         {
