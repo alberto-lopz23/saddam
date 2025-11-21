@@ -1575,7 +1575,7 @@
       "chanel": [
       {
           "nombre": "Bleu de Chanel EDP",
-          "precio": 7500,
+          "precio": 7800,
           "imagen": "https://i.pinimg.com/736x/d3/d8/8b/d3d88b0eb22490ebaff572e631280b52.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -1735,7 +1735,7 @@
       "armani": [
         {
           "nombre": "Stronger With You Intensely 100ML/50ML",
-          "precio": 6000,
+          "precio": 6500,
           "imagen": "https://i.pinimg.com/1200x/76/f7/dc/76f7dcef973fd72e15efd66c1250ba4c.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -1746,7 +1746,7 @@
         },
         {
           "nombre": "Stronger With You",
-          "precio": 4500,
+          "precio": 5000,
           "imagen": "https://i.pinimg.com/736x/a1/5c/eb/a15cebacf5a6bd349ef86911d306c334.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -1768,7 +1768,7 @@
         },
         {
           "nombre": "My Way Refill",
-          "precio": 6000,
+          "precio": 6500,
           "imagen": "https://i.pinimg.com/1200x/a5/7b/19/a57b1921d093e0797b52e7975f211b4d.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -1779,7 +1779,7 @@
         },
         {
           "nombre": "EMPORIO ARMANI Acqua Di Gió Profondo",
-          "precio": 5000,
+          "precio": 7800,
           "imagen": "https://i.pinimg.com/736x/04/e1/c8/04e1c8ed80a97b4f8afa8fe45bcaa4f0.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -1790,7 +1790,7 @@
         },
         {
           "nombre": "EMPORIO ARMANI Acqua Di Gió EDT",
-          "precio": 4500,
+          "precio": 5000,
           "imagen": "https://i.pinimg.com/736x/1b/71/f9/1b71f9c3dd9d9820beb4b875b92f3764.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -1801,7 +1801,7 @@
         },
         {
           "nombre": "EMPORIO ARMANI Acqua Di Gió PARFUM",
-          "precio": 5500,
+          "precio": 6000,
           "imagen": "https://i.pinimg.com/736x/b3/54/f0/b354f05f734432e4c8ddc5abe4c514a5.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -1814,7 +1814,7 @@
       "azzaro": [
         {
           "nombre": "Azzaro THA MOST WANTED Parfum",
-          "precio": 4500,
+          "precio": 5500,
           "imagen": "https://i.pinimg.com/736x/51/0a/cd/510acd2d06d402f5060df446cd806400.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -1825,7 +1825,7 @@
         },
         {
           "nombre": "Azzaro  THE MOST WANTED EDT INTENSE",
-          "precio": 5500,
+          "precio": 5000,
           "imagen": "https://i.pinimg.com/1200x/39/94/78/399478f64511c21cdb09bf7c8cd20c26.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -1836,7 +1836,7 @@
         },
         {
           "nombre": "Azzaro wanted EDP",
-          "precio": 3500,
+          "precio": 5000,
           "imagen": "https://i.pinimg.com/1200x/22/33/47/22334732b00fc8ae4d59758914692235.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -1847,7 +1847,7 @@
         },
         {
           "nombre": "Azzaro Wanted 100ML",
-          "precio": 4000,
+          "precio": 5000,
           "imagen": "https://i.pinimg.com/1200x/07/68/1a/07681ac1c631f655219d192d9134390d.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -1858,7 +1858,7 @@
         },
         {
           "nombre": "Azzaro the most wanted edp intense",
-          "precio": 4500,
+          "precio": 5500,
           "imagen": "https://i.pinimg.com/736x/65/5b/b5/655bb558c6c2d1b2816b6ccc906a26f5.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -1869,7 +1869,7 @@
         },
         {
           "nombre": "Azzaro Men Wanted EDT 100ML",
-          "precio": 3500,
+          "precio": 4500,
           "imagen": "https://i.pinimg.com/1200x/c0/35/23/c035232b1264fe2dae8b7ea39792a34c.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -1882,7 +1882,7 @@
       "Yves saint Laurent": [
         {
           "nombre": "Y EDP 100ML",
-          "precio": 5500,
+          "precio": 7500,
           "imagen": "https://i.pinimg.com/736x/5e/2e/ce/5e2ece82062dca0047d0f91f20b53ec0.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -1893,7 +1893,7 @@
         },
         {
           "nombre": "Yves Saint Laurent Libre Intense Eau de Parfum",
-          "precio": 6000,
+          "precio": 7500,
           "imagen": "https://i.pinimg.com/1200x/49/2d/50/492d508ab322b4eb60fe4c08654c6180.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -1904,7 +1904,7 @@
         },
         {
           "nombre": "Yves Saint Laurent Libre EDP",
-          "precio": 5500,
+          "precio": 7500,
           "imagen": "https://i.pinimg.com/736x/ab/32/e1/ab32e1f1f68682c52ca7c6bebeea0083.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -1915,7 +1915,7 @@
         },
         {
           "nombre": "Yves Saint Laurent Libre EDT",
-          "precio": 5000,
+          "precio": 6500,
           "imagen": "https://i.pinimg.com/736x/32/bf/1c/32bf1cb8bac6e6e8a040c2d35641ef3b.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -1926,7 +1926,7 @@
         },
         {
           "nombre": "Yves Saint Laurent La Nuit De L'Homme EDT",
-          "precio": 5000,
+          "precio": 5500,
           "imagen": "https://i.pinimg.com/1200x/93/20/41/932041463aa97ff7358a9344f77ef3bd.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -1948,7 +1948,7 @@
         },
         {
           "nombre": "Yves Saint Laurent La Nuit De L'Homme LE PARFUM",
-          "precio": 6000,
+          "precio": 6500,
           "imagen": "https://i.pinimg.com/736x/a9/a5/e4/a9a5e42c311db3cb74dc06c5da447368.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -1959,7 +1959,7 @@
         },
         {
           "nombre": "Yves Saint Laurent black opium edp glitter",
-          "precio": 5500,
+          "precio": 7500,
           "imagen": "https://i.pinimg.com/1200x/a6/a8/6d/a6a86d0bc7fd2a169aaec11545842e0e.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -1970,7 +1970,7 @@
         },
         {
           "nombre": "Yves Saint Laurent Ysl Myslf Eau de Parfum",
-          "precio": 5500,
+          "precio": 5800,
           "imagen": "https://i.pinimg.com/736x/d8/4f/ae/d84faeb03981274e83fd38f914ae153d.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -1981,7 +1981,7 @@
         },
         {
           "nombre": "Yves Saint Laurent Ysl Myslf Absolu",
-          "precio": 6000,
+          "precio": 7800,
           "imagen": "https://i.pinimg.com/736x/ba/a0/2d/baa02dfb4f3717da619c16bfe104d072.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -1992,7 +1992,7 @@
         },
         {
           "nombre": "Yves Saint Laurent Y EDT",
-          "precio": 3500,
+          "precio": 5500,
           "imagen": "https://i.pinimg.com/736x/e4/4c/82/e44c824f16b5d7156fca5ff049fafac1.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -2003,7 +2003,7 @@
         },
         {
           "nombre": "Yves Saint Laurent Y le parfum",
-          "precio": 4500,
+          "precio": 5500,
           "imagen": "https://i.pinimg.com/736x/12/39/94/12399446ea3d4ddfda6fbc9f4d1d8afa.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -2014,7 +2014,7 @@
         },
         {
           "nombre": "Black Opium",
-          "precio": 5000,
+          "precio": 7500,
           "imagen": "https://i.pinimg.com/736x/f9/de/2a/f9de2a2835268b6c7d4ff9f1e4386616.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -2027,7 +2027,7 @@
       "lancome": [
         {
           "nombre": "La Vie est Belle",
-          "precio": 6000,
+          "precio": 6500,
           "imagen": "https://i.pinimg.com/1200x/ca/1b/96/ca1b963d66716ac15eb59f59dd3ffca8.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -2040,7 +2040,7 @@
       "jeanPaulGaultier": [
         {
           "nombre": "Ultra Male 75ML/125ML",
-          "precio": 3500,
+          "precio": 5500,
           "imagen": "https://i.pinimg.com/1200x/e9/c1/ed/e9c1ed37cd5020e988a7197a09d409c6.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -2051,7 +2051,7 @@
         },
         {
           "nombre": "Le Belle 125ML",
-          "precio": 5000,
+          "precio": 6500,
           "imagen": "https://i.pinimg.com/1200x/f8/50/99/f85099c8a94326a5c978e5f89eda0255.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -2062,7 +2062,7 @@
         },
         {
           "nombre": "Le MALE 75ML/125ML",
-          "precio": 5000,
+          "precio": 5500,
           "imagen": "https://i.pinimg.com/736x/4a/95/24/4a95248a6179416bef796704dac9ecb5.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -2073,7 +2073,7 @@
         },
         {
           "nombre": "Scandal Intense 100ML",
-          "precio": 5000,
+          "precio": 7000,
           "imagen": "https://i.pinimg.com/1200x/96/1d/40/961d4058db1024a40275d3ca23b28123.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -2084,7 +2084,7 @@
         },
         {
           "nombre": "Scandal absolu 100ML",
-          "precio": 5000,
+          "precio": 7000,
           "imagen": "https://i.pinimg.com/736x/61/0d/bd/610dbda0e043b55d637c83cce22ec9d8.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -2095,7 +2095,7 @@
         },
         {
           "nombre": "Scandal WOMAN 100ML",
-          "precio": 5000,
+          "precio": 6000,
           "imagen": "https://i.pinimg.com/1200x/8e/0d/6a/8e0d6a14559a97a193dde404583a9bf6.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -2106,7 +2106,7 @@
         },
         {
           "nombre": "Scandal WOMAN EDP 100ML",
-          "precio": 5000,
+          "precio": 6500,
           "imagen": "https://i.pinimg.com/736x/6a/d0/a8/6ad0a868ad1c25c2780435ec9370b602.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -2128,7 +2128,7 @@
         },
         {
           "nombre": "le belle Paradise Garden 125ML",
-          "precio": 7000,
+          "precio": 7500,
           "imagen": "https://i.pinimg.com/1200x/f5/17/5d/f5175d9c6cf9153bf1df2bd89a4bbd3a.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -2139,7 +2139,7 @@
         },
         {
           "nombre": "LE BEAU Paradise Garden 125ML",
-          "precio": 7000,
+          "precio": 7500,
           "imagen": "https://i.pinimg.com/736x/e9/8d/11/e98d1107d684033bba731fadf5dae8f6.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -2161,7 +2161,7 @@
         },
         {
           "nombre": "Le Beau le Parfum 125ML",
-          "precio": 5500,
+          "precio": 6500,
           "imagen": "https://i.pinimg.com/1200x/41/a4/e3/41a4e3ffb43d7081f251d2b5d44be9f0.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -2172,7 +2172,7 @@
         },
         {
           "nombre": "Le Beau EDT 125ML",
-          "precio": 5500,
+          "precio": 6000,
           "imagen": "https://i.pinimg.com/1200x/bf/2a/2a/bf2a2adb00ccf797f4cc55acd7a85ff0.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -2183,7 +2183,7 @@
         },
         {
           "nombre": "Le Male Elixir 125ML",
-          "precio": 7000,
+          "precio": 7500,
           "imagen": "https://i.pinimg.com/1200x/80/f3/b5/80f3b5a32325b7c7bb8c53209745b5fd.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -2205,7 +2205,7 @@
         },
         {
           "nombre": "Scandal 100ML/50ML",
-          "precio": 6500,
+          "precio": 6000,
           "imagen": "https://i.pinimg.com/736x/d5/98/59/d59859b23ace3579cae062a7cb4edc28.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -2229,7 +2229,7 @@
         },
         {
           "nombre": "Phantom EDT 100ML",
-          "precio": 3500,
+          "precio": 5000,
           "imagen": "https://i.pinimg.com/1200x/8c/90/ec/8c90ecebd8e18cc348940fe7be45afdd.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -2240,7 +2240,7 @@
         },
         {
           "nombre": "Phantom Parfum 100ML",
-          "precio": 3500,
+          "precio": 5800,
           "imagen": "https://i.pinimg.com/1200x/75/24/5c/75245c1703476f71ecb01cdaa7f1852c.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -2251,7 +2251,7 @@
         },
         {
           "nombre": "Phantom Intense 100ML",
-          "precio": 3500,
+          "precio": 6000,
           "imagen": "https://i.pinimg.com/1200x/b2/97/94/b297947c2ade09c10aeb7e255ecfaa34.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -2262,7 +2262,7 @@
         },
         {
           "nombre": "Olympea Floral",
-          "precio": 4000,
+          "precio": 5000,
           "imagen": "https://i.pinimg.com/1200x/7f/89/75/7f8975c3432544d1cd5b31efcd5d4fbc.jpg",
           "notas": {
             "salida": "🍋 Bergamota, 🍊 Mandarina, 🌸 Neroli",
@@ -2273,7 +2273,7 @@
         },
         {
           "nombre": "1 Million Elixir",
-          "precio": 4300,
+          "precio": 6000,
           "imagen": "https://i.pinimg.com/1200x/3b/a3/14/3ba314a8897afa88c1344082472fac96.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -2284,7 +2284,7 @@
         },
         {
           "nombre": "Lady Million Royal",
-          "precio": 4000,
+          "precio": 5000,
           "imagen": "https://i.pinimg.com/736x/46/c2/bb/46c2bb5c9a47537243304f4f7615f46b.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -2295,7 +2295,7 @@
         },
         {
           "nombre": "Fame EDP",
-          "precio": 3900,
+          "precio": 6000,
           "imagen": "https://i.pinimg.com/736x/68/ff/48/68ff488c73899474345f7b9b078ac0bc.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -2306,7 +2306,7 @@
         },
         {
           "nombre": "INVICTUS VICTORY ELIXIR 100ML",
-          "precio": 4000,
+          "precio": 5500,
           "imagen": "https://i.pinimg.com/1200x/69/b5/f4/69b5f4f2d24a57791ee203e42f18260a.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -2317,7 +2317,7 @@
         },
         {
           "nombre": "INVICTUS VICTORY EDP 100ML",
-          "precio": 4000,
+          "precio": 5000,
           "imagen": "https://i.pinimg.com/736x/5a/8e/bd/5a8ebd82c2f54cca8d480467673c1ee9.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -2328,7 +2328,7 @@
         },
         {
           "nombre": "INVICTUS VICTORY PLATINIUM 100ML",
-          "precio": 4000,
+          "precio": 5800,
           "imagen": "https://i.pinimg.com/1200x/8e/9e/f8/8e9ef829c1d264fed4f3e5c459f494ed.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -2339,7 +2339,7 @@
         },
         {
           "nombre": "Paco Rabanne One Million PARFUM",
-          "precio": 4500,
+          "precio": 5500,
           "imagen": "https://i.pinimg.com/736x/17/82/31/1782318dd306488438e5f90cc26c2011.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -2350,7 +2350,7 @@
         },
         {
           "nombre": "paco rabanne feme intense",
-          "precio": 4000,
+          "precio": 5800,
           "imagen": "https://i.pinimg.com/1200x/e3/d0/6c/e3d06c8fe883e69b01be7e2b713512e6.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -2361,7 +2361,7 @@
         },
         {
           "nombre": "paco rabanne feme parfum",
-          "precio": 4000,
+          "precio": 5500,
           "imagen": "https://i.pinimg.com/736x/48/6e/e3/486ee327c084f772327216f9461dd00b.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -2383,7 +2383,7 @@
         },
         {
           "nombre": "Paco Rabanne Olympéa Flora Edp",
-          "precio": 4000,
+          "precio": 5000,
           "imagen": "https://i.pinimg.com/736x/74/42/70/74427072bc0ba7f6dda3dd0269fc9d29.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -2442,7 +2442,7 @@
       "moschino": [
         {
           "nombre": "Toy Boy Men",
-          "precio": 3700,
+          "precio": 3800,
           "imagen": "https://i.pinimg.com/1200x/06/83/3f/06833fbc96cf38aae8de56af5d201f9f.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -2464,7 +2464,7 @@
         },
         {
           "nombre": "Toy 2 Pearl EDP 100ML",
-          "precio": 3000,
+          "precio": 3500,
           "imagen": "https://i.pinimg.com/1200x/99/0e/0a/990e0a1d8715078f39c5d5298ee40de7.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -2475,7 +2475,7 @@
         },
         {
           "nombre": "Toy Bubble",
-          "precio": 3100,
+          "precio": 3200,
           "imagen": "https://i.pinimg.com/736x/63/24/6d/63246d1b693cbf42ddeef2ea2378f801.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -2499,7 +2499,7 @@
       "arianaGrande": [
         {
           "nombre": "Next",
-          "precio": 3000,
+          "precio": 3500,
           "imagen": "https://i.pinimg.com/736x/b3/aa/a9/b3aaa965af8403492077ddca587f655f.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -2521,7 +2521,7 @@
         },
         {
           "nombre": "Cloud 2.0",
-          "precio": 3300,
+          "precio": 3800,
           "imagen": "https://i.pinimg.com/1200x/a7/7a/2f/a77a2fbb147a969bfe388ed71596dfff.jpg",
           "notas": {
             "salida": "🍋 Bergamota, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -2692,7 +2692,7 @@
       "dior": [
         {
           "nombre": "Dior HOMME intense",
-          "precio": 6000,
+          "precio": 7000,
           "imagen": "https://i.pinimg.com/736x/72/ee/c7/72eec787e0daba943aa8a1b4683389ab.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -2703,7 +2703,7 @@
         },
         {
           "nombre": "Dior sauvage EDT",
-          "precio": 5500,
+          "precio": 7000,
           "imagen": "https://i.pinimg.com/736x/9d/58/0f/9d580f1f0bbbedd276fc647e78baf6ec.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -2714,7 +2714,7 @@
         },
         {
           "nombre": "Dior sauvage EDP",
-          "precio": 6000,
+          "precio": 7500,
           "imagen": "https://i.pinimg.com/736x/86/c4/0b/86c40bf4aaf12467f95cc8ab89632684.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -2727,7 +2727,7 @@
       "chanel": [
         {
           "nombre": "Bleu de Chanel EDP",
-          "precio": 6500,
+          "precio": 7500,
           "imagen": "https://i.pinimg.com/736x/d3/d8/8b/d3d88b0eb22490ebaff572e631280b52.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -2740,7 +2740,7 @@
       "tomFord": [
         {
           "nombre": "Tom Ford Ombre Leather EDP",
-          "precio": 7000,
+          "precio": 8800,
           "imagen": "https://i.pinimg.com/736x/ab/b6/15/abb615c6e0007cff4966849dd217e06a.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -3010,7 +3010,7 @@
       "valentino": [
         {
           "nombre": "Valentino Uomo Born In Roma Intense",
-          "precio": 5500,
+          "precio": 6500,
           "imagen": "https://i.pinimg.com/1200x/a9/b9/f1/a9b9f1dd170285e6b65e58e69e349bbb.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -3021,7 +3021,7 @@
         },
         {
           "nombre": "Valentino Uomo Born In Roma Yellow Dream",
-          "precio": 5000,
+          "precio": 6500,
           "imagen": "https://i.pinimg.com/1200x/18/2c/20/182c20e1022e2b8cf37b72c29881a90b.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -3032,7 +3032,7 @@
         },
         {
           "nombre": "Valentino Uomo Born In Roma EDT",
-          "precio": 4500,
+          "precio": 6500,
           "imagen": "https://i.pinimg.com/1200x/77/64/c5/7764c592580ad0b3665dea6519683744.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -3043,7 +3043,7 @@
         },
         {
           "nombre": "Valentino Uomo Born In Roma Green Stravaganza",
-          "precio": 5000,
+          "precio": 6500,
           "imagen": "https://i.pinimg.com/1200x/aa/68/54/aa685414ebe6e9921816c6edcb96ef66.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -3054,7 +3054,7 @@
         },
         {
           "nombre": "Valentino Uomo Born In Roma Coral Fantasy",
-          "precio": 5000,
+          "precio": 6500,
           "imagen": "https://i.pinimg.com/736x/e7/5d/ba/e75dba002416a7ad748ca542f25ab376.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -3065,7 +3065,7 @@
         },
         {
           "nombre": "Valentino Uomo EDT By Valentino",
-          "precio": 4500,
+          "precio": 6000,
           "imagen": "https://i.pinimg.com/1200x/41/f0/4e/41f04e19f7a2f00300279ac31067d7e9.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -3076,7 +3076,7 @@
         },
         {
           "nombre": "Valentino Donna Born In Roma EDT",
-          "precio": 4500,
+          "precio": 6500,
           "imagen": "https://i.pinimg.com/1200x/75/b1/08/75b1081a5526ac313ad3988a17c1b397.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -3087,7 +3087,7 @@
         },
         {
           "nombre": "Valentino Donna Born In Roma Yellow Dreams",
-          "precio": 4500,
+          "precio": 7000,
           "imagen": "https://i.pinimg.com/1200x/bc/18/60/bc18600ad691c55e0e7de4e70db7010a.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -3098,7 +3098,7 @@
         },
         {
           "nombre": "Valentino Donna Born In Roma Donna Green Stravaganza",
-          "precio": 5000,
+          "precio": 7000,
           "imagen": "https://i.pinimg.com/1200x/d4/38/b6/d438b6e2aca69774477120839d1c0734.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -3109,7 +3109,7 @@
         },
         {
           "nombre": "Valentino Donna Born In Roma Donna Coral Fantasy",
-          "precio": 5000,
+          "precio": 7000,
           "imagen": "https://i.pinimg.com/736x/d1/7f/2b/d17f2bd652f173c48825b5c15f69ace4.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -3123,7 +3123,7 @@
       "bvlgari": [
         {
           "nombre": "Bvlgari Man In Black",
-          "precio": 5000,
+          "precio": 5500,
           "imagen": "https://i.pinimg.com/1200x/a1/d3/66/a1d36677480772d14b66a415a1a1b676.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -3149,7 +3149,7 @@
       "dolceGabbana": [
         {
           "nombre": "Dolce&Gabbana KING EDP",
-          "precio": 5500,
+          "precio": 4500,
           "imagen": "https://i.pinimg.com/1200x/69/59/69/695969ed91a895a6c0d9a21c3d6089f8.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -3160,7 +3160,7 @@
         },
         {
           "nombre": "Dolce&Gabbana KING EDT",
-          "precio": 5000,
+          "precio": 4000,
           "imagen": "https://i.pinimg.com/736x/78/c2/f3/78c2f3f1f986c0dc4a056e11cdfef8d6.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -3204,7 +3204,7 @@
         },
         {
           "nombre": "Dolce&Gabbana LIGHT BLUE 100ML",
-          "precio": 5500,
+          "precio": 4500,
           "imagen": "https://i.pinimg.com/1200x/78/ac/ae/78acae585d265ee6b49e528d99f796eb.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -3215,7 +3215,7 @@
         },
          {
           "nombre": "Dolce&Gabbana LIGHT BLUE 100ML WOMAN",
-          "precio": 5500,
+          "precio": 4000,
           "imagen": "https://i.pinimg.com/1200x/6d/1e/ac/6d1eac95e0ddb46489b8b115dd42dcde.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -3227,7 +3227,7 @@
         
         {
           "nombre": "Dolce & Gabbana Queen Eau De Parfum",
-          "precio": 5500,
+          "precio": 4500,
           "imagen": "https://i.pinimg.com/736x/f1/f5/e0/f1f5e076ad9357f6f4362d8ee8140743.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -3240,7 +3240,7 @@
       "prada": [
         {
           "nombre": "Prada Paradoxe EDP",
-          "precio": 6000,
+          "precio": 7500,
           "imagen": "https://i.pinimg.com/1200x/27/26/d0/2726d059bc9dffb3e7b8d35de64850fb.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -3251,7 +3251,7 @@
         },
         {
           "nombre": "Prada luna rossa black",
-          "precio": 5000,
+          "precio": 6500,
           "imagen": "https://i.pinimg.com/736x/e3/8b/54/e38b5439673de1cc97f4d101178a5b26.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -3356,7 +3356,7 @@
       "isseyMiyake": [
         {
           "nombre": "Issey Miyake L'Eau d'Issey",
-          "precio": 4500,
+          "precio": 3800,
           "imagen": "https://i.pinimg.com/736x/0b/42/ee/0b42eeed845cad6891993336ebb0e41d.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -3367,7 +3367,7 @@
         },
         {
           "nombre": "Issey Miyake L'Eau d'Issey Sport",
-          "precio": 4000,
+          "precio": 3800,
           "imagen": "https://i.pinimg.com/1200x/c6/87/26/c68726d3bb82db89f6701596d728fa17.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -3378,7 +3378,7 @@
         },
         {
           "nombre": "Issey Miyake L'Eau d'Issey intense",
-          "precio": 4500,
+          "precio": 3800,
           "imagen": "https://i.pinimg.com/1200x/87/f1/6b/87f16b157a6fa449bcb3c9896f4bae16.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -3437,7 +3437,7 @@
       "nautica": [
         {
           "nombre": "nautica voyage",
-          "precio": 2500,
+          "precio": 2000,
           "imagen": "https://i.pinimg.com/736x/71/33/39/713339d59a614ce86d38f223e98c691d.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -3448,7 +3448,7 @@
         },
         {
           "nombre": "nautica blue",
-          "precio": 2500,
+          "precio": 2000,
           "imagen": "https://i.pinimg.com/736x/dd/9d/24/dd9d241f7f6847bfa5dc7fc52fa2348a.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
