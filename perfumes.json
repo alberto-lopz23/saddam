@@ -119,7 +119,7 @@
         },
         {
           "nombre": "Hawas Rasasi ice",
-          "precio": 2000,
+          "precio": 2500,
           "imagen": "https://i.pinimg.com/1200x/84/aa/d7/84aad731558781babefdd141d082a885.jpg",
           "descripcion": "Una brisa glacial de elegancia y energía. La menta refrescante se fusiona con acordes acuáticos para crear un aroma vigorizante que te mantiene fresco todo el día bajo el sol caribeño.",
           "notas": {
@@ -130,7 +130,7 @@
         },
          {
           "nombre": "Hawas Rasasi Fire",
-          "precio": 2000,
+          "precio": 2500,
           "imagen": "https://i.pinimg.com/1200x/d3/f9/a2/d3f9a22c7fea724b73f1a6531b677ee6.jpg",
           "descripcion": "Una brisa glacial de elegancia y energía. La menta refrescante se fusiona con acordes acuáticos para crear un aroma vigorizante que te mantiene fresco todo el día bajo el sol caribeño.",
           "notas": {
@@ -141,7 +141,7 @@
         },
         {
           "nombre": "Hawas Rasasi Malibu",
-          "precio": 2000,
+          "precio": 2500,
           "imagen": "https://i.pinimg.com/1200x/0f/1d/12/0f1d120f87ae0328220810ca3bda1cec.jpg",
           "descripcion": "Una brisa glacial de elegancia y energía. La menta refrescante se fusiona con acordes acuáticos para crear un aroma vigorizante que te mantiene fresco todo el día bajo el sol caribeño.",
           "notas": {
@@ -152,7 +152,7 @@
         },
         {
           "nombre": "Hawas Rasasi Elixir",
-          "precio": 2000,
+          "precio": 2500,
           "imagen": "https://i.pinimg.com/1200x/a7/23/a9/a723a95c95500ab6a0a3c216fad80c6a.jpg",
           "descripcion": "Una brisa glacial de elegancia y energía. La menta refrescante se fusiona con acordes acuáticos para crear un aroma vigorizante que te mantiene fresco todo el día bajo el sol caribeño.",
           "notas": {
@@ -163,7 +163,7 @@
         },
         {
           "nombre": "Hawas Rasasi Tropical",
-          "precio": 2000,
+          "precio": 2500,
           "imagen": "https://i.pinimg.com/1200x/0b/0f/bc/0b0fbc61cf3ccc8f7b0c200adbab2f53.jpg",
           "descripcion": "Una brisa glacial de elegancia y energía. La menta refrescante se fusiona con acordes acuáticos para crear un aroma vigorizante que te mantiene fresco todo el día bajo el sol caribeño.",
           "notas": {
@@ -174,7 +174,7 @@
         },
         {
           "nombre": "Hawas Rasasi Diva",
-          "precio": 2000,
+          "precio": 2500,
           "imagen": "https://i.pinimg.com/736x/5b/fb/e6/5bfbe60f4ed6342279da0b708e62adcc.jpg",
           "descripcion": "Una brisa glacial de elegancia y energía. La menta refrescante se fusiona con acordes acuáticos para crear un aroma vigorizante que te mantiene fresco todo el día bajo el sol caribeño.",
           "notas": {
@@ -185,7 +185,7 @@
         },
         {
           "nombre": "Hawas Rasasi Black",
-          "precio": 2300,
+          "precio": 2200,
           "imagen": "https://i.pinimg.com/1200x/19/8b/c5/198bc5cdbc1ca1bd77a3eead2c8657a5.jpg",
           "descripcion": "La versión más intensa y misteriosa de Hawas. Un aroma audaz con pimienta negra y oud que define la masculinidad absoluta, perfecto para las noches que prometen ser inolvidables.",
           "notas": {
@@ -198,7 +198,7 @@
       "nitro": [
         {
           "nombre": "Nitro Red",
-          "precio": 2000,
+          "precio": 2500,
           "imagen": "https://i.pinimg.com/1200x/53/2c/3c/532c3c2438d6afff40471fcab72350c9.jpg",
           "descripcion": "Dulce seducción envuelta en pasión. Frutos rojos y vainilla cremosa se entrelazan para crear una fragancia irresistible que cautiva corazones y deja una estela memorable.",
           "notas": {
@@ -244,7 +244,7 @@
         },
         {
           "nombre": "Club de Nuit intense",
-          "precio": 2000,
+          "precio": 2300,
           "imagen": "https://i.pinimg.com/1200x/4d/5d/0c/4d5d0cd841a6331a49c9777d81bf9f2a.jpg",
           "notas": {
             "salida": "🍋 Limón, 🍎 Grosellas Negras, 🍍 Piña, 🍎 Manzana",
@@ -288,7 +288,7 @@
         },
         {
           "nombre": "Club de Nuit Imperiale",
-          "precio": 2400,
+          "precio": 2500,
           "imagen": "https://i.pinimg.com/1200x/4b/2f/d1/4b2fd1c712245f283159cb8d0ecac692.jpg",
           "notas": {
             "salida": "🍋 Limón, 🍎 Manzana, 🌿 Menta, 🍊 Mandarina",
@@ -299,7 +299,7 @@
         },
         {
           "nombre": "Club de Nuit Millestone",
-          "precio": 2200,
+          "precio": 2500,
           "imagen": "https://i.pinimg.com/1200x/44/f9/82/44f982be7a134ecfcc4f60d14c846128.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -310,7 +310,7 @@
         },
         {
           "nombre": "Club de Nuit Urban Elixir",
-          "precio": 2200,
+          "precio": 2500,
           "imagen": "https://i.pinimg.com/1200x/b2/1d/e4/b21de4b828a5a553fb6d2d29c256e690.jpg",
           "notas": {
             "salida": "🍋 Limón, 🍎 Manzana, 🌿 Menta, 🌶️ Pimienta",
@@ -321,7 +321,7 @@
         },
         {
           "nombre": "Club de Nuit Sillage",
-          "precio": 2250,
+          "precio": 2400,
           "imagen": "https://i.pinimg.com/1200x/aa/10/2e/aa102eed4b18b308c53faa651aed56c1.jpg",
           "notas": {
             "salida": "🍋 Bergamota, 🍊 Mandarina, 🌶️ Pimienta Rosa",
@@ -332,7 +332,7 @@
         },
         {
           "nombre": "Club De Nuit Women",
-          "precio": 1900,
+          "precio": 2000,
           "imagen": "https://i.pinimg.com/1200x/eb/dd/ca/ebddcae038f12d525c61845544eee603.jpg",
           "notas": {
             "salida": "🍊 Naranja, 🍑 Durazno, 🌸 Jazmín, 🍋 Bergamota",
@@ -343,7 +343,7 @@
         },
         {
           "nombre": "Odyssey Mandarin",
-          "precio": 2000,
+          "precio": 2200,
           "imagen": "https://i.pinimg.com/1200x/33/5e/fa/335efa3aa0edd843fac04303596bbe13.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🍋 Bergamota, 🍎 Manzana Verde",
@@ -354,7 +354,7 @@
         },
         {
           "nombre": "Odyssey Mandarin Elixir",
-          "precio": 2350,
+          "precio": 2500,
           "imagen": "https://i.pinimg.com/1200x/44/d6/05/44d6050226a169fb98f1cae473c45c5c.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌶️ Pimienta Rosa, 🍋 Bergamota",
@@ -365,7 +365,7 @@
         },
         {
           "nombre": "Odyssey Artisto",
-          "precio": 2350,
+          "precio": 2500,
           "imagen": "https://i.pinimg.com/1200x/ed/8c/06/ed8c0679de9353c1fd61fd0e76c37e31.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -398,7 +398,7 @@
         },
         {
           "nombre": "Odyssey Candee",
-          "precio": 2000,
+          "precio": 2300,
           "imagen": "https://i.pinimg.com/1200x/ff/b4/a3/ffb4a32b3be9cea25681165560476852.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -454,7 +454,7 @@
         },
         {
           "nombre": "Odyssey acqua",
-          "precio": 1600,
+          "precio": 2200,
           "imagen": "https://i.pinimg.com/1200x/d1/6c/0f/d16c0faa5f83f07bf7ca0c5cdb3eb72e.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -465,7 +465,7 @@
         },
         {
           "nombre": "Odyssey Chocolate",
-          "precio": 2200,
+          "precio": 2500,
           "destacado": true,
           "imagen": "https://i.pinimg.com/1200x/ef/be/f2/efbef205e1902f0171af6dc08d261f1d.jpg",
           "notas": {
@@ -477,7 +477,7 @@
         },
         {
           "nombre": "Odyssey Limoni",
-          "precio": 2000,
+          "precio": 2500,
           "destacado": true,
           "imagen": "https://i.pinimg.com/1200x/b8/1a/c9/b81ac99e4b4a95c6f4f7d76ca6356aa5.jpg",
           "notas": {
@@ -500,7 +500,7 @@
         },
         {
           "nombre": "Odyssey Coffe",
-          "precio": 2400,
+          "precio": 2500,
           "imagen": "https://i.pinimg.com/1200x/7e/6f/4c/7e6f4ccc77c5bc7427216b9ce020076e.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -511,7 +511,7 @@
         },
         {
           "nombre": "Odyssey forest",
-          "precio": 2400,
+          "precio": 2500,
           "imagen": "https://i.pinimg.com/1200x/e6/bd/07/e6bd073ee3d455edfd2654a1a4b0731a.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -522,7 +522,7 @@
         },
         {
           "nombre": "Odyssey mango",
-          "precio": 2400,
+          "precio": 2500,
           "imagen": "https://i.pinimg.com/1200x/f3/db/01/f3db01674e1ae4a3241f3c6413f0598b.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -533,7 +533,7 @@
         },
         {
           "nombre": "Odyssey bahamas",
-          "precio": 2400,
+          "precio": 2500,
           "imagen": "https://i.pinimg.com/1200x/82/62/6b/82626b9f5782ea001daf40794d2cea1e.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -569,7 +569,7 @@
         },
         {
           "nombre": "Lattafa His Confession",
-          "precio": 1900,
+          "precio": 2500,
           "imagen": "https://i.pinimg.com/1200x/b3/05/a6/b305a6d29b4e2249e593f0f7331a3305.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -580,7 +580,7 @@
         },
         {
           "nombre": "Lattafa Her Confession",
-          "precio": 1900,
+          "precio": 2400,
           "imagen": "https://i.pinimg.com/1200x/78/ea/fd/78eafde220fe2b3453b8a857b3ef1cf7.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -613,7 +613,7 @@
         },
         {
           "nombre": "Lattafa Ishq Al Shuyukh Gold EDP",
-          "precio": 1900,
+          "precio": 2200,
           "imagen": "https://i.pinimg.com/1200x/7a/d9/93/7ad99313716ce25d8753c6832b28c968.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -624,7 +624,7 @@
         },
         {
           "nombre": "Lattafa Ishq Al Shuyukh silver",
-          "precio": 1900,
+          "precio": 2200,
           "imagen": "https://i.pinimg.com/1200x/93/65/58/9365583e943a1266f6a6a61c86c094ab.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -657,7 +657,7 @@
         },
         {
           "nombre": "Lattafa Khamrah Qahwa",
-          "precio": 2000,
+          "precio": 2200,
           "imagen": "https://i.pinimg.com/1200x/5e/93/86/5e93864f981ba8bc467814877c576116.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -668,7 +668,7 @@
         },
         {
           "nombre": "Lataffa Noble Blush",
-          "precio": 2000,
+          "precio": 2300,
           "imagen": "https://i.pinimg.com/1200x/0f/7d/03/0f7d030a15dced8410674997cd4876a6.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -690,7 +690,7 @@
         },
         {
           "nombre": "Lataffa Honor y Gloria",
-          "precio": 1850,
+          "precio": 2250,
           "imagen": "https://i.pinimg.com/1200x/6b/22/19/6b2219c35b1b853b77268cd3bed3d965.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -701,7 +701,7 @@
         },
         {
           "nombre": "Lataffa Our For Glory Negro",
-          "precio": 1700,
+          "precio": 1900,
           "imagen": "https://i.pinimg.com/1200x/2f/f7/ed/2ff7ed616b09a2844e340abb2c51b401.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -712,7 +712,7 @@
         },
         {
           "nombre": "Lataffa Sublime Rojo",
-          "precio": 1700,
+          "precio": 1800,
           "imagen": "https://i.pinimg.com/1200x/e5/da/0e/e5da0eeede1496dc99e038213ddb8b42.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -723,7 +723,7 @@
         },
         {
           "nombre": "Lataffa Fakhar Black",
-          "precio": 1500,
+          "precio": 1800,
           "imagen": "https://i.pinimg.com/1200x/75/2d/2f/752d2fdc7a3efb791915316984eb699b.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -734,7 +734,7 @@
         },
         {
           "nombre": "Lataffa Fakhar Gold",
-          "precio": 1500,
+          "precio": 1800,
           "imagen": "https://i.pinimg.com/1200x/f7/83/e6/f783e652c1382e070576e67851ae61b6.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -745,7 +745,7 @@
         },
         {
           "nombre": "Latafa Fakhar Rose",
-          "precio": 1500,
+          "precio": 1800,
           "imagen": "https://i.pinimg.com/1200x/3e/dd/c9/3eddc9356505ff0de73a4de7427fb542.jpg",
           "notas": {
             "salida": "🍋 Bergamota, 🍊 Mandarina, 🌸 Neroli",
@@ -756,7 +756,7 @@
         },
         {
           "nombre": "Lataffa Asad",
-          "precio": 1600,
+          "precio": 2000,
           "imagen": "https://i.pinimg.com/1200x/6f/4d/c7/6f4dc738ad2ba1772c737163f439c3e1.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -767,7 +767,7 @@
         },
         {
           "nombre": "Lataffa Asad Elixir",
-          "precio": 1600,
+          "precio": 2500,
           "imagen": "https://i.pinimg.com/1200x/32/8f/1b/328f1be3741ac2397ac37a4f3119e744.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -778,7 +778,7 @@
         },
         {
           "nombre": "Lataffa Asad Bourbon",
-          "precio": 2000,
+          "precio": 2400,
           "destacado": true,
           "imagen": "https://i.pinimg.com/1200x/ce/c6/bf/cec6bf276b64afd0fc1b7c96e46efa12.jpg",
           "notas": {
@@ -790,7 +790,7 @@
         },
         {
           "nombre": "Lataffa Asad Zanzibar",
-          "precio": 1500,
+          "precio": 2400,
           "imagen": "https://i.pinimg.com/1200x/61/b4/01/61b401bb269f967fb44c1f2679cf3c94.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -801,7 +801,7 @@
         },
         {
           "nombre": "Lataffa Yara Candy",
-          "precio": 1700,
+          "precio": 2200,
           "imagen": "https://i.pinimg.com/1200x/c8/e3/d4/c8e3d42bd20474c82cc3276265e83339.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -812,7 +812,7 @@
         },
         {
           "nombre": "Lataffa Yara",
-          "precio": 1700,
+          "precio": 2100,
           "imagen": "https://i.pinimg.com/736x/58/ae/3d/58ae3d8d21cd84a18d9efa20426b7669.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -823,7 +823,7 @@
         },
         {
           "nombre": "Lataffa Yara Moi",
-          "precio": 1700,
+          "precio": 2100,
           "imagen": "https://i.pinimg.com/1200x/45/07/80/45078009cf5d4e7915f376333590b3c6.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -834,7 +834,7 @@
         },
         {
           "nombre": "Yara Tous",
-          "precio": 1500,
+          "precio": 2100,
           "imagen": "https://i.pinimg.com/1200x/c7/87/1d/c7871d7ace05bc1ba4677fe7f7b5c6b6.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -856,7 +856,7 @@
         },
         {
           "nombre": "Lattafa Eclaire",
-          "precio": 2100,
+          "precio": 2500,
           "destacado": true,
           "imagen": "https://i.pinimg.com/1200x/07/af/d3/07afd3dc96d03c79faf7ca7858acf056.jpg",
           "notas": {
@@ -1340,7 +1340,7 @@
       "JoMilano": [
         {
           "nombre": "Game of Spades Wildcard",
-          "precio": 3700,
+          "precio": 4000,
           "imagen": "https://i.pinimg.com/1200x/e1/0e/8f/e10e8fb1ec08c3bd2308b1a55621ea33.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -1362,7 +1362,7 @@
         },
         {
           "nombre": "Game of Spades Royale",
-          "precio": 3700,
+          "precio": 4000,
           "imagen": "https://i.pinimg.com/1200x/94/d6/3e/94d63ef33c09cda51979c213150854d6.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -1384,7 +1384,7 @@
         },
          {
           "nombre": "Game of Spades BLIND-BID",
-          "precio": 3700,
+          "precio": 4000,
           "imagen": "https://i.pinimg.com/736x/44/89/4d/44894da3fbf620828618e09455bc7082.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -1395,7 +1395,7 @@
         },
         {
           "nombre": "Game of Spades Jackpot",
-          "precio": 3700,
+          "precio": 4000,
           "imagen": "https://i.pinimg.com/1200x/dd/6d/cb/dd6dcb6f8bc07fba449456eced9927cf.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -1406,7 +1406,7 @@
         },
         {
           "nombre": "Game of Spades ACE/Platinum",
-          "precio": 3700,
+          "precio": 4000,
           "imagen": "https://i.pinimg.com/1200x/75/8f/94/758f941a57c7c163cd255f58d3250af7.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -1417,7 +1417,7 @@
         },
         {
           "nombre": "Game of Spades Rouge Parfum",
-          "precio": 3700,
+          "precio": 4000,
           "imagen": "https://i.pinimg.com/1200x/4b/6d/fd/4b6dfdb435e5efebe636850014afba36.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -1428,7 +1428,7 @@
         },
         {
           "nombre": "Game of Spades Boston",
-          "precio": 3700,
+          "precio": 4000,
           "imagen": "https://i.pinimg.com/1200x/25/e6/7f/25e67f71aa2f270890648f2e144543b3.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -1439,7 +1439,7 @@
         },
         {
           "nombre": "Game of Spades Moon",
-          "precio": 3700,
+          "precio": 4000,
           "imagen": "https://i.pinimg.com/1200x/8b/d0/20/8bd0203385873d31c104ee07d5f1bb80.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -1450,7 +1450,7 @@
         },
         {
           "nombre": "Game of Spades Wind",
-          "precio": 3500,
+          "precio": 4000,
           "imagen": "https://i.pinimg.com/736x/39/12/4d/39124db451e5db86eb9925ca110dd0e2.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -1461,7 +1461,7 @@
         },
         {
           "nombre": "Game of Spades King",
-          "precio": 3300,
+          "precio": 4000,
           "imagen": "https://i.pinimg.com/1200x/7f/19/3b/7f193bd5338016367e91821f052a5c16.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -1472,7 +1472,7 @@
         },
         {
           "nombre": "Game of Spades Bid",
-          "precio": 3500,
+          "precio": 4000,
           "imagen": "https://i.pinimg.com/1200x/56/90/df/5690df5c94acefa8029855de286adcbe.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -1549,7 +1549,7 @@
         },
         {
           "nombre": "Game of Spades QUEEN",
-          "precio": 3800,
+          "precio": 4000,
           "imagen": "https://i.pinimg.com/1200x/03/df/cc/03dfcc75ca5ecc53ea05e2f1fa39810f.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -2510,7 +2510,7 @@
         },
         {
           "nombre": "Like Candy",
-          "precio": 2800,
+          "precio": 3200,
           "imagen": "https://i.pinimg.com/1200x/c1/e2/e4/c1e2e4f4eb0bedb19b5ae572e6e9f233.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
