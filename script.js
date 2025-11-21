@@ -78,8 +78,8 @@ function procesarDatos() {
   }
 
   // Procesar nichos
-  if (catalogoData.nichos) {
-    Object.entries(catalogoData.nichos).forEach(([marca, perfumes]) => {
+  if (catalogoData.perfumes?.nicho) {
+    Object.entries(catalogoData.perfumes.nicho).forEach(([marca, perfumes]) => {
       perfumes.forEach((perfume) => {
         todosLosPerfumes.push({
           ...perfume,
@@ -469,7 +469,7 @@ function mostrarSubfiltros(categoria) {
     ];
     subfiltros = marcas;
   } else if (categoria === "sets") {
-    subfiltros = ["Set disenador", "Set arabe"];
+    subfiltros = ["Set arabes", "Set disenador"];
   }
 
   // Crear botones de subfiltros
@@ -648,7 +648,7 @@ function mostrarSubfiltrosMobile(categoria) {
     ];
     subfiltros = marcas;
   } else if (categoria === "sets") {
-    subfiltros = ["Set disenador", "Set arabe"];
+    subfiltros = ["Set arabes", "Set disenador"];
   }
 
   if (subfiltros.length > 0) {
