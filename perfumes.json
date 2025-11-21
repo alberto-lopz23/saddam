@@ -1530,31 +1530,32 @@
 
         
       ],
-       "burberry": [
-      {
-          "nombre": "Bleu de Chanel EDP",
-          "precio": 7500,
-          "imagen": "https://i.pinimg.com/736x/d3/d8/8b/d3d88b0eb22490ebaff572e631280b52.jpg",
-          "notas": {
-            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
-            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
-            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
-          }
-        
-      ],
-      "victoriasecret": [
-        {
-          "nombre": "Very Sexy Night",
-          "precio": 2000,
-          "imagen": "https://i.pinimg.com/1200x/05/ae/f2/05aef2aa90e1fcbb3f0466b0835b192b.jpg",
-          "notas": {
-            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
-            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
-            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
-          },
-          "descripcion": "Aventura y libertad capturadas en una fragancia que inspira."
-        }
-      ],
+      "burberry": [
+  {
+    "nombre": "Bleu de Chanel EDP",
+    "precio": 7500,
+    "imagen": "https://i.pinimg.com/736x/d3/d8/8b/d3d88b0eb22490ebaff572e631280b52.jpg",
+    "notas": {
+      "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+      "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+      "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+    }
+  }
+],
+"victoriasecret": [
+  {
+    "nombre": "Very Sexy Night",
+    "precio": 2000,
+    "imagen": "https://i.pinimg.com/1200x/05/ae/f2/05aef2aa90e1fcbb3f0466b0835b192b.jpg",
+    "notas": {
+      "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+      "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+      "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+    },
+    "descripcion": "Aventura y libertad capturadas en una fragancia que inspira."
+  }
+],
+
       "armani": [
         {
           "nombre": "Stronger With You Intensely 100ML/50ML",
