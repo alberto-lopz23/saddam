@@ -2,7 +2,10 @@
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
     <title>PerfumParadiseRD | Catálogo de Perfumes</title>
     <link rel="stylesheet" href="style.css" />
     <link rel="icon" type="image/png" href="logo2.jpeg" />
@@ -149,6 +152,114 @@
         </div>
         <div class="mobile-subfilters" id="mobileSubfilters"></div>
       </div>
+
+      <!-- Sección de enlaces adicionales -->
+      <div class="mobile-extra-section">
+        <button class="mobile-extra-btn" onclick="abrirFormularioPerfume()">
+          🔍 ¿No encuentras tu perfume? Pídelo aquí
+        </button>
+        <button class="mobile-extra-btn" onclick="mostrarContacto()">
+          📞 Contacto
+        </button>
+        <button class="mobile-extra-btn" onclick="mostrarQuienesSomos()">
+          👥 Quiénes Somos
+        </button>
+      </div>
+    </div>
+
+    <!-- Modal para pedir perfume -->
+    <div class="custom-modal" id="modalPedirPerfume">
+      <div class="custom-modal-overlay" onclick="cerrarModalPerfume()"></div>
+      <div class="custom-modal-content">
+        <button class="custom-modal-close" onclick="cerrarModalPerfume()">
+          ×
+        </button>
+        <h2>🔍 Pide tu perfume</h2>
+        <form id="formPedirPerfume" onsubmit="enviarPedidoPerfume(event)">
+          <div class="form-group">
+            <label for="nombrePerfume">Nombre del perfume</label>
+            <input
+              type="text"
+              id="nombrePerfume"
+              required
+              placeholder="Ej: Dior Sauvage"
+            />
+          </div>
+          <div class="form-group">
+            <label for="nombrePersona">Tu nombre</label>
+            <input
+              type="text"
+              id="nombrePersona"
+              required
+              placeholder="Tu nombre completo"
+            />
+          </div>
+          <div class="form-group">
+            <label for="telefonoPersona">Tu teléfono</label>
+            <input
+              type="tel"
+              id="telefonoPersona"
+              required
+              placeholder="Ej: 809-555-1234"
+            />
+          </div>
+          <button type="submit" class="form-submit-btn">
+            Enviar pedido por WhatsApp
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Modal de Contacto -->
+    <div class="custom-modal" id="modalContacto">
+      <div class="custom-modal-overlay" onclick="cerrarModalContacto()"></div>
+      <div class="custom-modal-content">
+        <button class="custom-modal-close" onclick="cerrarModalContacto()">
+          ×
+        </button>
+        <h2>📞 Contacto</h2>
+        <div class="info-content">
+          <p><strong>WhatsApp:</strong> +1 (829) 891-4134</p>
+          <p><strong>Horario:</strong> Lunes a Sábado, 9:00 AM - 6:00 PM</p>
+          <p><strong>Ubicación:</strong> República Dominicana</p>
+          <a
+            href="https://wa.me/18298914134"
+            target="_blank"
+            class="whatsapp-contact-btn"
+          >
+            💬 Chatea con nosotros
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal de Quiénes Somos -->
+    <div class="custom-modal" id="modalQuienesSomos">
+      <div
+        class="custom-modal-overlay"
+        onclick="cerrarModalQuienesSomos()"
+      ></div>
+      <div class="custom-modal-content">
+        <button class="custom-modal-close" onclick="cerrarModalQuienesSomos()">
+          ×
+        </button>
+        <h2>👥 Quiénes Somos</h2>
+        <div class="info-content">
+          <p>
+            En <strong>PerfumParadiseRD</strong> nos dedicamos a ofrecer
+            fragancias de alta calidad para todo tipo de gustos y ocasiones.
+          </p>
+          <p>
+            Contamos con una amplia selección de perfumes árabes, de diseñador,
+            nichos y sets exclusivos.
+          </p>
+          <p>
+            Nuestro compromiso es brindarte la mejor experiencia de compra con
+            productos auténticos y atención personalizada.
+          </p>
+          <p><strong>¡Tu esencia perfecta te espera!</strong></p>
+        </div>
+      </div>
     </div>
 
     <header>
@@ -201,10 +312,9 @@
 
         <!-- Contenedor desktop vacío -->
         <div class="logo-title-container">
-          <img src="logo2.jpeg" alt="Logo" class="header-logo" />
           <div class="brand-text">
-            <h1 class="brand-name">PerfumParadiseRD</h1>
-            <p class="brand-slogan">Fragancias de lujo a tu alcance</p>
+            <h1 class="brand-name"></h1>
+            <p class="brand-slogan"></p>
           </div>
         </div>
       </div>
@@ -264,5 +374,55 @@
     </div>
 
     <script src="script.js"></script>
+    <script>
+      // Funciones para los modales
+      function abrirFormularioPerfume() {
+        document.getElementById("modalPedirPerfume").classList.add("active");
+        document.body.style.overflow = "hidden";
+        toggleMobileMenu(); // Cerrar menú móvil
+      }
+
+      function cerrarModalPerfume() {
+        document.getElementById("modalPedirPerfume").classList.remove("active");
+        document.body.style.overflow = "";
+      }
+
+      function enviarPedidoPerfume(event) {
+        event.preventDefault();
+        const perfume = document.getElementById("nombrePerfume").value;
+        const nombre = document.getElementById("nombrePersona").value;
+        const telefono = document.getElementById("telefonoPersona").value;
+
+        const mensaje = encodeURIComponent(
+          `Hola, soy ${nombre}.\n\nMe gustaría pedir el perfume: ${perfume}\n\nMi teléfono de contacto: ${telefono}`
+        );
+
+        window.open(`https://wa.me/18298914134?text=${mensaje}`, "_blank");
+        cerrarModalPerfume();
+        document.getElementById("formPedirPerfume").reset();
+      }
+
+      function mostrarContacto() {
+        document.getElementById("modalContacto").classList.add("active");
+        document.body.style.overflow = "hidden";
+        toggleMobileMenu();
+      }
+
+      function cerrarModalContacto() {
+        document.getElementById("modalContacto").classList.remove("active");
+        document.body.style.overflow = "";
+      }
+
+      function mostrarQuienesSomos() {
+        document.getElementById("modalQuienesSomos").classList.add("active");
+        document.body.style.overflow = "hidden";
+        toggleMobileMenu();
+      }
+
+      function cerrarModalQuienesSomos() {
+        document.getElementById("modalQuienesSomos").classList.remove("active");
+        document.body.style.overflow = "";
+      }
+    </script>
   </body>
 </html>

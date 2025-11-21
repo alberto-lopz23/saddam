@@ -4,6 +4,8 @@ const NUMERO_WHATSAPP = "+18298914134";
 let todosLosPerfumes = [];
 let perfumesFiltrados = [];
 let catalogoData = null;
+let paginaActual = 1;
+const perfumesPorPagina = 20;
 
 // Elementos del DOM
 const galeria = document.getElementById("galeria");
@@ -124,7 +126,11 @@ function calcularPrecioFinal(perfume) {
 }
 
 // Mostrar perfumes en la galería
-function mostrarPerfumes(lista) {
+function mostrarPerfumes(lista, resetearPagina = true) {
+  if (resetearPagina) {
+    paginaActual = 1;
+  }
+
   galeria.innerHTML = "";
 
   if (lista.length === 0) {
@@ -133,7 +139,13 @@ function mostrarPerfumes(lista) {
     return;
   }
 
-  lista.forEach((perfume, index) => {
+  // Calcular índices para la página actual
+  const inicio = (paginaActual - 1) * perfumesPorPagina;
+  const fin = inicio + perfumesPorPagina;
+  const perfumesPagina = lista.slice(inicio, fin);
+  const hayMasPerfumes = fin < lista.length;
+
+  perfumesPagina.forEach((perfume, index) => {
     const card = document.createElement("div");
     card.className = "card";
 
@@ -152,6 +164,58 @@ function mostrarPerfumes(lista) {
     galeria.appendChild(card);
     setTimeout(() => card.classList.add("is-visible"), index * 50);
   });
+
+  // Agregar botones de navegación si es necesario
+  const totalPaginas = Math.ceil(lista.length / perfumesPorPagina);
+
+  if (totalPaginas > 1) {
+    const paginacionContainer = document.createElement("div");
+    paginacionContainer.className = "pagination-btn-container";
+
+    let botonesHTML = "";
+
+    // Botón anterior
+    if (paginaActual > 1) {
+      botonesHTML += `
+        <button class="btn-paginacion btn-anterior" onclick="cargarPaginaAnterior()">
+          ← Anterior
+        </button>
+      `;
+    }
+
+    // Indicador de página
+    botonesHTML += `
+      <span class="pagination-info">Página ${paginaActual} de ${totalPaginas}</span>
+    `;
+
+    // Botón siguiente
+    if (hayMasPerfumes) {
+      botonesHTML += `
+        <button class="btn-paginacion btn-siguiente" onclick="cargarSiguientePagina()">
+          Siguiente →
+        </button>
+      `;
+    }
+
+    paginacionContainer.innerHTML = botonesHTML;
+    galeria.appendChild(paginacionContainer);
+  }
+}
+
+// Cargar página anterior
+function cargarPaginaAnterior() {
+  if (paginaActual > 1) {
+    paginaActual--;
+    mostrarPerfumes(perfumesFiltrados, false);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+}
+
+// Cargar siguiente página
+function cargarSiguientePagina() {
+  paginaActual++;
+  mostrarPerfumes(perfumesFiltrados, false);
+  window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 // Mostrar página completa del perfume
