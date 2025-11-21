@@ -1,44 +1,44 @@
 {
   "perfumes": {
     "arabes": {
-      "AFNAN": [
-         {
-          "nombre": "Orientica Oud Saffron",
-          "precio": 3500,
-          "imagen": "https://i.pinimg.com/1200x/9e/e5/30/9ee5302fbae8fcee2c089bb026802f39.jpg",
-          "descripcion": "Un viaje sensorial al corazón del Medio Oriente. La fusión perfecta entre el exótico azafrán y el místico oud crean una experiencia olfativa inolvidable que te transportará a los bazares de Arabia.",
-          "notas": {
-            "salida": "🌶️ Azafrán, 🍋 Bergamota, 🌿 Cardamomo",
-            "corazon": "🪵 Oud, 🌹 Rosa, 🌸 Jazmín",
-            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
-          }
-        }
+     "AFNAN": [
+  {
+    "nombre": "Orientica Oud Saffron",
+    "precio": 3500,
+    "imagen": "https://i.pinimg.com/1200x/9e/e5/30/9ee5302fbae8fcee2c089bb026802f39.jpg",
+    "descripcion": "Un viaje sensorial al corazón del Medio Oriente. La fusión perfecta entre el exótico azafrán y el místico oud crean una experiencia olfativa inolvidable que te transportará a los bazares de Arabia.",
+    "notas": {
+      "salida": "🌶️ Azafrán, 🍋 Bergamota, 🌿 Cardamomo",
+      "corazon": "🪵 Oud, 🌹 Rosa, 🌸 Jazmín",
+      "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+    }
+  }
+],
+"orientica": [
+  {
+    "nombre": "Orientica Oud Saffron",
+    "precio": 3500,
+    "imagen": "https://i.pinimg.com/1200x/9e/e5/30/9ee5302fbae8fcee2c089bb026802f39.jpg",
+    "descripcion": "Un viaje sensorial al corazón del Medio Oriente. La fusión perfecta entre el exótico azafrán y el místico oud crean una experiencia olfativa inolvidable que te transportará a los bazares de Arabia.",
+    "notas": {
+      "salida": "🌶️ Azafrán, 🍋 Bergamota, 🌿 Cardamomo",
+      "corazon": "🪵 Oud, 🌹 Rosa, 🌸 Jazmín",
+      "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+    }
+  },
+  {
+    "nombre": "Orientica Royal",
+    "precio": 3000,
+    "imagen": "https://i.pinimg.com/1200x/d7/50/bc/d750bc2b7a2ad7322c3b64645da008e6.jpg",
+    "descripcion": "Elegancia y realeza en cada gota. Una composición sofisticada que combina la nobleza de la rosa búlgara con la profundidad del oud, perfecto para quienes buscan distinción y clase.",
+    "notas": {
+      "salida": "🍋 Bergamota, 🌸 Flor de Naranjo, 🌿 Cardamomo",
+      "corazon": "🌹 Rosa Búlgara, 🪵 Oud, 🌸 Jazmín",
+      "fondo": "🪵 Sándalo, 🍦 Almizcle, 🪵 Ámbar"
+    }
+  }
+],
 
-      ],
-      "orientica": [
-        {
-          "nombre": "Orientica Oud Saffron",
-          "precio": 3500,
-          "imagen": "https://i.pinimg.com/1200x/9e/e5/30/9ee5302fbae8fcee2c089bb026802f39.jpg",
-          "descripcion": "Un viaje sensorial al corazón del Medio Oriente. La fusión perfecta entre el exótico azafrán y el místico oud crean una experiencia olfativa inolvidable que te transportará a los bazares de Arabia.",
-          "notas": {
-            "salida": "🌶️ Azafrán, 🍋 Bergamota, 🌿 Cardamomo",
-            "corazon": "🪵 Oud, 🌹 Rosa, 🌸 Jazmín",
-            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
-          }
-        },
-        {
-          "nombre": "Orientica Royal",
-          "precio": 3000,
-          "imagen": "https://i.pinimg.com/1200x/d7/50/bc/d750bc2b7a2ad7322c3b64645da008e6.jpg",
-          "descripcion": "Elegancia y realeza en cada gota. Una composición sofisticada que combina la nobleza de la rosa búlgara con la profundidad del oud, perfecto para quienes buscan distinción y clase.",
-          "notas": {
-            "salida": "🍋 Bergamota, 🌸 Flor de Naranjo, 🌿 Cardamomo",
-            "corazon": "🌹 Rosa Búlgara, 🪵 Oud, 🌸 Jazmín",
-            "fondo": "🪵 Sándalo, 🍦 Almizcle, 🪵 Ámbar"
-          }
-        }
-      ],
       "rasasi": [
         {
           "nombre": "Hawas Rasasi",
