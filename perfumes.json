@@ -1,85 +1,6 @@
 {
   "perfumes": {
     "arabes": {
-      "AFNAN": [
-        {
-          "nombre": "afnan 9am",
-          "precio": 2000,
-          "imagen": "https://i.pinimg.com/736x/4d/ab/d6/4dabd60ac0ebb4a47c53ec0fe0495775.jpg",
-          "descripcion": "Un viaje sensorial al corazón del Medio Oriente. La fusión perfecta entre el exótico azafrán y el místico oud crean una experiencia olfativa inolvidable que te transportará a los bazares de Arabia.",
-          "notas": {
-            "salida": "🌶️ Azafrán, 🍋 Bergamota, 🌿 Cardamomo",
-            "corazon": "🪵 Oud, 🌹 Rosa, 🌸 Jazmín",
-            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
-          }
-        },
-        {
-          "nombre": "afnan 9am white",
-          "precio": 2000,
-          "imagen": "https://i.pinimg.com/1200x/c7/8f/24/c78f2489aac9926d5cfda9cd44416bf3.jpg",
-          "descripcion": "Un viaje sensorial al corazón del Medio Oriente. La fusión perfecta entre el exótico azafrán y el místico oud crean una experiencia olfativa inolvidable que te transportará a los bazares de Arabia.",
-          "notas": {
-            "salida": "🌶️ Azafrán, 🍋 Bergamota, 🌿 Cardamomo",
-            "corazon": "🪵 Oud, 🌹 Rosa, 🌸 Jazmín",
-            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
-          }
-        },
-        {
-          "nombre": "afnan 9am  Pour Femme",
-          "precio": 2000,
-          "imagen": "https://i.pinimg.com/736x/c9/4e/a1/c94ea17b4c9f29412713d10dd4cd12e4.jpg",
-          "descripcion": "Un viaje sensorial al corazón del Medio Oriente. La fusión perfecta entre el exótico azafrán y el místico oud crean una experiencia olfativa inolvidable que te transportará a los bazares de Arabia.",
-          "notas": {
-            "salida": "🌶️ Azafrán, 🍋 Bergamota, 🌿 Cardamomo",
-            "corazon": "🪵 Oud, 🌹 Rosa, 🌸 Jazmín",
-            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
-          }
-        },
-        {
-          "nombre": "afnan 9pm",
-          "precio": 2000,
-          "imagen": "https://i.pinimg.com/1200x/fe/16/e8/fe16e8f3e2ad774eb33560511c213b36.jpg",
-          "descripcion": "Un viaje sensorial al corazón del Medio Oriente. La fusión perfecta entre el exótico azafrán y el místico oud crean una experiencia olfativa inolvidable que te transportará a los bazares de Arabia.",
-          "notas": {
-            "salida": "🌶️ Azafrán, 🍋 Bergamota, 🌿 Cardamomo",
-            "corazon": "🪵 Oud, 🌹 Rosa, 🌸 Jazmín",
-            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
-          }
-        },
-        {
-          "nombre": "afnan 9pm rebel",
-          "precio": 2000,
-          "imagen": "https://i.pinimg.com/736x/17/1f/a5/171fa5149ba02f7068163322b93925de.jpg",
-          "descripcion": "Un viaje sensorial al corazón del Medio Oriente. La fusión perfecta entre el exótico azafrán y el místico oud crean una experiencia olfativa inolvidable que te transportará a los bazares de Arabia.",
-          "notas": {
-            "salida": "🌶️ Azafrán, 🍋 Bergamota, 🌿 Cardamomo",
-            "corazon": "🪵 Oud, 🌹 Rosa, 🌸 Jazmín",
-            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
-          }
-        },
-        {
-          "nombre": "afnan 9pm elixir",
-          "precio": 2000,
-          "imagen": "https://i.pinimg.com/736x/0e/3b/05/0e3b05d88ba15014e98b3da636fa37e7.jpg",
-          "descripcion": "Un viaje sensorial al corazón del Medio Oriente. La fusión perfecta entre el exótico azafrán y el místico oud crean una experiencia olfativa inolvidable que te transportará a los bazares de Arabia.",
-          "notas": {
-            "salida": "🌶️ Azafrán, 🍋 Bergamota, 🌿 Cardamomo",
-            "corazon": "🪵 Oud, 🌹 Rosa, 🌸 Jazmín",
-            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
-          }
-        },
-        {
-          "nombre": "afnan 9pm Pour Femme",
-          "precio": 2000,
-          "imagen": "https://i.pinimg.com/1200x/5d/61/e1/5d61e140481ab2f29c178328143915a9.jpg",
-          "descripcion": "Un viaje sensorial al corazón del Medio Oriente. La fusión perfecta entre el exótico azafrán y el místico oud crean una experiencia olfativa inolvidable que te transportará a los bazares de Arabia.",
-          "notas": {
-            "salida": "🌶️ Azafrán, 🍋 Bergamota, 🌿 Cardamomo",
-            "corazon": "🪵 Oud, 🌹 Rosa, 🌸 Jazmín",
-            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
-          }
-        }
-      ],
       "orientica": [
         {
           "nombre": "Orientica Oud Saffron",
@@ -104,7 +25,6 @@
           }
         }
       ],
-
       "rasasi": [
         {
           "nombre": "Hawas Rasasi",
@@ -1572,172 +1492,6 @@
       ]
     },
     "disenador": {
-      "chanel": [
-        {
-          "nombre": "Bleu de Chanel EDP",
-          "precio": 7800,
-          "imagen": "https://i.pinimg.com/736x/d3/d8/8b/d3d88b0eb22490ebaff572e631280b52.jpg",
-          "notas": {
-            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
-            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
-            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
-          },
-          "descripcion": "Elegancia atemporal que conquista con su presencia única."
-        }
-      ],
-      "givenchy": [
-        {
-          "nombre": "givenchy Getleman EDP",
-          "precio": 5000,
-          "imagen": "https://i.pinimg.com/736x/73/71/4a/73714a261ff8e64db00d86cdfad9966e.jpg",
-          "notas": {
-            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
-            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
-            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
-          },
-          "descripcion": "Sofisticación masculina en su máxima expresión."
-        },
-        {
-          "nombre": "givenchy Getleman Reserve Privee",
-          "precio": 5000,
-          "imagen": "https://i.pinimg.com/1200x/ad/ac/1e/adac1e04c65522a3d253d0efef1cb307.jpg",
-          "notas": {
-            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
-            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
-            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
-          },
-          "descripcion": "Exclusividad reservada para los que aprecian lo mejor."
-        },
-        {
-          "nombre": "givenchy Getleman Boisee",
-          "precio": 5000,
-          "imagen": "https://i.pinimg.com/736x/b1/bd/f2/b1bdf2758c19e404a7afc7117c3ceebc.jpg",
-          "notas": {
-            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
-            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
-            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
-          },
-          "descripcion": "Frescura amaderada que define tu estilo único."
-        },
-        {
-          "nombre": "givenchy Getleman Society EDP",
-          "precio": 5000,
-          "imagen": "https://i.pinimg.com/1200x/3f/8a/42/3f8a425c5512699c07d676eb7ca0ce91.jpg",
-          "notas": {
-            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
-            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
-            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
-          },
-          "descripcion": "Para el hombre que lidera con elegancia y seguridad."
-        },
-        {
-          "nombre": "givenchy Getleman Society Extreme",
-          "precio": 5000,
-          "imagen": "https://i.pinimg.com/1200x/d3/b2/27/d3b227c513d1cb014324b05d8669d298.jpg",
-          "notas": {
-            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
-            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
-            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
-          },
-          "descripcion": "Intensidad extrema para personalidades audaces."
-        },
-        {
-          "nombre": "givenchy Getleman EDT INTENSE",
-          "precio": 5000,
-          "imagen": "https://i.pinimg.com/1200x/28/a4/ea/28a4ea9d7df6cd9eb5c34c8c9bc32635.jpg",
-          "notas": {
-            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
-            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
-            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
-          },
-          "descripcion": "Fuerza y carisma concentrados en cada gota."
-        },
-        {
-          "nombre": "givenchy Getleman EDT",
-          "precio": 5000,
-          "imagen": "https://i.pinimg.com/1200x/12/92/91/1292914e7563f3e0a93bf65610651f6c.jpg",
-          "notas": {
-            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
-            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
-            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
-          },
-          "descripcion": "Clásico atemporal para el caballero moderno."
-        },
-        {
-          "nombre": "givenchy Getleman Society EDP Ambree",
-          "precio": 5000,
-          "imagen": "https://i.pinimg.com/1200x/52/b4/fe/52b4fe99500f63bc12ff998be75d50e7.jpg",
-          "notas": {
-            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
-            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
-            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
-          },
-          "descripcion": "Calidez ambarada que envuelve y seduce."
-        },
-        {
-          "nombre": "givenchy pi",
-          "precio": 5000,
-          "imagen": "https://i.pinimg.com/1200x/f3/9b/d9/f39bd96d50ee4c7dee304a71392533b1.jpg",
-          "notas": {
-            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
-            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
-            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
-          },
-          "descripcion": "Misterioso y matemáticamente perfecto como su nombre."
-        }
-      ],
-      "burberry": [
-        {
-          "nombre": "Burberry Her",
-          "precio": 5500,
-          "imagen": "https://i.pinimg.com/1200x/0e/3f/ab/0e3fabf8046a9dd4a7f9b96299617271.jpg",
-          "notas": {
-            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
-            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
-            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
-          }
-        },
-        {
-          "nombre": "Burberry Touch for Men",
-          "precio": 3500,
-          "imagen": "https://i.pinimg.com/736x/d3/d8/8b/d3d88b0eb22490ebaff572e631280b52.jpg",
-          "notas": {
-            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
-            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
-            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
-          }
-        },
-        {
-          "nombre": "Burberry Touch for Men",
-          "precio": 3500,
-          "imagen": "https://i.pinimg.com/736x/d6/08/62/d60862fe1048061ac5965b4145792432.jpg",
-          "notas": {
-            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
-            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
-            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
-          }
-        },
-        {
-          "nombre": "Burberry Weekend for Men",
-          "precio": 3500,
-          "imagen": "https://i.pinimg.com/1200x/82/6d/b7/826db71ecca3055cf7834a8f443bf15b.jpg",
-          "notas": {
-            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
-            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
-            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
-          }
-        },
-        {
-          "nombre": "Burberry London for men",
-          "precio": 3500,
-          "imagen": "https://i.pinimg.com/736x/21/c1/90/21c19065ba13b54156f110791c1b4669.jpg",
-          "notas": {
-            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
-            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
-            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
-          }
-        }
-      ],
       "victoriasecret": [
         {
           "nombre": "Very Sexy Night",
@@ -1751,7 +1505,6 @@
           "descripcion": "Aventura y libertad capturadas en una fragancia que inspira."
         }
       ],
-
       "armani": [
         {
           "nombre": "Stronger With You Intensely 100ML/50ML",
@@ -2742,6 +2495,19 @@
             "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
           },
           "descripcion": "Feminidad radiante en una composición floral que enamora a primera inhalación."
+        }
+      ],
+      "chanel": [
+        {
+          "nombre": "Bleu de Chanel EDP",
+          "precio": 6500,
+          "imagen": "https://i.pinimg.com/736x/d3/d8/8b/d3d88b0eb22490ebaff572e631280b52.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Aventura y libertad capturadas en una fragancia que inspira."
         }
       ],
       "tomFord": [
