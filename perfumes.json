@@ -288,7 +288,7 @@
         },
         {
           "nombre": "Club de Nuit intense",
-          "precio": 2300,
+          "precio": 2000,
           "imagen": "https://i.pinimg.com/1200x/4d/5d/0c/4d5d0cd841a6331a49c9777d81bf9f2a.jpg",
           "notas": {
             "salida": "🍋 Limón, 🍎 Grosellas Negras, 🍍 Piña, 🍎 Manzana",
@@ -365,7 +365,7 @@
         },
         {
           "nombre": "Club de Nuit Sillage",
-          "precio": 2400,
+          "precio": 2250,
           "imagen": "https://i.pinimg.com/1200x/aa/10/2e/aa102eed4b18b308c53faa651aed56c1.jpg",
           "notas": {
             "salida": "🍋 Bergamota, 🍊 Mandarina, 🌶️ Pimienta Rosa",
@@ -378,6 +378,17 @@
           "nombre": "Club De Nuit Woman",
           "precio": 2000,
           "imagen": "https://i.pinimg.com/1200x/eb/dd/ca/ebddcae038f12d525c61845544eee603.jpg",
+          "notas": {
+            "salida": "🍊 Naranja, 🍑 Durazno, 🌸 Jazmín, 🍋 Bergamota",
+            "corazon": "🌹 Rosa, 🌸 Violeta, 🌺 Lirio, 🌸 Orquídea",
+            "fondo": "🪵 Ámbar, 🍦 Almizcle, 🌲 Pachulí, 🍦 Vainilla"
+          },
+          "descripcion": "Seducción pura envuelta en notas irresistibles que cautivan instantáneamente."
+        },
+        {
+          "nombre": "Club De Nuit Maleka",
+          "precio": 2500,
+          "imagen": "https://i.pinimg.com/1200x/86/b7/42/86b7422939ef7ab551700e21d65d99ff.jpg",
           "notas": {
             "salida": "🍊 Naranja, 🍑 Durazno, 🌸 Jazmín, 🍋 Bergamota",
             "corazon": "🌹 Rosa, 🌸 Violeta, 🌺 Lirio, 🌸 Orquídea",
