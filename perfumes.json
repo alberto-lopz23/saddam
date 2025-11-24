@@ -4,7 +4,7 @@
       "AFNAN": [
         {
           "nombre": "afnan 9am",
-          "precio": 2000,
+          "precio": 1700,
           "imagen": "https://i.pinimg.com/736x/4d/ab/d6/4dabd60ac0ebb4a47c53ec0fe0495775.jpg",
           "descripcion": "Un viaje sensorial al corazón del Medio Oriente. La fusión perfecta entre el exótico azafrán y el místico oud crean una experiencia olfativa inolvidable que te transportará a los bazares de Arabia.",
           "notas": {
@@ -15,7 +15,7 @@
         },
         {
           "nombre": "afnan 9am white",
-          "precio": 2000,
+          "precio": 1700,
           "imagen": "https://i.pinimg.com/1200x/c7/8f/24/c78f2489aac9926d5cfda9cd44416bf3.jpg",
           "descripcion": "Un viaje sensorial al corazón del Medio Oriente. La fusión perfecta entre el exótico azafrán y el místico oud crean una experiencia olfativa inolvidable que te transportará a los bazares de Arabia.",
           "notas": {
@@ -26,7 +26,7 @@
         },
         {
           "nombre": "afnan 9am  Pour Femme",
-          "precio": 2000,
+          "precio": 1700,
           "imagen": "https://i.pinimg.com/736x/c9/4e/a1/c94ea17b4c9f29412713d10dd4cd12e4.jpg",
           "descripcion": "Un viaje sensorial al corazón del Medio Oriente. La fusión perfecta entre el exótico azafrán y el místico oud crean una experiencia olfativa inolvidable que te transportará a los bazares de Arabia.",
           "notas": {
@@ -37,7 +37,7 @@
         },
         {
           "nombre": "afnan 9pm",
-          "precio": 2000,
+          "precio": 1700,
           "imagen": "https://i.pinimg.com/1200x/fe/16/e8/fe16e8f3e2ad774eb33560511c213b36.jpg",
           "descripcion": "Un viaje sensorial al corazón del Medio Oriente. La fusión perfecta entre el exótico azafrán y el místico oud crean una experiencia olfativa inolvidable que te transportará a los bazares de Arabia.",
           "notas": {
@@ -48,7 +48,7 @@
         },
         {
           "nombre": "afnan 9pm rebel",
-          "precio": 2000,
+          "precio": 1700,
           "imagen": "https://i.pinimg.com/736x/17/1f/a5/171fa5149ba02f7068163322b93925de.jpg",
           "descripcion": "Un viaje sensorial al corazón del Medio Oriente. La fusión perfecta entre el exótico azafrán y el místico oud crean una experiencia olfativa inolvidable que te transportará a los bazares de Arabia.",
           "notas": {
@@ -59,7 +59,7 @@
         },
         {
           "nombre": "afnan 9pm elixir",
-          "precio": 2000,
+          "precio": 1700,
           "imagen": "https://i.pinimg.com/736x/0e/3b/05/0e3b05d88ba15014e98b3da636fa37e7.jpg",
           "descripcion": "Un viaje sensorial al corazón del Medio Oriente. La fusión perfecta entre el exótico azafrán y el místico oud crean una experiencia olfativa inolvidable que te transportará a los bazares de Arabia.",
           "notas": {
@@ -70,7 +70,7 @@
         },
         {
           "nombre": "afnan 9pm Pour Femme",
-          "precio": 2000,
+          "precio": 1700,
           "imagen": "https://i.pinimg.com/1200x/f3/37/72/f33772798e8ce93b48e7a181c5b475dc.jpg",
           "descripcion": "Un viaje sensorial al corazón del Medio Oriente. La fusión perfecta entre el exótico azafrán y el místico oud crean una experiencia olfativa inolvidable que te transportará a los bazares de Arabia.",
           "notas": {
@@ -375,7 +375,7 @@
           "descripcion": "Sofisticación masculina que redefine la elegancia contemporánea."
         },
         {
-          "nombre": "Club De Nuit Women",
+          "nombre": "Club De Nuit Woman",
           "precio": 2000,
           "imagen": "https://i.pinimg.com/1200x/eb/dd/ca/ebddcae038f12d525c61845544eee603.jpg",
           "notas": {
@@ -387,7 +387,7 @@
         },
         {
           "nombre": "Odyssey Mandarin",
-          "precio": 2200,
+          "precio": 2000,
           "imagen": "https://i.pinimg.com/1200x/33/5e/fa/335efa3aa0edd843fac04303596bbe13.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🍋 Bergamota, 🍎 Manzana Verde",
@@ -3881,7 +3881,7 @@
       "disenador": [
         {
           "nombre": "Set Paco Rabanne Phantom",
-          "precio": 4800,
+          "precio": 6800,
           "imagen": "https://i.pinimg.com/736x/7e/91/6c/7e916c6cc8d998812e51877fe238439e.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -3892,7 +3892,7 @@
         },
         {
           "nombre": "Set Paco Rabanne One Million",
-          "precio": 4500,
+          "precio": 6800,
           "imagen": "https://i.pinimg.com/1200x/5f/2d/3b/5f2d3bf7b5bbee921dcfb95b72e68e92.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -3903,7 +3903,7 @@
         },
         {
           "nombre": "Set JPG Scandal Men",
-          "precio": 5300,
+          "precio": 7500,
           "imagen": "https://i.pinimg.com/1200x/c9/1a/e7/c91ae7d93764b042243707e1d2694288.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -3914,7 +3914,7 @@
         },
         {
           "nombre": "Set JPG Le Male Elixir",
-          "precio": 8000,
+          "precio": 9500,
           "imagen": "https://i.pinimg.com/1200x/80/f3/b5/80f3b5a32325b7c7bb8c53209745b5fd.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -3925,7 +3925,7 @@
         },
         {
           "nombre": "Set Hugo Boss Bottled",
-          "precio": 3500,
+          "precio": 5500,
           "imagen": "https://i.pinimg.com/1200x/ba/54/93/ba5493784b5f08c8de56450e2e42f453.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -3936,7 +3936,7 @@
         },
         {
           "nombre": "Set Hugo Boss Man",
-          "precio": 3100,
+          "precio": 5000,
           "imagen": "https://i.pinimg.com/1200x/b0/eb/9a/b0eb9ad546d9d5771a7fd4c72cebccd0.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -3947,7 +3947,7 @@
         },
         {
           "nombre": "Set MontBlanc Explorer",
-          "precio": 4000,
+          "precio": 5500,
           "imagen": "https://i.pinimg.com/1200x/1a/ff/a2/1affa22cdd6159889567c7c64e8b3067.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -3958,7 +3958,7 @@
         },
         {
           "nombre": "Set MontBlanc Explorer Platinum",
-          "precio": 4000,
+          "precio": 5900,
           "imagen": "https://i.pinimg.com/1200x/89/0e/47/890e47195b7e20eacc56cc2af9d1a15f.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -3971,7 +3971,7 @@
       "arabes": [
         {
           "nombre": "Set Khamrah",
-          "precio": 3000,
+          "precio": 4200,
           "imagen": "https://i.pinimg.com/1200x/61/e1/76/61e176cf853836567ee76cf5ca86bbd0.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -3981,19 +3981,8 @@
           "descripcion": "Lujo accesible que no compromete calidad. Tu mejor inversión en estilo personal."
         },
         {
-          "nombre": "Set Sillage",
-          "precio": 3000,
-          "imagen": "https://i.pinimg.com/1200x/aa/10/2e/aa102eed4b18b308c53faa651aed56c1.jpg",
-          "notas": {
-            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
-            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
-            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
-          },
-          "descripcion": "La esencia del lujo oriental fusionada con elegancia moderna."
-        },
-        {
           "nombre": "Set Universe",
-          "precio": 3300,
+          "precio": 5200,
           "imagen": "https://i.pinimg.com/736x/39/60/c1/3960c19226b71f6027463b6673788411.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -4004,8 +3993,19 @@
         },
         {
           "nombre": "Set Radio Vintage",
-          "precio": 2700,
+          "precio": 4500,
           "imagen": "https://i.pinimg.com/1200x/5b/60/57/5b605785634bd84132fad066863e8cab.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Elegancia atemporal que conquista con su presencia única."
+        },
+         {
+          "nombre": "Set Armani code",
+          "precio": 8500,
+          "imagen": "https://i.pinimg.com/736x/30/51/a9/3051a9cb20d5ad09ec418bda27300e18.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
             "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
@@ -4015,7 +4015,7 @@
         },
         {
           "nombre": "Set 9PM",
-          "precio": 2500,
+          "precio": 4200,
           "imagen": "https://i.pinimg.com/736x/40/27/30/402730d7e5ff74def7f60350331c7202.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -4026,7 +4026,7 @@
         },
         {
           "nombre": "Set 9AM Dive",
-          "precio": 2500,
+          "precio": 4500,
           "imagen": "https://i.pinimg.com/1200x/48/2c/ff/482cffa37c1ff7daf4793e4e45378d16.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -4037,7 +4037,7 @@
         },
         {
           "nombre": "Set 9AM Rosa",
-          "precio": 2600,
+          "precio": 4200,
           "imagen": "https://i.pinimg.com/736x/33/a1/70/33a170905a5a0a0d6f04fd1f67ba9e6b.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -4048,7 +4048,7 @@
         },
         {
           "nombre": "Set Odyssey Mandarin",
-          "precio": 3100,
+          "precio": 4500,
           "imagen": "https://i.pinimg.com/1200x/42/80/65/428065fe1aa39eae44af8d3e694f4abb.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -4059,7 +4059,7 @@
         },
         {
           "nombre": "Set Odyssey Mega",
-          "precio": 2800,
+          "precio": 4200,
           "imagen": "https://i.pinimg.com/1200x/93/90/35/93903577dfbe1423a3d0dc1d6b46883a.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -4070,7 +4070,7 @@
         },
         {
           "nombre": "Set Club De Nuit",
-          "precio": 3000,
+          "precio": 4500,
           "imagen": "https://i.pinimg.com/1200x/5d/36/33/5d36338f27b76e28a2087affc813afd8.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -4081,7 +4081,7 @@
         },
         {
           "nombre": "Set Club de Nuit Untold",
-          "precio": 3200,
+          "precio": 4800,
           "imagen": "https://i.pinimg.com/1200x/32/18/e5/3218e5c63141c6d6939948133416edcb.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -4092,7 +4092,7 @@
         },
         {
           "nombre": "Set Club de Nuit Sillage",
-          "precio": 2800,
+          "precio": 4800,
           "imagen": "https://i.pinimg.com/1200x/fb/a1/ce/fba1ce8a2afc01713e3e92ff0b3f104b.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
