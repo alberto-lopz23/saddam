@@ -195,11 +195,55 @@
           }
         }
       ],
-      "nitro": [
+      "Dumont": [
         {
           "nombre": "Nitro Red",
           "precio": 2500,
           "imagen": "https://i.pinimg.com/1200x/53/2c/3c/532c3c2438d6afff40471fcab72350c9.jpg",
+          "descripcion": "Dulce seducción envuelta en pasión. Frutos rojos y vainilla cremosa se entrelazan para crear una fragancia irresistible que cautiva corazones y deja una estela memorable.",
+          "notas": {
+            "salida": "🍓 Frutos Rojos, 🍋 Cítricos, 🍎 Manzana",
+            "corazon": "🌸 Jazmín, 🌹 Rosa, 🌺 Peonía",
+            "fondo": "🍦 Vainilla, 🪵 Almizcle, 🍦 Caramelo"
+          }
+        },
+        {
+          "nombre": "Nitro Green",
+          "precio": 2500,
+          "imagen": "https://i.pinimg.com/1200x/74/41/f4/7441f450c8dd00cc777b8a3255f9f38e.jpg",
+          "descripcion": "Dulce seducción envuelta en pasión. Frutos rojos y vainilla cremosa se entrelazan para crear una fragancia irresistible que cautiva corazones y deja una estela memorable.",
+          "notas": {
+            "salida": "🍓 Frutos Rojos, 🍋 Cítricos, 🍎 Manzana",
+            "corazon": "🌸 Jazmín, 🌹 Rosa, 🌺 Peonía",
+            "fondo": "🍦 Vainilla, 🪵 Almizcle, 🍦 Caramelo"
+          }
+        },
+         {
+          "nombre": "Nitro Black",
+          "precio": 2500,
+          "imagen": "https://i.pinimg.com/1200x/c5/9b/b6/c59bb660a4e3a2cb04eba90a9f321923.jpg",
+          "descripcion": "Dulce seducción envuelta en pasión. Frutos rojos y vainilla cremosa se entrelazan para crear una fragancia irresistible que cautiva corazones y deja una estela memorable.",
+          "notas": {
+            "salida": "🍓 Frutos Rojos, 🍋 Cítricos, 🍎 Manzana",
+            "corazon": "🌸 Jazmín, 🌹 Rosa, 🌺 Peonía",
+            "fondo": "🍦 Vainilla, 🪵 Almizcle, 🍦 Caramelo"
+          }
+        },
+        {
+          "nombre": "Nitro white",
+          "precio": 2500,
+          "imagen": "https://i.pinimg.com/736x/77/01/1d/77011defad99bc893b7ad7b211720480.jpg",
+          "descripcion": "Dulce seducción envuelta en pasión. Frutos rojos y vainilla cremosa se entrelazan para crear una fragancia irresistible que cautiva corazones y deja una estela memorable.",
+          "notas": {
+            "salida": "🍓 Frutos Rojos, 🍋 Cítricos, 🍎 Manzana",
+            "corazon": "🌸 Jazmín, 🌹 Rosa, 🌺 Peonía",
+            "fondo": "🍦 Vainilla, 🪵 Almizcle, 🍦 Caramelo"
+          }
+        },
+        {
+          "nombre": "Nitro blue",
+          "precio": 2500,
+          "imagen": "https://i.pinimg.com/1200x/62/0b/35/620b35e72a862b58c17bb8053264c582.jpg",
           "descripcion": "Dulce seducción envuelta en pasión. Frutos rojos y vainilla cremosa se entrelazan para crear una fragancia irresistible que cautiva corazones y deja una estela memorable.",
           "notas": {
             "salida": "🍓 Frutos Rojos, 🍋 Cítricos, 🍎 Manzana",
