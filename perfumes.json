@@ -3649,6 +3649,58 @@
           "descripcion": "Un toque de clase que eleva cualquier ocasión a memorable."
         }
       ],
+      "Xerjoff": [
+         {
+          "nombre": "xerjoff naxos erba pura",
+          "imagen": "https://i.pinimg.com/736x/fe/ee/1e/feee1e351f4eaf641fa13d5d843c991d.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Exclusividad y distinción para quienes aprecian lo extraordinario."
+        },
+         {
+          "nombre": "xerjoff torino 21",
+          "imagen": "https://i.pinimg.com/1200x/e8/b2/8b/e8b28bba1e207d94faea784a648759f5.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Exclusividad y distinción para quienes aprecian lo extraordinario."
+        },
+         {
+          "nombre": "xerjoff accento",
+          "imagen": "https://i.pinimg.com/1200x/df/b1/c3/dfb1c33b99284fb02dcadecf3858e4ba.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Exclusividad y distinción para quienes aprecian lo extraordinario."
+        },
+         {
+          "nombre": "xerjoff laylati",
+          "imagen": "https://i.pinimg.com/736x/4c/f3/0a/4cf30aa02b5ffd453bb7ee41e9ec6c00.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Exclusividad y distinción para quienes aprecian lo extraordinario."
+        },
+         {
+          "nombre": "xerjoff alexandria II",
+          "imagen": "https://i.pinimg.com/1200x/8b/7c/12/8b7c126f23d635d531f3566789b13eaf.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Exclusividad y distinción para quienes aprecian lo extraordinario."
+        }
+        ],
       "Bond no.9": [
         {
           "nombre": "bond no.9 the scent of peace men",
@@ -3817,6 +3869,26 @@
         {
           "nombre": "Galloway",
           "imagen": "https://i.pinimg.com/1200x/e3/ff/6b/e3ff6b851c275241cccde3ddbea797f6.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Sofisticación masculina que redefine la elegancia contemporánea."
+        },
+         {
+          "nombre": "Parfums de Marly pegasus",
+          "imagen": "https://i.pinimg.com/1200x/b9/13/16/b91316f87c88a067c4c4d93a884911b4.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Sofisticación masculina que redefine la elegancia contemporánea."
+        },
+         {
+          "nombre": "Parfums de Marly delina exclusif",
+          "imagen": "https://i.pinimg.com/1200x/2f/fe/66/2ffe6691c1c86c4e790af2578893bbdb.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
             "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
