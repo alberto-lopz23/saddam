@@ -1586,7 +1586,7 @@
         },
          {
           "nombre": "Chanel COCO NOIR",
-          "precio": 10500,
+          "precio": 11000,
           "imagen": "https://i.pinimg.com/1200x/94/4d/f6/944df65b1e742a395c5cbd32b31358e4.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -2001,8 +2001,19 @@
         },
         {
           "nombre": "Yves Saint Laurent Ysl Myslf Eau de Parfum",
-          "precio": 6200,
+          "precio": 7000,
           "imagen": "https://i.pinimg.com/736x/d8/4f/ae/d84faeb03981274e83fd38f914ae153d.jpg",
+          "notas": {
+            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
+            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
+            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
+          },
+          "descripcion": "Elegancia aterciopelada que acaricia los sentidos suavemente."
+        },
+         {
+          "nombre": "Yves Saint Laurent Ysl Myslf Le Parfum",
+          "precio": 7000,
+          "imagen": "https://i.pinimg.com/1200x/84/ca/6d/84ca6d7e119f81e481d505b54ce99aa0.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
             "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
@@ -2012,7 +2023,7 @@
         },
         {
           "nombre": "Yves Saint Laurent Ysl Myslf Absolu",
-          "precio": 8100,
+          "precio": 8200,
           "imagen": "https://i.pinimg.com/736x/ba/a0/2d/baa02dfb4f3717da619c16bfe104d072.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
