@@ -3957,15 +3957,15 @@
           "descripcion": "Frescura mediterránea que transporta tus sentidos a costas paradisíacas."
         },
         {
-          "nombre": "Set MontBlanc Explorer",
-          "precio": 5500,
-          "imagen": "https://i.pinimg.com/1200x/1a/ff/a2/1affa22cdd6159889567c7c64e8b3067.jpg",
+          "nombre": "Set Armani code",
+          "precio": 8500,
+          "imagen": "https://i.pinimg.com/736x/30/51/a9/3051a9cb20d5ad09ec418bda27300e18.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
             "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
             "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
           },
-          "descripcion": "Despierta admiración dondequiera que vayas con esta composición magistral."
+          "descripcion": "Elegancia atemporal que conquista con su presencia única."
         },
         {
           "nombre": "Set MontBlanc Explorer Platinum",
@@ -4006,17 +4006,6 @@
           "nombre": "Set Radio Vintage",
           "precio": 4500,
           "imagen": "https://i.pinimg.com/1200x/5b/60/57/5b605785634bd84132fad066863e8cab.jpg",
-          "notas": {
-            "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
-            "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
-            "fondo": "🍦 Vainilla, 🪵 Ámbar, 🌲 Pachulí"
-          },
-          "descripcion": "Elegancia atemporal que conquista con su presencia única."
-        },
-         {
-          "nombre": "Set Armani code",
-          "precio": 8500,
-          "imagen": "https://i.pinimg.com/736x/30/51/a9/3051a9cb20d5ad09ec418bda27300e18.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
             "corazon": "🌹 Rosa, 🪵 Oud, 🌸 Jazmín",
