@@ -722,7 +722,7 @@
           "descripcion": "Exclusividad y distinción para quienes aprecian lo extraordinario."
         },
         {
-          "nombre": "Lataffa Noble Blush",
+          "nombre": "Lattafa Noble Blush",
           "precio": 2300,
           "imagen": "https://i.pinimg.com/1200x/0f/7d/03/0f7d030a15dced8410674997cd4876a6.jpg",
           "notas": {
@@ -733,7 +733,7 @@
           "descripcion": "Frescura cítrica que revitaliza y refresca en cada spray."
         },
         {
-          "nombre": "Lataffa Amethyst",
+          "nombre": "Lattafa Amethyst",
           "precio": 1600,
           "imagen": "https://i.pinimg.com/1200x/d2/d6/07/d2d6078bb8ec5653b9c477192fe87855.jpg",
           "notas": {
@@ -744,7 +744,7 @@
           "descripcion": "Romanticismo en su máxima expresión. Perfecta para conquistar y enamorar."
         },
         {
-          "nombre": "Lataffa Honor y Gloria",
+          "nombre": "Lattafa Honor y Gloria",
           "precio": 2250,
           "imagen": "https://i.pinimg.com/1200x/6b/22/19/6b2219c35b1b853b77268cd3bed3d965.jpg",
           "notas": {
@@ -755,7 +755,7 @@
           "descripcion": "Feminidad radiante en una composición floral que enamora a primera inhalación."
         },
         {
-          "nombre": "Lataffa Our For Glory Negro",
+          "nombre": "Lattafa Our For Glory Negro",
           "precio": 1900,
           "imagen": "https://i.pinimg.com/1200x/2f/f7/ed/2ff7ed616b09a2844e340abb2c51b401.jpg",
           "notas": {
@@ -766,7 +766,7 @@
           "descripcion": "Seducción pura envuelta en notas irresistibles que cautivan instantáneamente."
         },
         {
-          "nombre": "Lataffa Sublime Rojo",
+          "nombre": "Lattafa Sublime Rojo",
           "precio": 1800,
           "imagen": "https://i.pinimg.com/1200x/e5/da/0e/e5da0eeede1496dc99e038213ddb8b42.jpg",
           "notas": {
@@ -777,7 +777,7 @@
           "descripcion": "Lujo y sofisticación en cada gota. Perfecto para momentos especiales que merecen ser inolvidables."
         },
         {
-          "nombre": "Lataffa Fakhar Black",
+          "nombre": "Lattafa Fakhar Black",
           "precio": 1800,
           "imagen": "https://i.pinimg.com/1200x/75/2d/2f/752d2fdc7a3efb791915316984eb699b.jpg",
           "notas": {
@@ -788,7 +788,7 @@
           "descripcion": "Intensidad magnética que atrae miradas y genera conversaciones."
         },
         {
-          "nombre": "Lataffa Fakhar Gold",
+          "nombre": "Lattafa Fakhar Gold",
           "precio": 1800,
           "imagen": "https://i.pinimg.com/1200x/f7/83/e6/f783e652c1382e070576e67851ae61b6.jpg",
           "notas": {
@@ -799,7 +799,7 @@
           "descripcion": "Vibrante y juvenil, esta fragancia es sinónimo de energía y vitalidad."
         },
         {
-          "nombre": "Latafa Fakhar Rose",
+          "nombre": "Lattafa Fakhar Rose",
           "precio": 1800,
           "imagen": "https://i.pinimg.com/1200x/3e/dd/c9/3eddc9356505ff0de73a4de7427fb542.jpg",
           "notas": {
@@ -810,8 +810,8 @@
           "descripcion": "Un toque de clase que eleva cualquier ocasión a memorable."
         },
         {
-          "nombre": "Lataffa Asad",
-          "precio": 2000,
+          "nombre": "Lattafa Asad",
+          "precio": 1600,
           "imagen": "https://i.pinimg.com/1200x/6f/4d/c7/6f4dc738ad2ba1772c737163f439c3e1.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -821,7 +821,7 @@
           "descripcion": "Frescura matutina que te prepara para conquistar el día con actitud."
         },
         {
-          "nombre": "Lataffa Asad Elixir",
+          "nombre": "Lattafa Asad Elixir",
           "precio": 2500,
           "imagen": "https://i.pinimg.com/1200x/32/8f/1b/328f1be3741ac2397ac37a4f3119e744.jpg",
           "notas": {
@@ -832,7 +832,7 @@
           "descripcion": "Frescura matutina que te prepara para conquistar el día con actitud."
         },
         {
-          "nombre": "Lataffa Asad Bourbon",
+          "nombre": "Lattafa Asad Bourbon",
           "precio": 2400,
           "destacado": true,
           "imagen": "https://i.pinimg.com/1200x/ce/c6/bf/cec6bf276b64afd0fc1b7c96e46efa12.jpg",
@@ -844,7 +844,7 @@
           "descripcion": "Frescura cítrica que revitaliza y refresca en cada spray."
         },
         {
-          "nombre": "Lataffa Asad Zanzibar",
+          "nombre": "Lattafa Asad Zanzibar",
           "precio": 2400,
           "imagen": "https://i.pinimg.com/1200x/61/b4/01/61b401bb269f967fb44c1f2679cf3c94.jpg",
           "notas": {
@@ -855,8 +855,8 @@
           "descripcion": "Dulce tentación imposible de resistir. Adictiva y memorable."
         },
         {
-          "nombre": "Lataffa Yara Candy",
-          "precio": 2200,
+          "nombre": "Lattafa Yara Candy",
+          "precio": 1700,
           "imagen": "https://i.pinimg.com/1200x/c8/e3/d4/c8e3d42bd20474c82cc3276265e83339.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -866,8 +866,8 @@
           "descripcion": "Rebeldía sofisticada para espíritus libres que marcan tendencia."
         },
         {
-          "nombre": "Lataffa Yara",
-          "precio": 2100,
+          "nombre": "Lattafa Yara",
+          "precio": 1700,
           "imagen": "https://i.pinimg.com/736x/58/ae/3d/58ae3d8d21cd84a18d9efa20426b7669.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -877,8 +877,8 @@
           "descripcion": "Aventura y libertad capturadas en una fragancia que inspira."
         },
         {
-          "nombre": "Lataffa Yara Moi",
-          "precio": 2100,
+          "nombre": "Lattafa Yara Moi",
+          "precio": 1700,
           "imagen": "https://i.pinimg.com/1200x/45/07/80/45078009cf5d4e7915f376333590b3c6.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
@@ -888,8 +888,8 @@
           "descripcion": "Romanticismo en su máxima expresión. Perfecta para conquistar y enamorar."
         },
         {
-          "nombre": "Yara Tous",
-          "precio": 2100,
+          "nombre": "Lattafa Yara Tous",
+          "precio": 1700,
           "imagen": "https://i.pinimg.com/1200x/c7/87/1d/c7871d7ace05bc1ba4677fe7f7b5c6b6.jpg",
           "notas": {
             "salida": "🍊 Mandarina, 🌿 Cardamomo, 🌶️ Azafrán",
