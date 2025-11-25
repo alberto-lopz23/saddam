@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Detalle del Perfume</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        background: #2a2a2a;
+        color: white;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      .back-button {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: white;
+        padding: 12px 20px;
+        border-radius: 25px;
+        cursor: pointer;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s;
+        backdrop-filter: blur(10px);
+        z-index: 1000;
+        text-decoration: none;
+      }
+
+      .back-button:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: translateX(-5px);
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 100px 20px 50px;
+      }
+
+      .perfume-detail {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 50px;
+        align-items: start;
+      }
+
+      .image-section {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 30px;
+        padding: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .perfume-image {
+        max-width: 100%;
+        height: auto;
+        max-height: 500px;
+        object-fit: contain;
+        border-radius: 20px;
+      }
+
+      .info-section {
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+      }
+
+      .brand-name {
+        font-size: 14px;
+        color: #aaa;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+      }
+
+      .perfume-name {
+        font-size: 42px;
+        font-weight: 700;
+        line-height: 1.2;
+        margin-bottom: 10px;
+      }
+
+      .price {
+        font-size: 36px;
+        font-weight: 700;
+        color: #667eea;
+        margin-bottom: 20px;
+      }
+
+      .description-box {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 20px;
+        padding: 25px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .description-box h3 {
+        font-size: 18px;
+        margin-bottom: 15px;
+        color: #fff;
+      }
+
+      .description-box p {
+        font-size: 15px;
+        line-height: 1.8;
+        color: #ccc;
+      }
+
+      .notes-section {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 20px;
+        padding: 25px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .notes-section h3 {
+        font-size: 18px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .note-item {
+        background: rgba(0, 0, 0, 0.3);
+        border-left: 4px solid #667eea;
+        padding: 15px;
+        margin-bottom: 15px;
+        border-radius: 8px;
+      }
+
+      .note-item:last-child {
+        margin-bottom: 0;
+      }
+
+      .note-label {
+        font-size: 12px;
+        text-transform: uppercase;
+        color: #667eea;
+        letter-spacing: 1px;
+        margin-bottom: 8px;
+        font-weight: 600;
+      }
+
+      .note-content {
+        font-size: 14px;
+        color: #e0e0e0;
+        line-height: 1.6;
+      }
+
+      .whatsapp-button {
+        background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+        color: white;
+        border: none;
+        padding: 18px 40px;
+        border-radius: 30px;
+        font-size: 18px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        box-shadow: 0 8px 25px rgba(37, 211, 102, 0.3);
+        margin-top: 10px;
+      }
+
+      .whatsapp-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 35px rgba(37, 211, 102, 0.4);
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          padding: 80px 15px 30px;
+        }
+
+        .perfume-detail {
+          grid-template-columns: 1fr;
+          gap: 30px;
+        }
+
+        .back-button {
+          top: 15px;
+          left: 15px;
+          padding: 10px 16px;
+          font-size: 14px;
+        }
+
+        .perfume-name {
+          font-size: 28px;
+        }
+
+        .price {
+          font-size: 28px;
+        }
+
+        .image-section {
+          padding: 30px;
+        }
+
+        .perfume-image {
+          max-height: 350px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a href="javascript:history.back()" class="back-button">
+      ← Volver al Catálogo
+    </a>
+
+    <div class="container">
+      <div class="perfume-detail">
+        <div class="image-section">
+          <img id="perfumeImage" src="" alt="Perfume" class="perfume-image" />
+        </div>
+
+        <div class="info-section">
+          <div class="brand-name" id="brandName"></div>
+          <h1 class="perfume-name" id="perfumeName"></h1>
+          <div class="price" id="perfumePrice"></div>
+
+          <div class="description-box">
+            <h3>Descripción</h3>
+            <p id="perfumeDescription"></p>
+          </div>
+
+          <div class="notes-section">
+            <h3>🌸 Notas Olfativas</h3>
+            <div id="notesContainer"></div>
+          </div>
+
+          <a href="#" id="whatsappLink" class="whatsapp-button">
+            📱 Consultar por WhatsApp
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Obtener datos del perfume desde sessionStorage
+      const perfumeData = JSON.parse(sessionStorage.getItem("perfumeDetail"));
+
+      if (perfumeData) {
+        // Llenar información
+        document.getElementById("perfumeImage").src = perfumeData.imagen;
+        document.getElementById("brandName").textContent =
+          perfumeData.marca.toUpperCase();
+        document.getElementById("perfumeName").textContent = perfumeData.nombre;
+        document.getElementById(
+          "perfumePrice"
+        ).textContent = `$${perfumeData.precio}`;
+        document.getElementById("perfumeDescription").textContent =
+          perfumeData.descripcion ||
+          "Perfume de alta calidad con una fragancia única y duradera.";
+
+        // Llenar notas olfativas
+        const notesContainer = document.getElementById("notesContainer");
+        if (perfumeData.notas) {
+          notesContainer.innerHTML = `
+                    <div class="note-item">
+                        <div class="note-label">Notas de Salida</div>
+                        <div class="note-content">${
+                          perfumeData.notas.salida || "No disponible"
+                        }</div>
+                    </div>
+                    <div class="note-item">
+                        <div class="note-label">Notas de Corazón</div>
+                        <div class="note-content">${
+                          perfumeData.notas.corazon || "No disponible"
+                        }</div>
+                    </div>
+                    <div class="note-item">
+                        <div class="note-label">Notas de Fondo</div>
+                        <div class="note-content">${
+                          perfumeData.notas.fondo || "No disponible"
+                        }</div>
+                    </div>
+                `;
+        } else {
+          notesContainer.innerHTML =
+            '<p style="color: #aaa;">Notas olfativas no disponibles</p>';
+        }
+
+        // Configurar WhatsApp
+        const mensaje = `Hola! Me interesa el perfume:\n\n*${perfumeData.nombre}*\n${perfumeData.marca}\nPrecio: RD$ ${perfumeData.precio}`;
+        document.getElementById(
+          "whatsappLink"
+        ).href = `https://wa.me/18298070599?text=${encodeURIComponent(
+          mensaje
+        )}`;
+      } else {
+        // Si no hay datos, redirigir
+        window.location.href = "marcas.html";
+      }
+    </script>
+  </body>
+</html>

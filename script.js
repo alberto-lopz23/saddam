@@ -1,4 +1,4 @@
-const NUMERO_WHATSAPP = "+18298914134";
+const NUMERO_WHATSAPP = "+18298070599";
 
 // Variables globales
 let todosLosPerfumes = [];
@@ -12,13 +12,76 @@ const galeria = document.getElementById("galeria");
 const subfiltersDiv = document.getElementById("subfilters");
 const searchInput = document.getElementById("searchInput");
 
-// Cargar datos del JSON
+// Cargar datos desde Firebase (con caché para cero costos)
 async function cargarCatalogo() {
   try {
-    const response = await fetch("perfumes.json");
-    catalogoData = await response.json();
+    // Importar Firebase dinámicamente
+    const { obtenerPerfumes } = await import("./firebase-config.js");
+
+    // Obtener perfumes (usa caché automático de 24h)
+    catalogoData = await obtenerPerfumes();
     procesarDatos();
-    mostrarPerfumes(todosLosPerfumes);
+
+    // Verificar si viene de la página de marcas
+    const marcaSeleccionada = sessionStorage.getItem("marcaSeleccionada");
+    const categoriaSeleccionada = sessionStorage.getItem(
+      "categoriaSeleccionada"
+    );
+
+    if (marcaSeleccionada && categoriaSeleccionada) {
+      // Limpiar sessionStorage
+      sessionStorage.removeItem("marcaSeleccionada");
+      sessionStorage.removeItem("categoriaSeleccionada");
+
+      // Aplicar filtro
+      filtrarPorMarca(marcaSeleccionada, categoriaSeleccionada);
+      mostrarSubfiltros(categoriaSeleccionada);
+    } else {
+      // Verificar si hay filtros guardados (al volver del modal)
+      const filtroCategoria = sessionStorage.getItem("filtroCategoria");
+      const filtroMarca = sessionStorage.getItem("filtroMarca");
+
+      if (filtroCategoria) {
+        // Restaurar filtro de categoría
+        const btnCategoria = Array.from(document.querySelectorAll(".btn")).find(
+          (b) => b.textContent.toLowerCase().trim() === filtroCategoria
+        );
+        if (btnCategoria) {
+          btnCategoria.classList.add("active");
+          const categoria =
+            filtroCategoria === "todos"
+              ? "todos"
+              : filtroCategoria === "árabes"
+              ? "arabes"
+              : filtroCategoria === "diseñador"
+              ? "disenador"
+              : filtroCategoria === "nichos"
+              ? "nichos"
+              : filtroCategoria === "sets"
+              ? "sets"
+              : "todos";
+          aplicarFiltroCategoria(categoria);
+
+          // Si hay filtro de marca, aplicarlo
+          if (filtroMarca && categoria !== "todos") {
+            setTimeout(() => {
+              const btnMarca = Array.from(
+                document.querySelectorAll(".subfilter-btn")
+              ).find((b) => b.textContent === filtroMarca);
+              if (btnMarca) {
+                btnMarca.click();
+              }
+            }, 100);
+          }
+        }
+
+        // Limpiar filtros guardados
+        sessionStorage.removeItem("filtroCategoria");
+        sessionStorage.removeItem("filtroMarca");
+      } else {
+        mostrarPerfumes(todosLosPerfumes);
+      }
+    }
   } catch (error) {
     console.error("Error cargando catálogo:", error);
     // Fallback a datos básicos si falla la carga
@@ -151,10 +214,23 @@ function mostrarPerfumes(lista, resetearPagina = true) {
 
     const precio = calcularPrecioFinal(perfume);
 
+    // Icono de género
+    let generoIcono = "";
+    if (perfume.genero === "hombre") {
+      generoIcono =
+        "<span style='color: #4A90E2; font-size: 1.3em; margin-left: 5px;'>♂️</span>"; // Símbolo masculino
+    } else if (perfume.genero === "mujer") {
+      generoIcono =
+        "<span style='color: #FF69B4; font-size: 1.3em; margin-left: 5px;'>♀️</span>"; // Símbolo femenino
+    } else {
+      generoIcono =
+        "<span style='color: #9B59B6; font-size: 1.3em; margin-left: 5px;'>⚧️</span>"; // Símbolo unisex
+    }
+
     card.innerHTML = `
       <img src="${perfume.imagen}" alt="${perfume.nombre}" onerror="this.src='https://placehold.co/400x500?text=Perfume'">
       <h3>${perfume.nombre}</h3>
-      <p class="marca">${perfume.marca}</p>
+      <p class="marca">${perfume.marca} ${generoIcono}</p>
       <p class="precio">${precio}</p>
     `;
 
@@ -333,6 +409,18 @@ function volverACatalogo() {
 
 // FUNCIÓN OBSOLETA - mantener por compatibilidad pero ya no se usa
 function openModal(perfume, precio) {
+  // Guardar estado del filtro actual antes de abrir modal
+  const categoriaActiva = document.querySelector(".btn.active");
+  if (categoriaActiva) {
+    const categoriaTexto = categoriaActiva.textContent.toLowerCase().trim();
+    sessionStorage.setItem("filtroCategoria", categoriaTexto);
+  }
+
+  const marcaActiva = document.querySelector(".subfilter-btn.active");
+  if (marcaActiva) {
+    sessionStorage.setItem("filtroMarca", marcaActiva.textContent);
+  }
+
   const modal = document.getElementById("perfumeModal");
   const mensaje = encodeURIComponent(
     `Hola, estoy interesado/a en ${perfume.nombre} de ${perfume.marca}. ¿Me podrías dar más detalles?`
@@ -447,7 +535,7 @@ function mostrarSubfiltros(categoria) {
           .map((p) => p.marca)
       ),
     ];
-    subfiltros = marcas.slice(0, 8); // Mostrar las primeras 8 marcas
+    subfiltros = marcas.slice(0, 8); // Mostrar solo 8 marcas
   } else if (categoria === "disenador") {
     // Obtener marcas de diseñador únicas
     const marcas = [
@@ -457,7 +545,7 @@ function mostrarSubfiltros(categoria) {
           .map((p) => p.marca)
       ),
     ];
-    subfiltros = marcas.slice(0, 8);
+    subfiltros = marcas.slice(0, 8); // Mostrar solo 8 marcas
   } else if (categoria === "nichos") {
     // Obtener marcas nicho únicas
     const marcas = [
@@ -480,6 +568,15 @@ function mostrarSubfiltros(categoria) {
     btn.onclick = () => filtrarPorMarca(subfiltro, categoria);
     subfiltersDiv.appendChild(btn);
   });
+
+  // Agregar botón "Más marcas" solo para diseñador
+  if (categoria === "disenador" && subfiltros.length === 8) {
+    const btnMas = document.createElement("button");
+    btnMas.className = "subfilter-btn subfilter-btn-mas";
+    btnMas.textContent = "✨ Más marcas";
+    btnMas.onclick = () => (window.location.href = "marcas.html");
+    subfiltersDiv.appendChild(btnMas);
+  }
 }
 
 // Filtrar por marca específica
@@ -628,7 +725,7 @@ function mostrarSubfiltrosMobile(categoria) {
           .map((p) => p.marca)
       ),
     ];
-    subfiltros = marcas.slice(0, 10);
+    subfiltros = marcas.slice(0, 8); // Mostrar solo 8 marcas
   } else if (categoria === "disenador") {
     const marcas = [
       ...new Set(
@@ -637,7 +734,7 @@ function mostrarSubfiltrosMobile(categoria) {
           .map((p) => p.marca)
       ),
     ];
-    subfiltros = marcas.slice(0, 10);
+    subfiltros = marcas.slice(0, 8); // Mostrar solo 8 marcas
   } else if (categoria === "nichos") {
     const marcas = [
       ...new Set(
@@ -667,6 +764,15 @@ function mostrarSubfiltrosMobile(categoria) {
       subfilterSection.appendChild(btn);
     });
 
+    // Agregar botón "Más marcas" solo para diseñador
+    if (categoria === "disenador" && subfiltros.length === 8) {
+      const btnMas = document.createElement("button");
+      btnMas.className = "mobile-subfilter-btn mobile-subfilter-btn-mas";
+      btnMas.textContent = "✨ Más marcas";
+      btnMas.onclick = () => (window.location.href = "marcas.html");
+      subfilterSection.appendChild(btnMas);
+    }
+
     mobileSubfilters.appendChild(subfilterSection);
   }
 }
@@ -690,3 +796,14 @@ function aplicarFiltroCategoria(categoria) {
   // Mostrar perfumes filtrados
   mostrarPerfumes(perfumesFiltrados);
 }
+
+// ============ EXPONER FUNCIONES AL ÁMBITO GLOBAL ============
+// Necesario porque usamos type="module" en el HTML
+window.filtrarCategoria = filtrarCategoria;
+window.filtrarCategoriaMobile = filtrarCategoriaMobile;
+window.toggleSearch = toggleSearch;
+window.toggleMobileMenu = toggleMobileMenu;
+window.buscarPerfumes = buscarPerfumes;
+window.mostrarPaginaPerfume = mostrarPaginaPerfume;
+window.cargarPaginaAnterior = cargarPaginaAnterior;
+window.cargarSiguientePagina = cargarSiguientePagina;

@@ -15,19 +15,14 @@ header {
   justify-content: center;
   align-items: center;
   text-align: center;
-  padding: 30px 5px;
-  background-color: rgba(255, 255, 255, 0.98);
-  background-image: url("logodesk.jpg");
-  background-size: cover;
-
-  background-position: center;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  padding: 8px 5px 6px 5px;
+  background-color: #000000;
   position: sticky;
   top: 0;
   z-index: 100;
   backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  min-height: 200px;
+  min-height: 85px;
   height: auto;
   position: relative; /* Para posicionamiento absoluto del search */
 }
@@ -37,13 +32,15 @@ header {
   justify-content: center;
   align-items: center;
   width: 100%;
-  margin-bottom: 18px;
+  margin-bottom: 4px;
 }
 
 .logo-title-container {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 12px;
+  position: relative;
+  top: 40px;
 }
 
 /* Contenedor móvil (oculto por defecto) */
@@ -69,7 +66,6 @@ header {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  color: #f48c8c;
 }
 
 .mobile-logo {
@@ -77,14 +73,15 @@ header {
 }
 
 .header-logo {
-  width: 70px;
-  height: 70px;
+  width: 65px;
+  height: 65px;
   border-radius: 50%;
   object-fit: cover;
   background: white;
-  border: 3px solid #f48c8c;
+  border: 2px solid #5c5c5c;
   box-shadow: 0 4px 12px rgba(244, 140, 140, 0.4);
   padding: 3px;
+  image-rendering: auto;
 }
 
 .brand-text {
@@ -96,17 +93,17 @@ header {
 
 .brand-name {
   margin: 0;
-  color: #f48c8c;
-  font-size: 28px;
+  color: #ffffff;
+  font-size: 20px;
   font-weight: 700;
   letter-spacing: 0.5px;
-  text-shadow: 1px 1px 2px rgba(244, 140, 140, 0.2);
+  text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.2);
 }
 
 .brand-slogan {
   margin: 0;
-  color: #666;
-  font-size: 13px;
+  color: #cccccc;
+  font-size: 11px;
   font-weight: 400;
   font-style: italic;
   letter-spacing: 0.3px;
@@ -144,6 +141,18 @@ h1 {
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.2s ease;
   font-size: 13px;
+}
+
+.subfilter-btn-mas {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  font-weight: 600;
+  box-shadow: 0 3px 10px rgba(102, 126, 234, 0.3);
+}
+
+.subfilter-btn-mas:hover {
+  background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+  transform: scale(1.08) !important;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.5) !important;
 }
 
 .btn:hover,
@@ -275,10 +284,37 @@ h1 {
   white-space: nowrap;
 }
 
+/* Botón de Admin - esquina superior izquierda */
+.admin-btn {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: white;
+  font-size: 22px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+  z-index: 200;
+}
+
+.admin-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+}
+
 /* Contenedor de búsqueda con lupa expandible - esquina superior derecha */
 .search-container {
   position: absolute;
-  top: 8px;
+  bottom: 10px;
   right: 15px;
   display: flex;
   align-items: center;
@@ -300,7 +336,6 @@ h1 {
   transition: all 0.3s ease;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   z-index: 2;
-  
 }
 
 .search-toggle-btn:hover {
@@ -522,6 +557,20 @@ h1 {
   padding: 10px 15px;
 }
 
+.mobile-subfilter-btn-mas {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  font-weight: 600;
+  text-align: center;
+  border: none;
+  box-shadow: 0 3px 10px rgba(102, 126, 234, 0.3);
+}
+
+.mobile-subfilter-btn-mas:hover {
+  background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.5);
+}
+
 /* Sección extra del menú móvil */
 .mobile-extra-section {
   padding: 15px 20px 20px 20px;
@@ -578,6 +627,15 @@ body.menu-open {
   .desktop-filters,
   .desktop-subfilters {
     display: none !important;
+  }
+
+  /* Botón de admin en móvil */
+  .admin-btn {
+    top: 10px;
+    left: 10px;
+    width: 38px;
+    height: 38px;
+    font-size: 18px;
   }
 
   /* Ajustar header */
@@ -746,29 +804,6 @@ body.menu-open {
   }
 }
 /* Imagen del header */
-.header-logo-link {
-  float: right; /* imagen en el lado derecho */
-  position: relative; /* para control preciso de posición */
-  top: -10px; /* centrado vertical perfecto */
-  margin-right: 20px; /* mejor espaciado del borde */
-  line-height: 22px; /* alineación más exacta */
-}
-
-.header-logo {
-  width: 60px; /* tamaño aún más pequeño */
-  height: 60px; /* altura fija para mantener proporción circular */
-  border-radius: 50%; /* imagen circular */
-  cursor: pointer;
-  object-fit: cover; /* mantiene la proporción y recorta si es necesario */
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-/* efecto al pasar el mouse */
-.header-logo:hover {
-  transform: scale(1.05);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-
 /* ============ MODAL DE PERFUME ============ */
 /* Modales personalizados */
 .custom-modal {
