@@ -537,7 +537,10 @@ async function eliminarPerfume(categoria, marca, index) {
     // Paso 4: Actualizar perfumesFiltrados con los cambios
     perfumesFiltrados = [...todosLosPerfumes];
 
-    // Paso 5: Actualizar la UI sin recargar
+    // Paso 5: Actualizar estadísticas
+    actualizarEstadisticas();
+
+    // Paso 6: Actualizar la UI sin recargar
     mostrarPerfumes();
 
     console.log(`✅ Perfume eliminado exitosamente: ${categoria}/${marca}[${index}]`);
@@ -547,6 +550,149 @@ async function eliminarPerfume(categoria, marca, index) {
     alert("❌ Error al eliminar: " + error.message);
   }
 }
+
+// ============ ACTUALIZAR ESTADÍSTICAS ============
+
+function actualizarEstadisticas() {
+  try {
+    // Calcular totales a partir de todosLosPerfumes
+    const total = todosLosPerfumes.length;
+    const totalArabes = todosLosPerfumes.filter(p => p.categoria === 'arabes').length;
+    const totalDisenador = todosLosPerfumes.filter(p => p.categoria === 'disenador').length;
+    const totalNicho = todosLosPerfumes.filter(p => p.categoria === 'nicho').length;
+    const totalSets = todosLosPerfumes.filter(p => p.categoria === 'sets').length;
+
+    // Log de debug con los totales
+    console.log('📊 Estadísticas actualizadas:', {
+      total,
+      arabes: totalArabes,
+      disenador: totalDisenador,
+      nicho: totalNicho,
+      sets: totalSets
+    });
+
+    // Actualizar elementos del DOM de forma segura (verificar que existan)
+    const elementoTotalPerfumes = document.getElementById('totalPerfumes');
+    if (elementoTotalPerfumes) elementoTotalPerfumes.textContent = total;
+
+    const elementoTotalArabes = document.getElementById('totalArabes');
+    if (elementoTotalArabes) elementoTotalArabes.textContent = totalArabes;
+
+    const elementoTotalDisenador = document.getElementById('totalDisenador');
+    if (elementoTotalDisenador) elementoTotalDisenador.textContent = totalDisenador;
+
+    const elementoTotalNicho = document.getElementById('totalNicho');
+    if (elementoTotalNicho) elementoTotalNicho.textContent = totalNicho;
+
+    const elementoTotalSets = document.getElementById('totalSets');
+    if (elementoTotalSets) elementoTotalSets.textContent = totalSets;
+
+  } catch (error) {
+    console.error('⚠️ Error al actualizar estadísticas:', error);
+    // No lanzar la excepción para evitar romper la carga de perfumes
+  }
+}
+
+// ============ MOSTRAR PERFUMES EN LA TABLA ============
+
+function mostrarPerfumes() {
+  try {
+    const tbody = document.getElementById('perfumesTableBody');
+    if (!tbody) {
+      console.error('❌ No se encontró el elemento perfumesTableBody');
+      return;
+    }
+
+    // Si no hay perfumes para mostrar
+    if (perfumesFiltrados.length === 0) {
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="6" style="text-align: center; padding: 40px; color: #999;">
+            <div style="font-size: 48px; margin-bottom: 20px;">🔍</div>
+            <h3 style="margin: 0;">No se encontraron perfumes</h3>
+            <p style="margin: 10px 0;">Intenta ajustar los filtros de búsqueda</p>
+          </td>
+        </tr>
+      `;
+      return;
+    }
+
+    // Generar las filas de la tabla
+    tbody.innerHTML = perfumesFiltrados.map(perfume => `
+      <tr>
+        <td>
+          <img src="${perfume.imagen}" alt="${perfume.nombre}" 
+               style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;" 
+               onerror="this.src='logo2.jpeg'">
+        </td>
+        <td>${perfume.nombre}</td>
+        <td>${capitalizar(perfume.marca)}</td>
+        <td>
+          <span class="badge badge-${perfume.categoria}">
+            ${capitalizar(perfume.categoria)}
+          </span>
+        </td>
+        <td>$${perfume.precioFinal.toLocaleString()}</td>
+        <td>
+          <button class="btn-edit" onclick="abrirEditarModal('${perfume.categoria}', '${perfume.marca}', ${perfume.arrayIndex})" title="Editar">
+            ✏️
+          </button>
+          <button class="btn-delete" onclick="if(confirm('¿Eliminar ${perfume.nombre}?')) eliminarPerfume('${perfume.categoria}', '${perfume.marca}', ${perfume.arrayIndex})" title="Eliminar">
+            🗑️
+          </button>
+        </td>
+      </tr>
+    `).join('');
+
+    console.log(`✅ Mostrando ${perfumesFiltrados.length} perfumes en la tabla`);
+
+  } catch (error) {
+    console.error('❌ Error al mostrar perfumes:', error);
+    const tbody = document.getElementById('perfumesTableBody');
+    if (tbody) {
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="6" style="text-align: center; padding: 40px; color: #e74c3c;">
+            <div style="font-size: 48px; margin-bottom: 20px;">⚠️</div>
+            <h3>Error al mostrar perfumes</h3>
+            <p>${error.message}</p>
+          </td>
+        </tr>
+      `;
+    }
+  }
+}
+
+// ============ FILTROS Y BÚSQUEDA ============
+
+function aplicarFiltros() {
+  try {
+    const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
+    const categoryFilter = document.getElementById('categoryFilter').value;
+
+    perfumesFiltrados = todosLosPerfumes.filter(perfume => {
+      // Filtro de búsqueda (nombre o marca)
+      const matchesSearch = !searchTerm || 
+        perfume.nombre.toLowerCase().includes(searchTerm) ||
+        perfume.marca.toLowerCase().includes(searchTerm);
+
+      // Filtro de categoría
+      const matchesCategory = !categoryFilter || perfume.categoria === categoryFilter;
+
+      return matchesSearch && matchesCategory;
+    });
+
+    mostrarPerfumes();
+    console.log(`🔍 Filtros aplicados: ${perfumesFiltrados.length} de ${todosLosPerfumes.length} perfumes`);
+
+  } catch (error) {
+    console.error('❌ Error al aplicar filtros:', error);
+  }
+}
+
+// Agregar event listeners para los filtros
+document.getElementById('searchInput')?.addEventListener('input', aplicarFiltros);
+document.getElementById('categoryFilter')?.addEventListener('change', aplicarFiltros);
 
 // ============ UTILIDADES ============
 
