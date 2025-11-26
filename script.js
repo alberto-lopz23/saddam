@@ -162,6 +162,7 @@ function procesarDatos() {
 };
 
 
+
   // Procesar todas las categorías
   procesarCategoria("arabes", catalogoData.perfumes?.arabes);
   procesarCategoria("disenador", catalogoData.perfumes?.disenador);
