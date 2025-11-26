@@ -16,13 +16,14 @@ let perfumeActual = null;
 let usuarioActual = null;
 
 // ============ AUTENTICACIÓN ============
+
 onAuthChange((user) => {
   if (user) {
     usuarioActual = user;
     document.getElementById("loginScreen").style.display = "none";
     document.getElementById("adminPanel").style.display = "block";
     document.getElementById("adminUsername").textContent = user.email;
-    cargarPerfumes();
+    cargarPerfumes(); // Carga los perfumes cuando el usuario inicia sesión
   } else {
     usuarioActual = null;
     document.getElementById("loginScreen").style.display = "flex";
@@ -31,6 +32,7 @@ onAuthChange((user) => {
 });
 
 // ============ LOGIN ============
+
 document.getElementById("loginForm").addEventListener("submit", async (e) => {
   e.preventDefault();
 
@@ -38,13 +40,14 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
   const password = document.getElementById("password").value;
   const errorEl = document.getElementById("loginError");
 
-  errorEl.style.display = "none";
+  errorEl.style.display = "none"; // Inicialmente, ocultamos el mensaje de error
 
   try {
     await loginAdmin(email, password);
   } catch (error) {
     let mensaje = "Error al iniciar sesión";
 
+    // Definir mensajes de error según el código de error de Firebase
     if (error.code === "auth/invalid-credential") {
       mensaje = "Email o contraseña incorrectos";
     } else if (error.code === "auth/user-not-found") {
@@ -62,6 +65,7 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
 });
 
 // ============ LOGOUT ============
+
 document.getElementById("logoutBtn").addEventListener("click", async () => {
   try {
     await logoutAdmin();
@@ -71,6 +75,7 @@ document.getElementById("logoutBtn").addEventListener("click", async () => {
 });
 
 // ============ CARGAR PERFUMES ============
+
 async function cargarPerfumes() {
   try {
     console.log("📖 Cargando perfumes desde Firebase...");
@@ -82,47 +87,50 @@ async function cargarPerfumes() {
     todosLosPerfumes = [];
 
     Object.keys(data.perfumes).forEach((categoria) => {
-  Object.keys(data.perfumes[categoria]).forEach((marca) => {
-    const perfumesObj = data.perfumes[categoria][marca];
-    if (perfumesObj && typeof perfumesObj === "object") {
-      Object.keys(perfumesObj).forEach((key) => {
-        const perfume = perfumesObj[key];
+      Object.keys(data.perfumes[categoria]).forEach((marca) => {
+        const perfumesObj = data.perfumes[categoria][marca];
 
-        const precioBase = parseInt(perfume.precio) || 0;
-        let precioFinal = precioBase;
+        // Verificamos que perfumesObj sea un objeto válido
+        if (perfumesObj && typeof perfumesObj === "object") {
+          Object.keys(perfumesObj).forEach((key) => {
+            const perfume = perfumesObj[key];
 
-        switch (categoria) {
-          case "arabes":
-            precioFinal = precioBase + 1800;
-            break;
-          case "disenador":
-            precioFinal = precioBase + 2300;
-            break;
-          case "nicho":
-            precioFinal = precioBase + 3000;
-            break;
-          case "sets":
-            precioFinal = precioBase;
-            break;
+            const precioBase = parseInt(perfume.precio) || 0;
+            let precioFinal = precioBase;
+
+            // Definir el precio final según la categoría
+            switch (categoria) {
+              case "arabes":
+                precioFinal = precioBase + 1800;
+                break;
+              case "disenador":
+                precioFinal = precioBase + 2300;
+                break;
+              case "nicho":
+                precioFinal = precioBase + 3000;
+                break;
+              case "sets":
+                precioFinal = precioBase;
+                break;
+            }
+
+            // Agregar el perfume procesado a la lista
+            todosLosPerfumes.push({
+              ...perfume,
+              categoria,
+              marca,
+              arrayIndex: parseInt(key, 10),
+              precioBase,
+              precioFinal,
+            });
+          });
         }
-
-        todosLosPerfumes.push({
-          ...perfume,
-          categoria,
-          marca,
-          arrayIndex: parseInt(key, 10),
-          precioBase,
-          precioFinal,
-        });
       });
-    }
-  });
-});
+    });
 
-
-    perfumesFiltrados = [...todosLosPerfumes];
-    actualizarEstadisticas();
-    mostrarPerfumes();
+    perfumesFiltrados = [...todosLosPerfumes]; // Inicializamos perfumesFiltrados con todos los perfumes
+    actualizarEstadisticas(); // Actualizamos las estadísticas
+    mostrarPerfumes(); // Mostramos los perfumes en la UI
     console.log("✅ Perfumes cargados:", todosLosPerfumes.length);
   } catch (error) {
     console.error("Error al cargar perfumes:", error);
@@ -131,6 +139,7 @@ async function cargarPerfumes() {
     let mensajeError = error.message;
     let sugerencia = "";
 
+    // Error handling para posibles problemas de conexión
     if (
       error.message.includes("offline") ||
       error.message.includes("Failed to get document") ||
@@ -161,146 +170,24 @@ async function cargarPerfumes() {
   }
 }
 
-
-// ============ ESTADÍSTICAS ============
-function actualizarEstadisticas() {
-  document.getElementById("totalPerfumes").textContent =
-    todosLosPerfumes.length;
-  document.getElementById("totalArabes").textContent = todosLosPerfumes.filter(
-    (p) => p.categoria === "arabes"
-  ).length;
-  document.getElementById("totalDisenador").textContent =
-    todosLosPerfumes.filter((p) => p.categoria === "disenador").length;
-  document.getElementById("totalNicho").textContent = todosLosPerfumes.filter(
-    (p) => p.categoria === "nicho"
-  ).length;
-  document.getElementById("totalSets").textContent = todosLosPerfumes.filter(
-    (p) => p.categoria === "sets"
-  ).length;
-}
-
-// ============ MOSTRAR PERFUMES ============
-function mostrarPerfumes() {
-  const tbody = document.getElementById("perfumesTableBody");
-  tbody.innerHTML = "";
-
-  if (perfumesFiltrados.length === 0) {
-    tbody.innerHTML = `
-      <tr>
-        <td colspan="6" style="text-align: center; padding: 40px; color: #999;">
-          No se encontraron perfumes
-        </td>
-      </tr>
-    `;
-    return;
-  }
-
-  perfumesFiltrados.forEach((perfume) => {
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td><img src="${perfume.imagen}" alt="${
-      perfume.nombre
-    }" class="perfume-img"></td>
-      <td><strong>${perfume.nombre}</strong></td>
-      <td>${capitalizar(perfume.marca)}</td>
-      <td><span class="category-badge category-${perfume.categoria}">
-        ${capitalizar(perfume.categoria)}
-      </span></td>
-      <td><strong>$${perfume.precioFinal.toLocaleString()}</strong></td>
-      <td>
-        <button class="btn-edit" data-categoria="${
-          perfume.categoria
-        }" data-marca="${perfume.marca}" data-index="${perfume.arrayIndex}">
-          ✏️ Editar
-        </button>
-        <button class="btn-delete" data-categoria="${
-          perfume.categoria
-        }" data-marca="${perfume.marca}" data-index="${perfume.arrayIndex}">
-          🗑️ Eliminar
-        </button>
-      </td>
-    `;
-
-    tr.querySelector(".btn-edit").addEventListener("click", function () {
-      abrirEditarModal(
-        this.dataset.categoria,
-        this.dataset.marca,
-        parseInt(this.dataset.index)
-      );
-    });
-
-    tr.querySelector(".btn-delete").addEventListener("click", function () {
-      eliminarPerfumeConfirm(
-        this.dataset.categoria,
-        this.dataset.marca,
-        parseInt(this.dataset.index),
-        perfume.nombre
-      );
-    });
-
-    tbody.appendChild(tr);
-  });
-}
-
-// ============ BÚSQUEDA ============
-document.getElementById("searchInput").addEventListener("input", (e) => {
-  const query = e.target.value.toLowerCase();
-
-  perfumesFiltrados = todosLosPerfumes.filter((perfume) => {
-    return (
-      perfume.nombre.toLowerCase().includes(query) ||
-      perfume.marca.toLowerCase().includes(query)
-    );
-  });
-
-  const categoriaSeleccionada = document.getElementById("categoryFilter").value;
-  if (categoriaSeleccionada) {
-    perfumesFiltrados = perfumesFiltrados.filter(
-      (p) => p.categoria === categoriaSeleccionada
-    );
-  }
-
-  mostrarPerfumes();
-});
-
-// ============ FILTRO POR CATEGORÍA ============
-document.getElementById("categoryFilter").addEventListener("change", (e) => {
-  const categoria = e.target.value;
-
-  if (categoria) {
-    perfumesFiltrados = todosLosPerfumes.filter(
-      (p) => p.categoria === categoria
-    );
-  } else {
-    perfumesFiltrados = [...todosLosPerfumes];
-  }
-
-  const query = document.getElementById("searchInput").value.toLowerCase();
-  if (query) {
-    perfumesFiltrados = perfumesFiltrados.filter((perfume) => {
-      return (
-        perfume.nombre.toLowerCase().includes(query) ||
-        perfume.marca.toLowerCase().includes(query)
-      );
-    });
-  }
-
-  mostrarPerfumes();
-});
-
 // ============ BOTÓN REFRESCAR ============
-document.getElementById("refreshBtn").addEventListener("click", () => {
-  limpiarCache();
-  cargarPerfumes();
-  document.getElementById("searchInput").value = "";
-  document.getElementById("categoryFilter").value = "";
+document.getElementById("refreshBtn").addEventListener("click", async () => {
+  try {
+    limpiarCache();
+    await cargarPerfumes(); // Esperamos a que los perfumes se carguen
+    document.getElementById("searchInput").value = "";
+    document.getElementById("categoryFilter").value = "";
+  } catch (error) {
+    console.error("Error al refrescar los perfumes:", error);
+    alert("❌ Error al refrescar. Intenta de nuevo más tarde.");
+  }
 });
 
 // ============ BOTÓN AGREGAR PERFUME ============
 document.getElementById("addPerfumeBtn").addEventListener("click", () => {
-  cargarMarcasDisponibles();
+  cargarMarcasDisponibles(); // Aseguramos que las marcas estén cargadas
   document.getElementById("addModal").classList.add("show");
-  document.body.style.overflow = "hidden";
+  document.body.style.overflow = "hidden"; // Deshabilitar scroll cuando el modal está abierto
 });
 
 // ============ CARGAR MARCAS DISPONIBLES ============
@@ -361,6 +248,7 @@ function abrirEditarModal(categoria, marca, index) {
     return;
   }
 
+  // Actualizamos los campos con los datos del perfume
   document.getElementById("editImage").src = perfumeActual.imagen;
   document.getElementById("editCategoriaTexto").textContent =
     capitalizar(categoria);
@@ -606,8 +494,8 @@ window.closeAddModal = function () {
   }
 
   document.getElementById("addModal").classList.remove("show");
-  document.body.style.overflow = "";
-  document.getElementById("addForm").reset();
+  document.body.style.overflow = ""; // Restaurar el scroll al cerrar el modal
+  document.getElementById("addForm").reset(); // Limpiar el formulario
 };
 
 document
@@ -630,15 +518,13 @@ document.getElementById("addForm").addEventListener("submit", async (e) => {
       return;
     }
   } else {
-    // La marca seleccionada ya viene en lowercase de Firebase
     marca = marcaSelect.trim();
   }
 
-  const precioFinalInput =
-    parseInt(document.getElementById("addPrecio").value) || 0;
-
+  const precioFinalInput = parseInt(document.getElementById("addPrecio").value) || 0;
   let precioBase = precioFinalInput;
 
+  // Ajustar precio base según la categoría
   switch (categoria) {
     case "arabes":
       precioBase = precioFinalInput - 1800;
@@ -670,6 +556,7 @@ document.getElementById("addForm").addEventListener("submit", async (e) => {
     }
   });
 
+  // Crear el objeto del nuevo perfume
   const nuevoPerfume = {
     nombre: document.getElementById("addNombre").value,
     imagen: document.getElementById("addImagen").value,
@@ -716,36 +603,57 @@ document.getElementById("addForm").addEventListener("submit", async (e) => {
 // ============ ELIMINAR PERFUME (MODIFICADO – SIN RECARGA) ============
 async function eliminarPerfume(categoria, marca, index) {
   try {
-    const perfumesObj = data.perfumes[categoria][marca];
+    const docRef = doc(db, "catalogo", "perfumes");
+    const docSnap = await getDoc(docRef);
 
-    if (perfumesObj && typeof perfumesObj === "object") {
-      // Convertir objeto a array si es necesario
-      const keys = Object.keys(perfumesObj);
-
-      // Si no es un array, convertirlo a uno
-      const perfumesArray = keys.map((key) => perfumesObj[key]);
-
-      // Eliminar el perfume basado en el índice
-      perfumesArray.splice(index, 1); // elimina el perfume
-
-      // Ahora actualizamos la base de datos de Firebase
-      // Usar el índice para actualizar correctamente el objeto
-      data.perfumes[categoria][marca] = perfumesArray.reduce((acc, perfume, idx) => {
-        acc[idx] = perfume; // reconstruir el objeto
-        return acc;
-      }, {});
-
-      console.log("Perfume eliminado con éxito");
+    if (!docSnap.exists()) {
+      throw new Error("Documento de catálogo no encontrado");
     }
+
+    const data = docSnap.data();
+
+    // Verificar que el perfume existe
+    if (
+      !data.perfumes[categoria] ||
+      !data.perfumes[categoria][marca] ||
+      data.perfumes[categoria][marca][index] === undefined
+    ) {
+      throw new Error("Perfume no encontrado");
+    }
+
+    // Obtener el array de perfumes de esa marca
+    const marcaPerfumes = [...data.perfumes[categoria][marca]];
+
+    // Eliminar el perfume del array
+    marcaPerfumes.splice(index, 1); // elimina el perfume
+
+    // Actualizar la base de datos de Firebase
+    const marcaPath = `perfumes.${categoria}.${marca}`;
+
+    await updateDoc(docRef, {
+      [marcaPath]: marcaPerfumes,
+    });
+
+    // --- ELIMINAR LOCAL SIN RECARGA ---
+    todosLosPerfumes = todosLosPerfumes.filter(
+      (p) =>
+        !(p.categoria === categoria && p.marca === marca && p.arrayIndex === index)
+    );
+
+    perfumesFiltrados = [...todosLosPerfumes];
+
+    mostrarPerfumes();
+
+    alert("✅ Perfume eliminado exitosamente");
   } catch (error) {
     console.error("Error al eliminar el perfume:", error);
-    throw new Error("Error al eliminar el perfume");
+    alert("❌ Error al eliminar: " + error.message);
   }
 }
-
 
 // ============ UTILIDADES ============
 function capitalizar(str) {
   if (!str) return "";
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
+
