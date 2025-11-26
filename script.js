@@ -100,10 +100,37 @@ async function cargarCatalogo() {
       mostrarPerfumes(todosLosPerfumes);
     }
   } catch (error) {
-    console.error("Error cargando catálogo:", error);
-    // Fallback a datos básicos si falla la carga
-    todosLosPerfumes = [];
-    mostrarPerfumes([]);
+    console.error("❌ Error cargando catálogo:", error);
+
+    // Mostrar mensaje de error más amigable
+    galeria.innerHTML = `
+      <div style="grid-column: 1/-1; text-align: center; padding: 60px 20px; color: #666;">
+        <div style="font-size: 48px; margin-bottom: 20px;">⚠️</div>
+        <h3 style="color: #333; font-size: 24px; margin-bottom: 15px;">No se pudieron cargar los perfumes</h3>
+        <p style="color: #666; margin-bottom: 20px; line-height: 1.6;">
+          ${error.message || "Error de conexión"}
+        </p>
+        <button onclick="location.reload()" 
+          style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+                 color: white; border: none; padding: 15px 30px; 
+                 border-radius: 25px; font-size: 16px; font-weight: 600; 
+                 cursor: pointer; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+                 transition: transform 0.2s;"
+          onmouseover="this.style.transform='translateY(-2px)'"
+          onmouseout="this.style.transform='translateY(0)'">
+          🔄 Reintentar
+        </button>
+        <div style="margin-top: 30px; padding: 20px; background: #f5f5f5; border-radius: 10px; max-width: 500px; margin-left: auto; margin-right: auto; text-align: left;">
+          <strong style="color: #333;">💡 Consejos:</strong>
+          <ul style="margin-top: 10px; color: #666; line-height: 1.8;">
+            <li>Verifica tu conexión a internet</li>
+            <li>Si estás en modo avión, desactívalo</li>
+            <li>Intenta recargar la página en unos segundos</li>
+            <li>Si el problema persiste, limpia la caché del navegador</li>
+          </ul>
+        </div>
+      </div>
+    `;
   }
 }
 
@@ -816,8 +843,48 @@ document.addEventListener("click", function (e) {
   }
 });
 
+// Diagnóstico de caché (disponible en consola)
+async function diagnosticarCache() {
+  console.log("🔍 === DIAGNÓSTICO DE CACHÉ ===");
+
+  try {
+    const { infoCacheActual } = await import("./firebase-config.js");
+    const info = infoCacheActual();
+
+    if (info.existe) {
+      console.log(`✅ Caché disponible`);
+      console.log(`📊 Tamaño: ${info.tamaño}`);
+      console.log(`⏰ Edad: ${info.edad} minutos`);
+      console.log(
+        `${info.expira ? "✅" : "⚠️"} Estado: ${
+          info.expira ? "Válida" : "Expirada"
+        }`
+      );
+    } else {
+      console.log("❌ No hay caché disponible");
+      console.log("ℹ️ La caché se creará después de la primera carga exitosa");
+    }
+
+    console.log("🌐 Conexión:", navigator.onLine ? "✅ Online" : "❌ Offline");
+    console.log(
+      "💾 LocalStorage disponible:",
+      typeof Storage !== "undefined" ? "✅ Sí" : "❌ No"
+    );
+    console.log("================================");
+  } catch (error) {
+    console.error("❌ Error en diagnóstico:", error);
+  }
+}
+
+// Hacer disponible globalmente para debugging
+window.diagnosticarCache = diagnosticarCache;
+
 // Inicializar cuando carga la página
-document.addEventListener("DOMContentLoaded", cargarCatalogo);
+document.addEventListener("DOMContentLoaded", () => {
+  cargarCatalogo();
+  // Ejecutar diagnóstico automático después de 1 segundo
+  setTimeout(diagnosticarCache, 1000);
+});
 
 // ============ FUNCIONES MÓVILES ============
 

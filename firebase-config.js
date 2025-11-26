@@ -36,23 +36,56 @@ const CACHE_KEY = "perfumes_cache";
 const CACHE_TIMESTAMP_KEY = "perfumes_cache_timestamp";
 const CACHE_DURATION = 24 * 60 * 60 * 1000; // 24 horas
 
-// Obtener perfumes con fallback a caché si está offline
+// Obtener perfumes con estrategia CACHE-FIRST (carga instantánea)
 export async function obtenerPerfumes() {
+  // 1. PRIMERO: Intentar cargar desde caché (instantáneo)
+  const cachedData = localStorage.getItem(CACHE_KEY);
+  const cacheTimestamp = localStorage.getItem(CACHE_TIMESTAMP_KEY);
+
+  if (cachedData) {
+    console.log("⚡ Cargando desde caché (instantáneo)...");
+    const cacheAge = Date.now() - parseInt(cacheTimestamp || "0");
+
+    // Si la caché es reciente (menos de 24h), usarla directamente
+    if (cacheAge < CACHE_DURATION) {
+      console.log(
+        `✅ Usando caché (edad: ${Math.round(cacheAge / 1000 / 60)} minutos)`
+      );
+
+      // Intentar actualizar en background (sin esperar)
+      actualizarCacheEnBackground();
+
+      return JSON.parse(cachedData);
+    } else {
+      console.log("⏰ Caché expirada, intentando actualizar...");
+    }
+  } else {
+    console.log("📦 No hay caché disponible");
+  }
+
+  // 2. SEGUNDO: Intentar obtener de Firebase con timeout
   try {
-    console.log("📖 Intentando leer de Firebase...");
+    console.log("📖 Cargando desde Firebase...");
+
     const docRef = doc(db, "catalogo", "perfumes");
-    const docSnap = await getDoc(docRef);
+
+    // Timeout de 8 segundos
+    const timeoutPromise = new Promise((_, reject) =>
+      setTimeout(() => reject(new Error("Timeout")), 8000)
+    );
+
+    const docSnap = await Promise.race([getDoc(docRef), timeoutPromise]);
 
     if (docSnap.exists()) {
       const data = docSnap.data();
 
-      // Guardar en caché para uso offline
+      // Guardar en caché
       try {
         localStorage.setItem(CACHE_KEY, JSON.stringify(data));
         localStorage.setItem(CACHE_TIMESTAMP_KEY, Date.now().toString());
         console.log("✅ Datos actualizados y guardados en caché");
       } catch (cacheError) {
-        console.warn("No se pudo guardar en caché:", cacheError);
+        console.warn("⚠️ No se pudo guardar en caché:", cacheError);
       }
 
       return data;
@@ -60,28 +93,39 @@ export async function obtenerPerfumes() {
       throw new Error("No se encontraron perfumes en Firebase");
     }
   } catch (error) {
-    console.error("⚠️ Error al obtener perfumes de Firebase:", error);
+    console.error("⚠️ Error al obtener de Firebase:", error.message);
 
-    // Intentar usar caché si está offline
-    if (
-      error.code === "unavailable" ||
-      error.message.includes("offline") ||
-      error.message.includes("Failed to get document")
-    ) {
-      console.log("📦 Intentando cargar desde caché offline...");
-      const cachedData = localStorage.getItem(CACHE_KEY);
-
-      if (cachedData) {
-        console.log("✅ Usando datos del caché (modo offline)");
-        return JSON.parse(cachedData);
-      } else {
-        throw new Error(
-          "Sin conexión y no hay datos en caché. Por favor, conéctate a internet."
-        );
-      }
+    // 3. FALLBACK: Usar caché aunque esté expirada
+    if (cachedData) {
+      console.log("📦 Usando caché expirada como fallback");
+      return JSON.parse(cachedData);
     }
 
-    throw error;
+    throw new Error(
+      "❌ Sin conexión y no hay datos en caché.\n\n" +
+        "Soluciones:\n" +
+        "• Verifica tu conexión a internet\n" +
+        "• Recarga la página\n" +
+        "• Intenta de nuevo en unos momentos"
+    );
+  }
+}
+
+// Función auxiliar para actualizar caché en background
+async function actualizarCacheEnBackground() {
+  try {
+    const docRef = doc(db, "catalogo", "perfumes");
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      const data = docSnap.data();
+      localStorage.setItem(CACHE_KEY, JSON.stringify(data));
+      localStorage.setItem(CACHE_TIMESTAMP_KEY, Date.now().toString());
+      console.log("🔄 Caché actualizada en background");
+    }
+  } catch (error) {
+    // Silenciar errores de actualización en background
+    console.log("ℹ️ No se pudo actualizar caché en background");
   }
 }
 
@@ -216,8 +260,37 @@ export async function eliminarPerfume(categoria, marca, index) {
 }
 
 // Función de compatibilidad (ya no usa caché)
+// Limpiar caché manualmente (útil después de hacer cambios en admin)
 export function limpiarCache() {
-  console.log("✅ Sin caché - siempre actualizado");
+  try {
+    localStorage.removeItem(CACHE_KEY);
+    localStorage.removeItem(CACHE_TIMESTAMP_KEY);
+    console.log("🗑️ Caché limpiada correctamente");
+    return true;
+  } catch (error) {
+    console.error("⚠️ Error al limpiar caché:", error);
+    return false;
+  }
+}
+
+// Obtener info de la caché
+export function infoCacheActual() {
+  const cachedData = localStorage.getItem(CACHE_KEY);
+  const cacheTimestamp = localStorage.getItem(CACHE_TIMESTAMP_KEY);
+
+  if (!cachedData) {
+    return { existe: false };
+  }
+
+  const cacheAge = Date.now() - parseInt(cacheTimestamp || "0");
+  const minutosEdad = Math.round(cacheAge / 1000 / 60);
+
+  return {
+    existe: true,
+    edad: minutosEdad,
+    expira: minutosEdad < 24 * 60,
+    tamaño: (cachedData.length / 1024).toFixed(2) + " KB",
+  };
 }
 
 // ============ AUTENTICACIÓN ============
