@@ -248,7 +248,6 @@ function procesarDatos() {
           categoria,
           marca: categoria === "sets" ? `Set ${marca}` : marca,
           tipo,
-          arrayIndex: i,
           precioBase: precioBase,
           precioFinal: precioFinal
         });
@@ -269,34 +268,22 @@ function procesarDatos() {
   console.log(`✅ procesarDatos: total de perfumes procesados = ${todosLosPerfumes.length}`);
 }
 
-// Calcular precio final con incrementos por categoría
+// Calcular precio final - usa el precio ya calculado en procesarDatos()
 function calcularPrecioFinal(perfume) {
+  // Si el perfume tiene precioFinal calculado, usarlo
+  if (perfume.precioFinal !== undefined) {
+    if (typeof perfume.precioFinal === 'number') {
+      return `$${perfume.precioFinal.toLocaleString()}`;
+    }
+    return perfume.precioFinal; // Ya es string (ej: "Consultar")
+  }
+  
+  // Fallback: si no tiene precioFinal, usar precio original
   if (!perfume.precio || perfume.precio === "Consultar") {
     return "Consultar";
   }
-
-  let incremento = 0;
-
-  switch (perfume.categoria) {
-    case "arabes":
-      incremento = 1800;
-      break;
-    case "disenador":
-      incremento = 2300;
-      break;
-    case "nichos":
-      incremento = 3000;
-      break;
-    case "sets":
-      // Los sets mantienen su precio original
-      incremento = 0;
-      break;
-    default:
-      incremento = 0;
-  }
-
-  const precioFinal = perfume.precio + incremento;
-  return `$${precioFinal.toLocaleString()}`;
+  
+  return `$${perfume.precio.toLocaleString()}`;
 }
 
 // Mostrar perfumes en la galería
