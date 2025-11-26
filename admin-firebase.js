@@ -23,6 +23,7 @@ onAuthChange((user) => {
     document.getElementById("loginScreen").style.display = "none";
     document.getElementById("adminPanel").style.display = "block";
     document.getElementById("adminUsername").textContent = user.email;
+    inicializarEventListeners(); // Configurar los event listeners para filtros
     cargarPerfumes(); // Carga los perfumes cuando el usuario inicia sesión
   } else {
     usuarioActual = null;
@@ -537,7 +538,10 @@ async function eliminarPerfume(categoria, marca, index) {
     // Paso 4: Actualizar perfumesFiltrados con los cambios
     perfumesFiltrados = [...todosLosPerfumes];
 
-    // Paso 5: Actualizar la UI sin recargar
+    // Paso 5: Actualizar estadísticas
+    actualizarEstadisticas();
+
+    // Paso 6: Actualizar la UI sin recargar
     mostrarPerfumes();
 
     console.log(`✅ Perfume eliminado exitosamente: ${categoria}/${marca}[${index}]`);
@@ -548,9 +552,220 @@ async function eliminarPerfume(categoria, marca, index) {
   }
 }
 
+// ============ ACTUALIZAR ESTADÍSTICAS ============
+
+function actualizarEstadisticas() {
+  try {
+    // Calcular totales a partir de todosLosPerfumes
+    const total = todosLosPerfumes.length;
+    const totalArabes = todosLosPerfumes.filter(p => p.categoria === 'arabes').length;
+    const totalDisenador = todosLosPerfumes.filter(p => p.categoria === 'disenador').length;
+    const totalNicho = todosLosPerfumes.filter(p => p.categoria === 'nicho').length;
+    const totalSets = todosLosPerfumes.filter(p => p.categoria === 'sets').length;
+
+    // Log de debug con los totales
+    console.log('📊 Estadísticas actualizadas:', {
+      total,
+      arabes: totalArabes,
+      disenador: totalDisenador,
+      nicho: totalNicho,
+      sets: totalSets
+    });
+
+    // Actualizar elementos del DOM de forma segura (verificar que existan)
+    const elementoTotalPerfumes = document.getElementById('totalPerfumes');
+    if (elementoTotalPerfumes) elementoTotalPerfumes.textContent = total;
+
+    const elementoTotalArabes = document.getElementById('totalArabes');
+    if (elementoTotalArabes) elementoTotalArabes.textContent = totalArabes;
+
+    const elementoTotalDisenador = document.getElementById('totalDisenador');
+    if (elementoTotalDisenador) elementoTotalDisenador.textContent = totalDisenador;
+
+    const elementoTotalNicho = document.getElementById('totalNicho');
+    if (elementoTotalNicho) elementoTotalNicho.textContent = totalNicho;
+
+    const elementoTotalSets = document.getElementById('totalSets');
+    if (elementoTotalSets) elementoTotalSets.textContent = totalSets;
+
+  } catch (error) {
+    console.error('⚠️ Error al actualizar estadísticas:', error);
+    // No lanzar la excepción para evitar romper la carga de perfumes
+  }
+}
+
+// ============ MOSTRAR PERFUMES EN LA TABLA ============
+
+function mostrarPerfumes() {
+  try {
+    const tbody = document.getElementById('perfumesTableBody');
+    if (!tbody) {
+      console.error('❌ No se encontró el elemento perfumesTableBody');
+      return;
+    }
+
+    // Si no hay perfumes para mostrar
+    if (perfumesFiltrados.length === 0) {
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="6" style="text-align: center; padding: 40px; color: #999;">
+            <div style="font-size: 48px; margin-bottom: 20px;">🔍</div>
+            <h3 style="margin: 0;">No se encontraron perfumes</h3>
+            <p style="margin: 10px 0;">Intenta ajustar los filtros de búsqueda</p>
+          </td>
+        </tr>
+      `;
+      return;
+    }
+
+    // Generar las filas de la tabla
+    tbody.innerHTML = perfumesFiltrados.map(perfume => {
+      const nombreEscapado = escaparHTML(perfume.nombre);
+      const marcaEscapada = escaparHTML(perfume.marca);
+      const imagenValidada = validarURL(perfume.imagen);
+      const nombreParaConfirm = escaparAtributo(perfume.nombre);
+      const categoriaParaOnclick = escaparAtributo(perfume.categoria);
+      const marcaParaOnclick = escaparAtributo(perfume.marca);
+      // arrayIndex es un número, pero lo validamos por seguridad
+      const arrayIndexSeguro = parseInt(perfume.arrayIndex, 10);
+      if (isNaN(arrayIndexSeguro)) {
+        console.error('arrayIndex inválido para perfume:', perfume.nombre);
+        return ''; // Saltar este perfume si el índice es inválido
+      }
+      
+      return `
+        <tr>
+          <td>
+            <img src="${escaparHTML(imagenValidada)}" alt="${nombreEscapado}" 
+                 style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;" 
+                 onerror="this.src='logo2.jpeg'">
+          </td>
+          <td>${nombreEscapado}</td>
+          <td>${capitalizar(marcaEscapada)}</td>
+          <td>
+            <span class="category-badge category-${perfume.categoria}">
+              ${capitalizar(perfume.categoria)}
+            </span>
+          </td>
+          <td>$${perfume.precioFinal.toLocaleString()}</td>
+          <td>
+            <button class="btn-edit" onclick="abrirEditarModal('${categoriaParaOnclick}', '${marcaParaOnclick}', ${arrayIndexSeguro})" title="Editar">
+              ✏️
+            </button>
+            <button class="btn-delete" onclick="if(confirm('¿Eliminar ${nombreParaConfirm}?')) eliminarPerfume('${categoriaParaOnclick}', '${marcaParaOnclick}', ${arrayIndexSeguro})" title="Eliminar">
+              🗑️
+            </button>
+          </td>
+        </tr>
+      `;
+    }).join('');
+
+    console.log(`✅ Mostrando ${perfumesFiltrados.length} perfumes en la tabla`);
+
+  } catch (error) {
+    console.error('❌ Error al mostrar perfumes:', error);
+    const tbody = document.getElementById('perfumesTableBody');
+    if (tbody) {
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="6" style="text-align: center; padding: 40px; color: #e74c3c;">
+            <div style="font-size: 48px; margin-bottom: 20px;">⚠️</div>
+            <h3>Error al mostrar perfumes</h3>
+            <p>${error.message}</p>
+          </td>
+        </tr>
+      `;
+    }
+  }
+}
+
+// ============ FILTROS Y BÚSQUEDA ============
+
+function aplicarFiltros() {
+  try {
+    const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
+    const categoryFilter = document.getElementById('categoryFilter').value;
+
+    perfumesFiltrados = todosLosPerfumes.filter(perfume => {
+      // Filtro de búsqueda (nombre o marca)
+      const matchesSearch = !searchTerm || 
+        perfume.nombre.toLowerCase().includes(searchTerm) ||
+        perfume.marca.toLowerCase().includes(searchTerm);
+
+      // Filtro de categoría
+      const matchesCategory = !categoryFilter || perfume.categoria === categoryFilter;
+
+      return matchesSearch && matchesCategory;
+    });
+
+    mostrarPerfumes();
+    console.log(`🔍 Filtros aplicados: ${perfumesFiltrados.length} de ${todosLosPerfumes.length} perfumes`);
+
+  } catch (error) {
+    console.error('❌ Error al aplicar filtros:', error);
+  }
+}
+
+// Agregar event listeners para los filtros cuando el DOM esté listo
+// Se ejecutan después de que el usuario haya iniciado sesión y se haya cargado el panel
+function inicializarEventListeners() {
+  const searchInput = document.getElementById('searchInput');
+  const categoryFilter = document.getElementById('categoryFilter');
+  
+  if (searchInput) {
+    searchInput.addEventListener('input', aplicarFiltros);
+  }
+  
+  if (categoryFilter) {
+    categoryFilter.addEventListener('change', aplicarFiltros);
+  }
+}
+
+// Llamar a la inicialización cuando sea necesario (después del login)
+// Los event listeners se configurarán en onAuthChange cuando el usuario inicie sesión
+
 // ============ UTILIDADES ============
 
 function capitalizar(str) {
   if (!str) return "";
   return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+function escaparHTML(str) {
+  if (!str) return "";
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+function escaparAtributo(str) {
+  if (!str) return "";
+  // Escapar caracteres peligrosos para atributos HTML
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/'/g, '&#39;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/`/g, '&#96;')
+    .replace(/\n/g, '&#10;')
+    .replace(/\r/g, '&#13;');
+}
+
+function validarURL(url) {
+  if (!url) return 'logo2.jpeg';
+  try {
+    // Permitir URLs relativas y URLs HTTP/HTTPS
+    if (url.startsWith('/') || url.startsWith('./') || url.startsWith('../')) {
+      return url;
+    }
+    const urlObj = new URL(url);
+    if (urlObj.protocol === 'http:' || urlObj.protocol === 'https:') {
+      return url;
+    }
+  } catch (e) {
+    // Si no es una URL válida, usar imagen por defecto
+    return 'logo2.jpeg';
+  }
+  return 'logo2.jpeg';
 }
