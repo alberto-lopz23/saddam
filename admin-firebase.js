@@ -23,6 +23,7 @@ onAuthChange((user) => {
     document.getElementById("loginScreen").style.display = "none";
     document.getElementById("adminPanel").style.display = "block";
     document.getElementById("adminUsername").textContent = user.email;
+    inicializarEventListeners(); // Configurar los event listeners para filtros
     cargarPerfumes(); // Carga los perfumes cuando el usuario inicia sesión
   } else {
     usuarioActual = null;
@@ -621,14 +622,21 @@ function mostrarPerfumes() {
     tbody.innerHTML = perfumesFiltrados.map(perfume => {
       const nombreEscapado = escaparHTML(perfume.nombre);
       const marcaEscapada = escaparHTML(perfume.marca);
+      const imagenValidada = validarURL(perfume.imagen);
       const nombreParaConfirm = escaparAtributo(perfume.nombre);
       const categoriaParaOnclick = escaparAtributo(perfume.categoria);
       const marcaParaOnclick = escaparAtributo(perfume.marca);
+      // arrayIndex es un número, pero lo validamos por seguridad
+      const arrayIndexSeguro = parseInt(perfume.arrayIndex, 10);
+      if (isNaN(arrayIndexSeguro)) {
+        console.error('arrayIndex inválido para perfume:', perfume.nombre);
+        return ''; // Saltar este perfume si el índice es inválido
+      }
       
       return `
         <tr>
           <td>
-            <img src="${escaparHTML(perfume.imagen)}" alt="${nombreEscapado}" 
+            <img src="${escaparHTML(imagenValidada)}" alt="${nombreEscapado}" 
                  style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;" 
                  onerror="this.src='logo2.jpeg'">
           </td>
@@ -641,10 +649,10 @@ function mostrarPerfumes() {
           </td>
           <td>$${perfume.precioFinal.toLocaleString()}</td>
           <td>
-            <button class="btn-edit" onclick="abrirEditarModal('${categoriaParaOnclick}', '${marcaParaOnclick}', ${perfume.arrayIndex})" title="Editar">
+            <button class="btn-edit" onclick="abrirEditarModal('${categoriaParaOnclick}', '${marcaParaOnclick}', ${arrayIndexSeguro})" title="Editar">
               ✏️
             </button>
-            <button class="btn-delete" onclick="if(confirm('¿Eliminar ${nombreParaConfirm}?')) eliminarPerfume('${categoriaParaOnclick}', '${marcaParaOnclick}', ${perfume.arrayIndex})" title="Eliminar">
+            <button class="btn-delete" onclick="if(confirm('¿Eliminar ${nombreParaConfirm}?')) eliminarPerfume('${categoriaParaOnclick}', '${marcaParaOnclick}', ${arrayIndexSeguro})" title="Eliminar">
               🗑️
             </button>
           </td>
@@ -698,9 +706,23 @@ function aplicarFiltros() {
   }
 }
 
-// Agregar event listeners para los filtros
-document.getElementById('searchInput')?.addEventListener('input', aplicarFiltros);
-document.getElementById('categoryFilter')?.addEventListener('change', aplicarFiltros);
+// Agregar event listeners para los filtros cuando el DOM esté listo
+// Se ejecutan después de que el usuario haya iniciado sesión y se haya cargado el panel
+function inicializarEventListeners() {
+  const searchInput = document.getElementById('searchInput');
+  const categoryFilter = document.getElementById('categoryFilter');
+  
+  if (searchInput) {
+    searchInput.addEventListener('input', aplicarFiltros);
+  }
+  
+  if (categoryFilter) {
+    categoryFilter.addEventListener('change', aplicarFiltros);
+  }
+}
+
+// Llamar a la inicialización cuando sea necesario (después del login)
+// Los event listeners se configurarán en onAuthChange cuando el usuario inicie sesión
 
 // ============ UTILIDADES ============
 
@@ -718,5 +740,32 @@ function escaparHTML(str) {
 
 function escaparAtributo(str) {
   if (!str) return "";
-  return str.replace(/'/g, "\\'").replace(/"/g, '\\"');
+  // Escapar caracteres peligrosos para atributos HTML
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/'/g, '&#39;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/`/g, '&#96;')
+    .replace(/\n/g, '&#10;')
+    .replace(/\r/g, '&#13;');
+}
+
+function validarURL(url) {
+  if (!url) return 'logo2.jpeg';
+  try {
+    // Permitir URLs relativas y URLs HTTP/HTTPS
+    if (url.startsWith('/') || url.startsWith('./') || url.startsWith('../')) {
+      return url;
+    }
+    const urlObj = new URL(url);
+    if (urlObj.protocol === 'http:' || urlObj.protocol === 'https:') {
+      return url;
+    }
+  } catch (e) {
+    // Si no es una URL válida, usar imagen por defecto
+    return 'logo2.jpeg';
+  }
+  return 'logo2.jpeg';
 }
