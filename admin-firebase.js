@@ -618,31 +618,39 @@ function mostrarPerfumes() {
     }
 
     // Generar las filas de la tabla
-    tbody.innerHTML = perfumesFiltrados.map(perfume => `
-      <tr>
-        <td>
-          <img src="${perfume.imagen}" alt="${perfume.nombre}" 
-               style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;" 
-               onerror="this.src='logo2.jpeg'">
-        </td>
-        <td>${perfume.nombre}</td>
-        <td>${capitalizar(perfume.marca)}</td>
-        <td>
-          <span class="badge badge-${perfume.categoria}">
-            ${capitalizar(perfume.categoria)}
-          </span>
-        </td>
-        <td>$${perfume.precioFinal.toLocaleString()}</td>
-        <td>
-          <button class="btn-edit" onclick="abrirEditarModal('${perfume.categoria}', '${perfume.marca}', ${perfume.arrayIndex})" title="Editar">
-            ✏️
-          </button>
-          <button class="btn-delete" onclick="if(confirm('¿Eliminar ${perfume.nombre}?')) eliminarPerfume('${perfume.categoria}', '${perfume.marca}', ${perfume.arrayIndex})" title="Eliminar">
-            🗑️
-          </button>
-        </td>
-      </tr>
-    `).join('');
+    tbody.innerHTML = perfumesFiltrados.map(perfume => {
+      const nombreEscapado = escaparHTML(perfume.nombre);
+      const marcaEscapada = escaparHTML(perfume.marca);
+      const nombreParaConfirm = escaparAtributo(perfume.nombre);
+      const categoriaParaOnclick = escaparAtributo(perfume.categoria);
+      const marcaParaOnclick = escaparAtributo(perfume.marca);
+      
+      return `
+        <tr>
+          <td>
+            <img src="${escaparHTML(perfume.imagen)}" alt="${nombreEscapado}" 
+                 style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;" 
+                 onerror="this.src='logo2.jpeg'">
+          </td>
+          <td>${nombreEscapado}</td>
+          <td>${capitalizar(marcaEscapada)}</td>
+          <td>
+            <span class="category-badge category-${perfume.categoria}">
+              ${capitalizar(perfume.categoria)}
+            </span>
+          </td>
+          <td>$${perfume.precioFinal.toLocaleString()}</td>
+          <td>
+            <button class="btn-edit" onclick="abrirEditarModal('${categoriaParaOnclick}', '${marcaParaOnclick}', ${perfume.arrayIndex})" title="Editar">
+              ✏️
+            </button>
+            <button class="btn-delete" onclick="if(confirm('¿Eliminar ${nombreParaConfirm}?')) eliminarPerfume('${categoriaParaOnclick}', '${marcaParaOnclick}', ${perfume.arrayIndex})" title="Eliminar">
+              🗑️
+            </button>
+          </td>
+        </tr>
+      `;
+    }).join('');
 
     console.log(`✅ Mostrando ${perfumesFiltrados.length} perfumes en la tabla`);
 
@@ -699,4 +707,16 @@ document.getElementById('categoryFilter')?.addEventListener('change', aplicarFil
 function capitalizar(str) {
   if (!str) return "";
   return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+function escaparHTML(str) {
+  if (!str) return "";
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+function escaparAtributo(str) {
+  if (!str) return "";
+  return str.replace(/'/g, "\\'").replace(/"/g, '\\"');
 }
