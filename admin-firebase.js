@@ -82,29 +82,43 @@ async function cargarPerfumes() {
     todosLosPerfumes = [];
 
     Object.keys(data.perfumes).forEach((categoria) => {
-      Object.keys(data.perfumes[categoria]).forEach((marca) => {
-        data.perfumes[categoria][marca].forEach((perfume, index) => {
-          const precioBase = parseInt(perfume.precio) || 0;
-          let precioFinal = precioBase;
+  Object.keys(data.perfumes[categoria]).forEach((marca) => {
+    const perfumesObj = data.perfumes[categoria][marca];
+    if (perfumesObj && typeof perfumesObj === "object") {
+      Object.keys(perfumesObj).forEach((key) => {
+        const perfume = perfumesObj[key];
 
-          switch (categoria) {
-            case "arabes": precioFinal = precioBase + 1800; break;
-            case "disenador": precioFinal = precioBase + 2300; break;
-            case "nicho": precioFinal = precioBase + 3000; break;
-            case "sets": precioFinal = precioBase; break;
-          }
+        const precioBase = parseInt(perfume.precio) || 0;
+        let precioFinal = precioBase;
 
-          todosLosPerfumes.push({
-            ...perfume,
-            categoria,
-            marca,
-            arrayIndex: index,
-            precioBase,
-            precioFinal,
-          });
+        switch (categoria) {
+          case "arabes":
+            precioFinal = precioBase + 1800;
+            break;
+          case "disenador":
+            precioFinal = precioBase + 2300;
+            break;
+          case "nicho":
+            precioFinal = precioBase + 3000;
+            break;
+          case "sets":
+            precioFinal = precioBase;
+            break;
+        }
+
+        todosLosPerfumes.push({
+          ...perfume,
+          categoria,
+          marca,
+          arrayIndex: parseInt(key, 10),
+          precioBase,
+          precioFinal,
         });
       });
-    });
+    }
+  });
+});
+
 
     perfumesFiltrados = [...todosLosPerfumes];
     actualizarEstadisticas();
