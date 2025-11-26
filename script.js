@@ -1002,8 +1002,8 @@ function mostrarFiltrosGenero(boton) {
 
   // Crear los botones de género
   const opciones = [
-    { texto: "Hombre", valor: "hombre" },
-    { texto: "Mujer", valor: "mujer" },
+    { texto: "Masculino", valor: "hombre" },
+    { texto: "Femenino", valor: "mujer" },
     { texto: "Unisex", valor: "unisex" },
   ];
 
