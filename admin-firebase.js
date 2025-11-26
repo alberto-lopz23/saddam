@@ -714,40 +714,35 @@ document.getElementById("addForm").addEventListener("submit", async (e) => {
 });
 
 // ============ ELIMINAR PERFUME (MODIFICADO – SIN RECARGA) ============
-async function eliminarPerfumeConfirm(categoria, marca, index, nombre) {
-  const confirmacion = confirm(
-    `¿Estás seguro de eliminar este perfume?\n\n` +
-      `Nombre: ${nombre}\n` +
-      `Marca: ${marca}\n` +
-      `Categoría: ${categoria}\n\n` +
-      `Esta acción no se puede deshacer.`
-  );
-
-  if (!confirmacion) return;
-
+async function eliminarPerfume(categoria, marca, index) {
   try {
-    await eliminarPerfume(categoria, marca, index);
+    const perfumesObj = data.perfumes[categoria][marca];
 
-    // --- ELIMINAR LOCAL SIN RECARGAR ---
-    todosLosPerfumes = todosLosPerfumes.filter(
-      (p) =>
-        !(
-          p.categoria === categoria &&
-          p.marca === marca &&
-          p.arrayIndex === index
-        )
-    );
+    if (perfumesObj && typeof perfumesObj === "object") {
+      // Convertir objeto a array si es necesario
+      const keys = Object.keys(perfumesObj);
 
-    perfumesFiltrados = [...todosLosPerfumes];
+      // Si no es un array, convertirlo a uno
+      const perfumesArray = keys.map((key) => perfumesObj[key]);
 
-    mostrarPerfumes();
+      // Eliminar el perfume basado en el índice
+      perfumesArray.splice(index, 1); // elimina el perfume
 
-    alert("✅ Perfume eliminado exitosamente");
+      // Ahora actualizamos la base de datos de Firebase
+      // Usar el índice para actualizar correctamente el objeto
+      data.perfumes[categoria][marca] = perfumesArray.reduce((acc, perfume, idx) => {
+        acc[idx] = perfume; // reconstruir el objeto
+        return acc;
+      }, {});
+
+      console.log("Perfume eliminado con éxito");
+    }
   } catch (error) {
-    console.error("Error al eliminar:", error);
-    alert("❌ Error al eliminar: " + error.message);
+    console.error("Error al eliminar el perfume:", error);
+    throw new Error("Error al eliminar el perfume");
   }
 }
+
 
 // ============ UTILIDADES ============
 function capitalizar(str) {
