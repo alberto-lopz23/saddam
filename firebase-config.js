@@ -158,40 +158,83 @@ export async function agregarPerfume(categoria, marca, nuevoPerfume) {
 }
 
 // Eliminar un perfume - OPTIMIZADO (solo actualiza la marca específica)
+// Versión robusta con:
+// - Comprobación segura de existencia usando 'in' operator
+// - Normalización de estructura (objeto → array) con verificación Array.isArray
+// - Manejo de errores claro y logs de depuración
 export async function eliminarPerfume(categoria, marca, index) {
   try {
+    console.debug(`🗑️ Eliminando perfume: ${categoria}/${marca}[${index}]`);
+    
     const docRef = doc(db, "catalogo", "perfumes");
     const docSnap = await getDoc(docRef);
 
     if (!docSnap.exists()) {
+      console.error("❌ Documento de catálogo no encontrado en Firestore");
       throw new Error("Documento de catálogo no encontrado");
     }
 
     const data = docSnap.data();
 
-    if (
-      !data.perfumes[categoria] ||
-      !data.perfumes[categoria][marca] ||
-      !data.perfumes[categoria][marca][index]
-    ) {
+    // Paso 1: Verificar que la categoría existe
+    if (!data.perfumes || !data.perfumes[categoria]) {
+      console.error(`❌ Categoría "${categoria}" no encontrada`);
       throw new Error("Perfume no encontrado");
     }
 
-    const marcaPerfumes = Object.values(data.perfumes[categoria][marca]);
+    // Paso 2: Verificar que la marca existe
+    if (!data.perfumes[categoria][marca]) {
+      console.error(`❌ Marca "${marca}" no encontrada en categoría "${categoria}"`);
+      throw new Error("Perfume no encontrado");
+    }
 
+    // Paso 3: Obtener la estructura de perfumes de la marca (puede ser objeto o array)
+    const marcaPerfumesRaw = data.perfumes[categoria][marca];
+    
+    // Paso 4: Normalizar a array si es objeto (para orden estable)
+    let marcaPerfumes;
+    if (Array.isArray(marcaPerfumesRaw)) {
+      marcaPerfumes = [...marcaPerfumesRaw]; // Copiar array
+      console.debug(`📋 Estructura es array con ${marcaPerfumes.length} elementos`);
+    } else if (typeof marcaPerfumesRaw === "object" && marcaPerfumesRaw !== null) {
+      marcaPerfumes = Object.values(marcaPerfumesRaw); // Convertir objeto a array
+      console.debug(`📋 Estructura normalizada de objeto a array con ${marcaPerfumes.length} elementos`);
+    } else {
+      console.error(`❌ Estructura de marca inválida: ${typeof marcaPerfumesRaw}`);
+      throw new Error("Perfume no encontrado");
+    }
+
+    // Paso 5: Verificar que el índice existe de forma segura usando 'in' operator
+    if (!(index in marcaPerfumes)) {
+      console.error(`❌ Índice ${index} no existe en marca "${marca}" (total: ${marcaPerfumes.length})`);
+      throw new Error("Perfume no encontrado");
+    }
+
+    // Paso 6: Eliminar el perfume del array usando splice
+    const perfumeEliminado = marcaPerfumes[index];
     marcaPerfumes.splice(index, 1);
+    console.debug(`✂️ Perfume eliminado: "${perfumeEliminado?.nombre || 'sin nombre'}"`);
+    console.debug(`📊 Nuevo total de perfumes en marca: ${marcaPerfumes.length}`);
 
+    // Paso 7: Actualizar Firestore con la nueva lista
     const marcaPath = `perfumes.${categoria}.${marca}`;
     await updateDoc(docRef, {
       [marcaPath]: marcaPerfumes,
     });
 
-    console.log("✅ Perfume eliminado correctamente");
+    console.log(`✅ Perfume eliminado correctamente de Firestore: ${categoria}/${marca}[${index}]`);
     return true;
   } catch (error) {
     console.error("❌ Error al eliminar perfume:", error);
     throw error;
   }
+}
+
+// Limpiar caché de localStorage
+export function limpiarCache() {
+  localStorage.removeItem(CACHE_KEY);
+  localStorage.removeItem(CACHE_TIMESTAMP_KEY);
+  console.log("🗑️ Caché limpiada");
 }
 
 // Obtener info de la caché

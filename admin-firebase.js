@@ -2,7 +2,7 @@ import {
   obtenerPerfumes,
   actualizarPerfume,
   agregarPerfume,
-  eliminarPerfume,
+  eliminarPerfume as eliminarPerfumeFirestore,
   moverPerfume,
   limpiarCache,
   loginAdmin,
@@ -489,53 +489,61 @@ document.getElementById("editForm").addEventListener("submit", async (e) => {
 });
 
 // ============ ELIMINAR PERFUME (MODIFICADO – SIN RECARGA) ============
+// Esta función wrapper:
+// - Usa la implementación compartida de firebase-config.js para la operación en Firestore
+// - Actualiza la caché local (todosLosPerfumes y perfumesFiltrados)
+// - Recalcula arrayIndex para perfumes posteriores de la misma categoría/marca
+// Esto evita duplicación de código y mantiene sincronizada la lógica de eliminación
 
 async function eliminarPerfume(categoria, marca, index) {
   try {
-    const docRef = doc(db, "catalogo", "perfumes");
-    const docSnap = await getDoc(docRef);
+    console.debug(`🗑️ [Admin] Iniciando eliminación: ${categoria}/${marca}[${index}]`);
+    
+    // Paso 1: Usar la implementación compartida para eliminar de Firestore
+    // Esta función ya tiene toda la lógica robusta de validación y normalización
+    await eliminarPerfumeFirestore(categoria, marca, index);
 
-    if (!docSnap.exists()) {
-      throw new Error("Documento de catálogo no encontrado");
+    console.debug(`💾 Firestore actualizado correctamente`);
+
+    // Paso 2: Actualizar caché local - eliminar el perfume
+    // Usar findIndex + splice para mejor rendimiento con datasets grandes
+    const indexEnCache = todosLosPerfumes.findIndex(
+      (p) => p.categoria === categoria && p.marca === marca && p.arrayIndex === index
+    );
+    
+    if (indexEnCache !== -1) {
+      todosLosPerfumes.splice(indexEnCache, 1);
+      console.debug(`🗂️ Perfume eliminado de caché local en posición ${indexEnCache}`);
+    } else {
+      console.warn(`⚠️ Perfume no encontrado en caché local (esto es normal si se acabó de agregar)`);
     }
 
-    const data = docSnap.data();
-
-    // Verificar que el perfume existe
-    if (
-      !data.perfumes[categoria] ||
-      !data.perfumes[categoria][marca] ||
-      data.perfumes[categoria][marca][index] === undefined
-    ) {
-      throw new Error("Perfume no encontrado");
-    }
-
-    // Obtener el array de perfumes de esa marca
-    const marcaPerfumes = [...data.perfumes[categoria][marca]];
-
-    // Eliminar el perfume del array
-    marcaPerfumes.splice(index, 1); // elimina el perfume
-
-    // Actualizar la base de datos de Firebase
-    const marcaPath = `perfumes.${categoria}.${marca}`;
-
-    await updateDoc(docRef, {
-      [marcaPath]: marcaPerfumes,
+    // Paso 3: CRÍTICO - Recalcular arrayIndex para perfumes posteriores de la misma categoría/marca
+    // Esto evita que los índices queden obsoletos y causa "Perfumes no encontrados"
+    todosLosPerfumes = todosLosPerfumes.map((p) => {
+      // Solo ajustar perfumes de la misma categoría/marca con índice mayor al eliminado
+      if (p.categoria === categoria && p.marca === marca && p.arrayIndex > index) {
+        console.debug(`📉 Recalculando índice: ${p.arrayIndex} → ${p.arrayIndex - 1} para "${p.nombre}"`);
+        return {
+          ...p,
+          arrayIndex: p.arrayIndex - 1, // Reducir índice en 1
+        };
+      }
+      return p; // Mantener otros perfumes sin cambios
     });
 
-    // --- ELIMINAR LOCAL SIN RECARGA ---
-    todosLosPerfumes = todosLosPerfumes.filter(
-      (p) =>
-        !(p.categoria === categoria && p.marca === marca && p.arrayIndex === index)
-    );
+    console.debug(`🔢 Índices recalculados para perfumes posteriores`);
 
+    // Paso 4: Actualizar perfumesFiltrados con los cambios
     perfumesFiltrados = [...todosLosPerfumes];
 
+    // Paso 5: Actualizar la UI sin recargar
     mostrarPerfumes();
 
+    console.log(`✅ Perfume eliminado exitosamente: ${categoria}/${marca}[${index}]`);
     alert("✅ Perfume eliminado exitosamente");
   } catch (error) {
-    console.error("Error al eliminar el perfume:", error);
+    console.error("❌ Error al eliminar el perfume:", error);
     alert("❌ Error al eliminar: " + error.message);
   }
 }
