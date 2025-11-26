@@ -153,7 +153,7 @@ async function cargarPerfumes() {
         "<br><br>💡 Por favor, conéctate a internet para cargar los datos";
     }
 
-    tbody.innerHTML = `
+    tbody.innerHTML = ` 
       <tr>
         <td colspan="6" style="text-align: center; padding: 40px; color: #e74c3c;">
           <div style="font-size: 48px; margin-bottom: 20px;">⚠️</div>
@@ -171,6 +171,7 @@ async function cargarPerfumes() {
 }
 
 // ============ BOTÓN REFRESCAR ============
+
 document.getElementById("refreshBtn").addEventListener("click", async () => {
   try {
     limpiarCache();
@@ -184,6 +185,7 @@ document.getElementById("refreshBtn").addEventListener("click", async () => {
 });
 
 // ============ BOTÓN AGREGAR PERFUME ============
+
 document.getElementById("addPerfumeBtn").addEventListener("click", () => {
   cargarMarcasDisponibles(); // Aseguramos que las marcas estén cargadas
   document.getElementById("addModal").classList.add("show");
@@ -191,6 +193,7 @@ document.getElementById("addPerfumeBtn").addEventListener("click", () => {
 });
 
 // ============ CARGAR MARCAS DISPONIBLES ============
+
 function cargarMarcasDisponibles() {
   const categoriaSelect = document.getElementById("addCategoria");
   const marcaSelect = document.getElementById("addMarcaSelect");
@@ -237,6 +240,7 @@ function cargarMarcasDisponibles() {
 }
 
 // ============ ABRIR MODAL DE EDICIÓN ============
+
 function abrirEditarModal(categoria, marca, index) {
   perfumeActual = todosLosPerfumes.find(
     (p) =>
@@ -326,6 +330,7 @@ function abrirEditarModal(categoria, marca, index) {
 }
 
 // ============ CERRAR MODAL ============
+
 window.closeEditModal = function (forzar = false) {
   // Si no es forzado, preguntar confirmación
   if (!forzar) {
@@ -345,6 +350,7 @@ document
   .addEventListener("click", () => closeEditModal(false));
 
 // ============ GUARDAR CAMBIOS ============
+
 document.getElementById("editForm").addEventListener("submit", async (e) => {
   e.preventDefault();
 
@@ -482,125 +488,8 @@ document.getElementById("editForm").addEventListener("submit", async (e) => {
   }
 });
 
-// ============ CERRAR MODAL DE AGREGAR ============
-window.closeAddModal = function () {
-  // Confirmar si hay datos ingresados
-  const nombre = document.getElementById("addNombre").value;
-  if (nombre && nombre.trim() !== "") {
-    const confirmar = confirm(
-      "⚠️ ¿Estás seguro de cerrar? Se perderán los datos ingresados."
-    );
-    if (!confirmar) return;
-  }
-
-  document.getElementById("addModal").classList.remove("show");
-  document.body.style.overflow = ""; // Restaurar el scroll al cerrar el modal
-  document.getElementById("addForm").reset(); // Limpiar el formulario
-};
-
-document
-  .querySelector("#addModal .modal-overlay")
-  .addEventListener("click", closeAddModal);
-
-// ============ GUARDAR NUEVO PERFUME (MODIFICADO – SIN RECARGA) ============
-document.getElementById("addForm").addEventListener("submit", async (e) => {
-  e.preventDefault();
-
-  const categoria = document.getElementById("addCategoria").value;
-  const marcaSelect = document.getElementById("addMarcaSelect").value;
-
-  // Determinar la marca: existente o nueva
-  let marca;
-  if (marcaSelect === "__NUEVA__") {
-    marca = document.getElementById("addMarcaInput").value.toLowerCase().trim();
-    if (!marca) {
-      alert("Por favor ingresa el nombre de la nueva marca");
-      return;
-    }
-  } else {
-    marca = marcaSelect.trim();
-  }
-
-  const precioFinalInput = parseInt(document.getElementById("addPrecio").value) || 0;
-  let precioBase = precioFinalInput;
-
-  // Ajustar precio base según la categoría
-  switch (categoria) {
-    case "arabes":
-      precioBase = precioFinalInput - 1800;
-      break;
-    case "disenador":
-      precioBase = precioFinalInput - 2300;
-      break;
-    case "nicho":
-      precioBase = precioFinalInput - 3000;
-      break;
-    case "sets":
-      precioBase = precioFinalInput;
-      break;
-  }
-
-  // Obtener tamaños disponibles y precios personalizados
-  const tamanosDisponibles = [];
-  const preciosPersonalizados = {};
-
-  const tamanos = [30, 50, 60, 75, 80, 90, 100, 120, 125, 200];
-  tamanos.forEach((tamano) => {
-    const checkbox = document.getElementById(`addTamano${tamano}`);
-    const precioInput = document.getElementById(`addPrecio${tamano}`);
-
-    if (checkbox && checkbox.checked) {
-      tamanosDisponibles.push(tamano);
-      const precio = precioInput.value;
-      if (precio) preciosPersonalizados[tamano] = parseInt(precio);
-    }
-  });
-
-  // Crear el objeto del nuevo perfume
-  const nuevoPerfume = {
-    nombre: document.getElementById("addNombre").value,
-    imagen: document.getElementById("addImagen").value,
-    precio: precioBase,
-    genero: document.getElementById("addGenero").value,
-    tamanosDisponibles: tamanosDisponibles,
-    preciosPersonalizados:
-      Object.keys(preciosPersonalizados).length > 0
-        ? preciosPersonalizados
-        : null,
-    descripcion: document.getElementById("addDescripcion").value || "",
-    notas: {
-      salida: document.getElementById("addNotasSalida").value || "",
-      corazon: document.getElementById("addNotasCorazon").value || "",
-      fondo: document.getElementById("addNotasFondo").value || "",
-    },
-  };
-
-  try {
-    const indexNuevo = await agregarPerfume(categoria, marca, nuevoPerfume);
-
-    // --- AÑADIR LOCAL SIN RECARGAR ---
-    todosLosPerfumes.push({
-      ...nuevoPerfume,
-      categoria,
-      marca,
-      arrayIndex: indexNuevo,
-      precioBase,
-      precioFinal: precioFinalInput,
-    });
-
-    perfumesFiltrados = [...todosLosPerfumes];
-
-    mostrarPerfumes();
-    closeAddModal();
-
-    alert("✅ Perfume agregado exitosamente");
-  } catch (error) {
-    console.error("Error al agregar:", error);
-    alert("❌ Error al agregar: " + error.message);
-  }
-});
-
 // ============ ELIMINAR PERFUME (MODIFICADO – SIN RECARGA) ============
+
 async function eliminarPerfume(categoria, marca, index) {
   try {
     const docRef = doc(db, "catalogo", "perfumes");
@@ -652,8 +541,8 @@ async function eliminarPerfume(categoria, marca, index) {
 }
 
 // ============ UTILIDADES ============
+
 function capitalizar(str) {
   if (!str) return "";
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
-
