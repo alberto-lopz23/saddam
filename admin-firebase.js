@@ -506,12 +506,17 @@ async function eliminarPerfume(categoria, marca, index) {
     console.debug(`💾 Firestore actualizado correctamente`);
 
     // Paso 2: Actualizar caché local - eliminar el perfume
-    todosLosPerfumes = todosLosPerfumes.filter(
-      (p) =>
-        !(p.categoria === categoria && p.marca === marca && p.arrayIndex === index)
+    // Usar findIndex + splice para mejor rendimiento con datasets grandes
+    const indexEnCache = todosLosPerfumes.findIndex(
+      (p) => p.categoria === categoria && p.marca === marca && p.arrayIndex === index
     );
-
-    console.debug(`🗂️ Perfume eliminado de caché local`);
+    
+    if (indexEnCache !== -1) {
+      todosLosPerfumes.splice(indexEnCache, 1);
+      console.debug(`🗂️ Perfume eliminado de caché local en posición ${indexEnCache}`);
+    } else {
+      console.warn(`⚠️ Perfume no encontrado en caché local (esto es normal si se acabó de agregar)`);
+    }
 
     // Paso 3: CRÍTICO - Recalcular arrayIndex para perfumes posteriores de la misma categoría/marca
     // Esto evita que los índices queden obsoletos y causa "Perfumes no encontrados"
