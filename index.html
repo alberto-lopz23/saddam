@@ -150,6 +150,27 @@
             Nichos
           </button>
         </div>
+        <div class="mobile-filter-section">
+          <h4>Género</h4>
+          <button
+            class="mobile-filter-btn"
+            onclick="filtrarGeneroMobile('hombre', this)"
+          >
+            Hombre
+          </button>
+          <button
+            class="mobile-filter-btn"
+            onclick="filtrarGeneroMobile('mujer', this)"
+          >
+            Mujer
+          </button>
+          <button
+            class="mobile-filter-btn"
+            onclick="filtrarGeneroMobile('unisex', this)"
+          >
+            Unisex
+          </button>
+        </div>
         <div class="mobile-subfilters" id="mobileSubfilters"></div>
       </div>
 
@@ -279,15 +300,6 @@
           <h1>PerfumParadiseRD</h1>
         </div>
 
-        <!-- Botón de Admin (esquina superior izquierda) -->
-        <a
-          href="admin-firebase.html"
-          class="admin-btn"
-          title="Panel de Administración"
-        >
-          ⚙️
-        </a>
-
         <!-- Buscador con lupa expandible (esquina superior derecha) -->
         <div class="search-container" id="searchContainer">
           <button
@@ -321,7 +333,7 @@
 
         <!-- Logo y texto centrados -->
         <div class="logo-title-container">
-          <img src="logo2.jpeg" alt="Logo" class="header-logo" />
+          <img src="logoheader.jpg" alt="Logo" class="header-logo" />
           <div class="brand-text">
             <h1 class="brand-name">PerfumParadiseRD</h1>
             <p class="brand-slogan">Tus expertos en fragancias</p>
@@ -346,9 +358,15 @@
         <button class="btn" onclick="filtrarCategoria('nichos', this)">
           Nichos
         </button>
+        <button class="btn btn-genero" onclick="mostrarFiltrosGenero(this)">
+          Género
+        </button>
       </div>
 
-      <!-- Subfiltros desktop -->
+      <!-- Subfiltros de género desktop -->
+      <div class="subfilters desktop-subfilters" id="generoSubfilters"></div>
+
+      <!-- Subfiltros de marcas desktop -->
       <div class="subfilters desktop-subfilters" id="subfilters"></div>
     </header>
 
@@ -434,5 +452,14 @@
         document.body.style.overflow = "";
       }
     </script>
+
+    <!-- Botón de Admin (invisible al final) -->
+    <a
+      href="admin-firebase.html"
+      class="admin-btn-invisible"
+      title="Panel de Administración"
+    >
+      ⚙️
+    </a>
   </body>
 </html>

@@ -6,6 +6,7 @@ let perfumesFiltrados = [];
 let catalogoData = null;
 let paginaActual = 1;
 const perfumesPorPagina = 20;
+let filtroGeneroActual = "todos"; // Nuevo filtro de género
 
 // Elementos del DOM
 const galeria = document.getElementById("galeria");
@@ -413,9 +414,16 @@ function mostrarPaginaPerfume(perfume, precio) {
 
     // Definir multiplicadores para cada tamaño (por defecto)
     const multiplicadores = {
+      30: 0.4,
+      50: 0.6,
       60: 0.7,
+      75: 0.85,
+      80: 0.9,
+      90: 0.95,
       100: 1.0,
       120: 1.2,
+      125: 1.25,
+      200: 1.8,
     };
 
     const mlSelectorContainer = document.getElementById("mlSelectorContainer");
@@ -920,13 +928,18 @@ function aplicarFiltroCategoria(categoria) {
   // Limpiar subfiltros desktop
   subfiltersDiv.innerHTML = "";
 
+  // Filtrar por categoría
+  let filtrados = [];
   if (categoria === "todos") {
-    perfumesFiltrados = [...todosLosPerfumes];
+    filtrados = [...todosLosPerfumes];
   } else {
-    perfumesFiltrados = todosLosPerfumes.filter(
-      (p) => p.categoria === categoria
-    );
+    filtrados = todosLosPerfumes.filter((p) => p.categoria === categoria);
   }
+
+  // Aplicar filtro de género adicional
+  filtrados = aplicarFiltroGenero(filtrados, filtroGeneroActual);
+
+  perfumesFiltrados = filtrados;
 
   // Mostrar subfiltros desktop
   mostrarSubfiltros(categoria);
@@ -935,10 +948,152 @@ function aplicarFiltroCategoria(categoria) {
   mostrarPerfumes(perfumesFiltrados);
 }
 
+// Función auxiliar para aplicar filtro de género
+function aplicarFiltroGenero(perfumes, genero) {
+  if (genero === "todos") {
+    return perfumes;
+  } else if (genero === "unisex") {
+    // Solo perfumes unisex
+    return perfumes.filter((p) => p.genero === "unisex");
+  } else if (genero === "hombre") {
+    // Hombres + unisex
+    return perfumes.filter(
+      (p) => p.genero === "hombre" || p.genero === "unisex"
+    );
+  } else if (genero === "mujer") {
+    // Mujeres + unisex
+    return perfumes.filter(
+      (p) => p.genero === "mujer" || p.genero === "unisex"
+    );
+  }
+  return perfumes;
+}
+
+// Mostrar subfiltros de género en desktop
+function mostrarFiltrosGenero(boton) {
+  const generoSubfiltersDiv = document.getElementById("generoSubfilters");
+
+  // Toggle: si ya están mostrados, ocultarlos
+  if (generoSubfiltersDiv.innerHTML !== "") {
+    generoSubfiltersDiv.innerHTML = "";
+    return;
+  }
+
+  // Crear los botones de género
+  const opciones = [
+    { texto: "Hombre", valor: "hombre" },
+    { texto: "Mujer", valor: "mujer" },
+    { texto: "Unisex", valor: "unisex" },
+  ];
+
+  opciones.forEach((opcion) => {
+    const btn = document.createElement("button");
+    btn.classList.add("subfiltro-btn");
+    if (opcion.valor === filtroGeneroActual) {
+      btn.classList.add("active");
+    }
+    btn.textContent = opcion.texto;
+    btn.onclick = () => filtrarGeneroDesktop(opcion.valor, btn);
+    generoSubfiltersDiv.appendChild(btn);
+  });
+}
+
+// Filtrar género desde menú móvil
+function filtrarGeneroMobile(genero, boton) {
+  // Actualizar botón activo en la sección de género
+  const generoSection = boton.closest(".mobile-filter-section");
+  if (generoSection) {
+    generoSection
+      .querySelectorAll(".mobile-filter-btn")
+      .forEach((b) => b.classList.remove("active"));
+  }
+  boton.classList.add("active");
+
+  // Actualizar filtro global
+  filtroGeneroActual = genero;
+
+  // Sincronizar con filtros desktop
+  document
+    .querySelectorAll(".btn-gender")
+    .forEach((b) => b.classList.remove("active"));
+  const desktopBtn = Array.from(document.querySelectorAll(".btn-gender")).find(
+    (b) => b.textContent.toLowerCase().trim() === genero
+  );
+  if (desktopBtn) desktopBtn.classList.add("active");
+
+  // Reaplicar filtros actuales con el nuevo género
+  const categoriaActual = Array.from(
+    document.querySelectorAll(
+      '.mobile-filter-btn[onclick*="filtrarCategoriaMobile"]'
+    )
+  ).find((b) => b.classList.contains("active"));
+  if (categoriaActual) {
+    const categoria = categoriaActual.textContent.toLowerCase().trim();
+    const categoriaMap = {
+      todos: "todos",
+      árabes: "arabes",
+      diseñador: "disenador",
+      sets: "sets",
+      nichos: "nichos",
+    };
+    aplicarFiltroCategoria(categoriaMap[categoria] || "todos");
+  } else {
+    aplicarFiltroCategoria("todos");
+  }
+}
+
+// Filtrar género desde desktop
+function filtrarGeneroDesktop(genero, boton) {
+  // Actualizar botón activo en subfiltros de género
+  const generoSubfiltersDiv = document.getElementById("generoSubfilters");
+  generoSubfiltersDiv
+    .querySelectorAll(".subfiltro-btn")
+    .forEach((b) => b.classList.remove("active"));
+  boton.classList.add("active");
+
+  // Actualizar filtro global
+  filtroGeneroActual = genero;
+
+  // Sincronizar con filtros móviles
+  const generoMobileBtns = Array.from(
+    document.querySelectorAll(
+      '.mobile-filter-btn[onclick*="filtrarGeneroMobile"]'
+    )
+  );
+  generoMobileBtns.forEach((b) => b.classList.remove("active"));
+  const mobileBtn = generoMobileBtns.find(
+    (b) => b.textContent.toLowerCase().trim() === genero
+  );
+  if (mobileBtn) mobileBtn.classList.add("active");
+
+  // Reaplicar filtros actuales con el nuevo género
+  const categoriaActual = Array.from(
+    document.querySelectorAll(".desktop-filters .btn")
+  ).find(
+    (b) => b.classList.contains("active") && !b.textContent.includes("Género")
+  );
+  if (categoriaActual) {
+    const categoria = categoriaActual.textContent.toLowerCase().trim();
+    const categoriaMap = {
+      todos: "todos",
+      árabes: "arabes",
+      diseñador: "disenador",
+      sets: "sets",
+      nichos: "nichos",
+    };
+    aplicarFiltroCategoria(categoriaMap[categoria] || "todos");
+  } else {
+    aplicarFiltroCategoria("todos");
+  }
+}
+
 // ============ EXPONER FUNCIONES AL ÁMBITO GLOBAL ============
 // Necesario porque usamos type="module" en el HTML
 window.filtrarCategoria = filtrarCategoria;
 window.filtrarCategoriaMobile = filtrarCategoriaMobile;
+window.filtrarGeneroMobile = filtrarGeneroMobile;
+window.filtrarGeneroDesktop = filtrarGeneroDesktop;
+window.mostrarFiltrosGenero = mostrarFiltrosGenero;
 window.toggleSearch = toggleSearch;
 window.toggleMobileMenu = toggleMobileMenu;
 window.buscarPerfumes = buscarPerfumes;
