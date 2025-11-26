@@ -6,7 +6,7 @@ let perfumesFiltrados = [];
 let catalogoData = null;
 let paginaActual = 1;
 const perfumesPorPagina = 20;
-let filtroGeneroActual = "todos"; // Nuevo filtro de género
+let filtroGeneroActual = "todos"; // Filtro de género por defecto
 
 // Elementos del DOM
 const galeria = document.getElementById("galeria");
@@ -103,7 +103,7 @@ async function cargarCatalogo() {
     console.error("❌ Error cargando catálogo:", error);
 
     // Mostrar mensaje de error más amigable
-    galeria.innerHTML = `
+    galeria.innerHTML = `  
       <div style="grid-column: 1/-1; text-align: center; padding: 60px 20px; color: #666;">
         <div style="font-size: 48px; margin-bottom: 20px;">⚠️</div>
         <h3 style="color: #333; font-size: 24px; margin-bottom: 15px;">No se pudieron cargar los perfumes</h3>
@@ -140,28 +140,26 @@ function procesarDatos() {
 
   // Helper para procesar cada categoría de forma optimizada
   const procesarCategoria = (categoria, data, tipo = "unisex") => {
-  if (!data) return;
+    if (!data) return;
 
-  for (const [marca, perfumes] of Object.entries(data)) {
-    if (!perfumes) continue;
+    for (const [marca, perfumes] of Object.entries(data)) {
+      if (!perfumes) continue;
 
-    // Normalizar perfumes para que siempre sea un array
-    const lista = Array.isArray(perfumes)
-      ? perfumes
-      : Object.values(perfumes);
+      // Normalizar perfumes para que siempre sea un array
+      const lista = Array.isArray(perfumes)
+        ? perfumes
+        : Object.values(perfumes);
 
-    for (const perfume of lista) {
-      todosLosPerfumes.push({
-        ...perfume,
-        categoria,
-        marca: categoria === "sets" ? `Set ${marca}` : marca,
-        tipo,
-      });
+      for (const perfume of lista) {
+        todosLosPerfumes.push({
+          ...perfume,
+          categoria,
+          marca: categoria === "sets" ? `Set ${marca}` : marca,
+          tipo,
+        });
+      }
     }
-  }
-};
-
-
+  };
 
   // Procesar todas las categorías
   procesarCategoria("arabes", catalogoData.perfumes?.arabes);
@@ -448,145 +446,146 @@ function mostrarPaginaPerfume(perfume, precio) {
 
   detallePage.style.display = "block";
   window.scrollTo(0, 0);
+}
 
-  // Configurar el selector de ML (sin setTimeout para evitar parpadeo)
-  const mlSelect = document.getElementById("detailMlSelect");
-  const whatsappBtn = document.querySelector(".detail-whatsapp-btn");
 
-  if (mlSelect && whatsappBtn) {
-    // Obtener tamaños disponibles
-    const tamanosDisponibles =
-      perfume.tamanosDisponibles && perfume.tamanosDisponibles.length > 0
-        ? perfume.tamanosDisponibles
-        : [];
+ // Configurar el selector de ML (sin setTimeout para evitar parpadeo)
+const mlSelect = document.getElementById("detailMlSelect");
+const whatsappBtn = document.querySelector(".detail-whatsapp-btn");
 
-    // Obtener precios personalizados si existen
-    const preciosPersonalizados = perfume.preciosPersonalizados || {};
-    const precioNumerico = parseInt(precio.replace(/[^0-9]/g, ""));
+if (mlSelect && whatsappBtn) {
+  // Obtener tamaños disponibles
+  const tamanosDisponibles =
+    perfume.tamanosDisponibles && perfume.tamanosDisponibles.length > 0
+      ? perfume.tamanosDisponibles
+      : [];
 
-    // Definir multiplicadores para cada tamaño (por defecto)
-    const multiplicadores = {
-      30: 0.4,
-      50: 0.6,
-      60: 0.7,
-      75: 0.85,
-      80: 0.9,
-      90: 0.95,
-      100: 1.0,
-      120: 1.2,
-      125: 1.25,
-      200: 1.8,
-    };
+  // Obtener precios personalizados si existen
+  const preciosPersonalizados = perfume.preciosPersonalizados || {};
+  const precioNumerico = parseInt(precio.replace(/[^0-9]/g, ""));
 
-    const mlSelectorContainer = document.getElementById("mlSelectorContainer");
+  // Definir multiplicadores para cada tamaño (por defecto)
+  const multiplicadores = {
+    30: 0.4,
+    50: 0.6,
+    60: 0.7,
+    75: 0.85,
+    80: 0.9,
+    90: 0.95,
+    100: 1.0,
+    120: 1.2,
+    125: 1.25,
+    200: 1.8,
+  };
 
-    // Si no tiene tamaños configurados, ocultar selector y mostrar nombre sin ML
-    if (tamanosDisponibles.length === 0) {
-      mlSelectorContainer.style.display = "none";
-      document.getElementById("detailNombre").textContent = perfume.nombre;
-      return; // Salir aquí, no hay nada más que hacer
-    }
+  const mlSelectorContainer = document.getElementById("mlSelectorContainer");
 
-    // Generar opciones dinámicamente
-    mlSelect.innerHTML = "";
-    tamanosDisponibles.forEach((tamano, index) => {
-      const option = document.createElement("option");
-      option.value = tamano;
+  // Si no tiene tamaños configurados, ocultar selector y mostrar nombre sin ML
+  if (tamanosDisponibles.length === 0) {
+    mlSelectorContainer.style.display = "none";
+    document.getElementById("detailNombre").textContent = perfume.nombre;
+    return; // Salir aquí, no hay nada más que hacer
+  }
 
-      // Usar precio personalizado si existe, sino usar multiplicador
-      if (preciosPersonalizados[tamano]) {
-        option.dataset.precioFijo = preciosPersonalizados[tamano];
-        option.dataset.multiplier = null;
-      } else {
-        option.dataset.multiplier = multiplicadores[tamano];
-        option.dataset.precioFijo = null;
-      }
+  // Generar opciones dinámicamente
+  mlSelect.innerHTML = "";
+  tamanosDisponibles.forEach((tamano, index) => {
+    const option = document.createElement("option");
+    option.value = tamano;
 
-      option.textContent = `${tamano} ML`;
-      if (index === 0) option.selected = true;
-      mlSelect.appendChild(option);
-    });
-
-    // Si solo hay un tamaño, ocultar el selector
-    if (tamanosDisponibles.length === 1) {
-      mlSelectorContainer.style.display = "none";
-      const tamano = tamanosDisponibles[0];
-      document.getElementById(
-        "detailNombre"
-      ).textContent = `${perfume.nombre} ${tamano}ML`;
-
-      // Actualizar precio si hay precio personalizado
-      if (preciosPersonalizados[tamano]) {
-        document.getElementById(
-          "detailPrecio"
-        ).textContent = `$${preciosPersonalizados[tamano].toLocaleString()}`;
-      } else {
-        const precioConMultiplicador = Math.round(
-          precioNumerico * multiplicadores[tamano]
-        );
-        document.getElementById(
-          "detailPrecio"
-        ).textContent = `$${precioConMultiplicador.toLocaleString()}`;
-      }
+    // Usar precio personalizado si existe, sino usar multiplicador
+    if (preciosPersonalizados[tamano]) {
+      option.dataset.precioFijo = preciosPersonalizados[tamano];
+      option.dataset.multiplier = null;
     } else {
-      // Mostrar el selector cuando hay múltiples tamaños
-      mlSelectorContainer.style.display = "flex";
-
-      // Actualizar nombre y precio inicial con el primer tamaño
-      const tamanoInicial = tamanosDisponibles[0];
-      document.getElementById(
-        "detailNombre"
-      ).textContent = `${perfume.nombre} ${tamanoInicial}ML`;
-
-      // Actualizar precio inicial
-      if (preciosPersonalizados[tamanoInicial]) {
-        document.getElementById(
-          "detailPrecio"
-        ).textContent = `$${preciosPersonalizados[
-          tamanoInicial
-        ].toLocaleString()}`;
-      } else {
-        const precioConMultiplicador = Math.round(
-          precioNumerico * multiplicadores[tamanoInicial]
-        );
-        document.getElementById(
-          "detailPrecio"
-        ).textContent = `$${precioConMultiplicador.toLocaleString()}`;
-      }
+      option.dataset.multiplier = multiplicadores[tamano];
+      option.dataset.precioFijo = null;
     }
 
-    mlSelect.addEventListener("change", function () {
-      const selectedOption = this.options[this.selectedIndex];
-      const mlValue = this.value;
-      let nuevoPrecio;
+    option.textContent = `${tamano} ML`;
+    if (index === 0) option.selected = true;
+    mlSelect.appendChild(option);
+  });
 
-      // Usar precio fijo personalizado si existe, sino calcular con multiplicador
-      if (selectedOption.dataset.precioFijo) {
-        nuevoPrecio = parseInt(selectedOption.dataset.precioFijo);
-      } else {
-        const multiplier = parseFloat(selectedOption.dataset.multiplier);
-        nuevoPrecio = Math.round(precioNumerico * multiplier);
-      }
+  // Si solo hay un tamaño, ocultar el selector
+  if (tamanosDisponibles.length === 1) {
+    mlSelectorContainer.style.display = "none";
+    const tamano = tamanosDisponibles[0];
+    document.getElementById(
+      "detailNombre"
+    ).textContent = `${perfume.nombre} ${tamano}ML`;
 
-      // Actualizar precio en pantalla
+    // Actualizar precio si hay precio personalizado
+    if (preciosPersonalizados[tamano]) {
       document.getElementById(
         "detailPrecio"
-      ).textContent = `$${nuevoPrecio.toLocaleString()}`;
-
-      // Actualizar nombre del perfume con el tamaño
-      document.getElementById(
-        "detailNombre"
-      ).textContent = `${perfume.nombre} ${mlValue}ML`;
-
-      // Actualizar mensaje de WhatsApp
-      const nuevoMensaje = encodeURIComponent(
-        `Hola! Me interesa el perfume:\n\n*${perfume.nombre}*\n${
-          perfume.marca
-        }\nTamaño: ${mlValue}ML\nPrecio: RD$ ${nuevoPrecio.toLocaleString()}`
+      ).textContent = `$${preciosPersonalizados[tamano].toLocaleString()}`;
+    } else {
+      const precioConMultiplicador = Math.round(
+        precioNumerico * multiplicadores[tamano]
       );
-      whatsappBtn.href = `https://wa.me/${NUMERO_WHATSAPP}?text=${nuevoMensaje}`;
-    });
+      document.getElementById(
+        "detailPrecio"
+      ).textContent = `$${precioConMultiplicador.toLocaleString()}`;
+    }
+  } else {
+    // Mostrar el selector cuando hay múltiples tamaños
+    mlSelectorContainer.style.display = "flex";
+
+    // Actualizar nombre y precio inicial con el primer tamaño
+    const tamanoInicial = tamanosDisponibles[0];
+    document.getElementById(
+      "detailNombre"
+    ).textContent = `${perfume.nombre} ${tamanoInicial}ML`;
+
+    // Actualizar precio inicial
+    if (preciosPersonalizados[tamanoInicial]) {
+      document.getElementById(
+        "detailPrecio"
+      ).textContent = `$${preciosPersonalizados[
+        tamanoInicial
+      ].toLocaleString()}`;
+    } else {
+      const precioConMultiplicador = Math.round(
+        precioNumerico * multiplicadores[tamanoInicial]
+      );
+      document.getElementById(
+        "detailPrecio"
+      ).textContent = `$${precioConMultiplicador.toLocaleString()}`;
+    }
   }
+
+  mlSelect.addEventListener("change", function () {
+    const selectedOption = this.options[this.selectedIndex];
+    const mlValue = this.value;
+    let nuevoPrecio;
+
+    // Usar precio fijo personalizado si existe, sino calcular con multiplicador
+    if (selectedOption.dataset.precioFijo) {
+      nuevoPrecio = parseInt(selectedOption.dataset.precioFijo);
+    } else {
+      const multiplier = parseFloat(selectedOption.dataset.multiplier);
+      nuevoPrecio = Math.round(precioNumerico * multiplier);
+    }
+
+    // Actualizar precio en pantalla
+    document.getElementById(
+      "detailPrecio"
+    ).textContent = `$${nuevoPrecio.toLocaleString()}`;
+
+    // Actualizar nombre del perfume con el tamaño
+    document.getElementById(
+      "detailNombre"
+    ).textContent = `${perfume.nombre} ${mlValue}ML`;
+
+    // Actualizar mensaje de WhatsApp
+    const nuevoMensaje = encodeURIComponent(
+      `Hola! Me interesa el perfume:\n\n*${perfume.nombre}*\n${
+        perfume.marca
+      }\nTamaño: ${mlValue}ML\nPrecio: RD$ ${nuevoPrecio.toLocaleString()}`
+    );
+    whatsappBtn.href = `https://wa.me/${NUMERO_WHATSAPP}?text=${nuevoMensaje}`;
+  });
 }
 
 // Volver al catálogo
@@ -851,378 +850,3 @@ document.addEventListener("click", function (e) {
     }
   }
 });
-
-// Diagnóstico de caché (disponible en consola)
-async function diagnosticarCache() {
-  console.log("🔍 === DIAGNÓSTICO DE CACHÉ ===");
-
-  try {
-    const { infoCacheActual } = await import("./firebase-config.js");
-    const info = infoCacheActual();
-
-    if (info.existe) {
-      console.log(`✅ Caché disponible`);
-      console.log(`📊 Tamaño: ${info.tamaño}`);
-      console.log(`⏰ Edad: ${info.edad} minutos`);
-      console.log(
-        `${info.expira ? "✅" : "⚠️"} Estado: ${
-          info.expira ? "Válida" : "Expirada"
-        }`
-      );
-    } else {
-      console.log("❌ No hay caché disponible");
-      console.log("ℹ️ La caché se creará después de la primera carga exitosa");
-    }
-
-    console.log("🌐 Conexión:", navigator.onLine ? "✅ Online" : "❌ Offline");
-    console.log(
-      "💾 LocalStorage disponible:",
-      typeof Storage !== "undefined" ? "✅ Sí" : "❌ No"
-    );
-    console.log("================================");
-  } catch (error) {
-    console.error("❌ Error en diagnóstico:", error);
-  }
-}
-
-// Hacer disponible globalmente para debugging
-window.diagnosticarCache = diagnosticarCache;
-
-// Inicializar cuando carga la página
-document.addEventListener("DOMContentLoaded", () => {
-  cargarCatalogo();
-  // Ejecutar diagnóstico automático después de 1 segundo
-  setTimeout(diagnosticarCache, 1000);
-});
-
-// ============ FUNCIONES MÓVILES ============
-
-// Toggle del menú móvil
-function toggleMobileMenu() {
-  const mobileMenu = document.getElementById("mobileMenu");
-  const overlay = document.getElementById("mobileMenuOverlay");
-  const body = document.body;
-
-  if (mobileMenu.classList.contains("active")) {
-    mobileMenu.classList.remove("active");
-    overlay.classList.remove("active");
-    body.classList.remove("menu-open");
-  } else {
-    mobileMenu.classList.add("active");
-    overlay.classList.add("active");
-    body.classList.add("menu-open");
-  }
-}
-
-// Filtrar categoría desde menú móvil
-function filtrarCategoriaMobile(categoria, boton) {
-  // Verificar si el botón ya está activo (toggle)
-  const yaEstaActivo = boton.classList.contains("active");
-
-  if (yaEstaActivo && categoria !== "todos") {
-    // Si ya está activo, quitar filtro y mostrar todos
-    document
-      .querySelectorAll(".mobile-filter-btn")
-      .forEach((b) => b.classList.remove("active"));
-    document
-      .querySelector('.mobile-filter-btn[onclick*="todos"]')
-      .classList.add("active");
-
-    // Sincronizar con desktop
-    document
-      .querySelectorAll(".btn")
-      .forEach((b) => b.classList.remove("active"));
-    document.querySelector('.btn[onclick*="todos"]').classList.add("active");
-
-    // Mostrar todos los perfumes
-    aplicarFiltroCategoria("todos");
-    mostrarSubfiltrosMobile("todos");
-    return;
-  }
-
-  // Actualizar botón activo en móvil
-  document
-    .querySelectorAll(".mobile-filter-btn")
-    .forEach((b) => b.classList.remove("active"));
-  boton.classList.add("active");
-
-  // Actualizar también los filtros desktop para mantener sincronización
-  document
-    .querySelectorAll(".btn")
-    .forEach((b) => b.classList.remove("active"));
-  const desktopBtn = Array.from(document.querySelectorAll(".btn")).find(
-    (b) =>
-      b.textContent.toLowerCase().trim() === categoria ||
-      (categoria === "todos" && b.textContent.toLowerCase().trim() === "todos")
-  );
-  if (desktopBtn) desktopBtn.classList.add("active");
-
-  // Aplicar filtro
-  aplicarFiltroCategoria(categoria);
-
-  // Mostrar subfiltros móviles
-  mostrarSubfiltrosMobile(categoria);
-}
-
-// Mostrar subfiltros en menú móvil
-function mostrarSubfiltrosMobile(categoria) {
-  const mobileSubfilters = document.getElementById("mobileSubfilters");
-  mobileSubfilters.innerHTML = "";
-
-  if (categoria === "todos") return;
-
-  let subfiltros = [];
-
-  if (categoria === "arabes") {
-    const marcas = [
-      ...new Set(
-        todosLosPerfumes
-          .filter((p) => p.categoria === "arabes")
-          .map((p) => p.marca)
-      ),
-    ];
-    subfiltros = marcas.slice(0, 8); // Mostrar solo 8 marcas
-  } else if (categoria === "disenador") {
-    const marcas = [
-      ...new Set(
-        todosLosPerfumes
-          .filter((p) => p.categoria === "disenador")
-          .map((p) => p.marca)
-      ),
-    ];
-    subfiltros = marcas.slice(0, 8); // Mostrar solo 8 marcas
-  } else if (categoria === "nichos") {
-    const marcas = [
-      ...new Set(
-        todosLosPerfumes
-          .filter((p) => p.categoria === "nichos")
-          .map((p) => p.marca)
-      ),
-    ];
-    subfiltros = marcas;
-  } else if (categoria === "sets") {
-    subfiltros = ["Set arabes", "Set disenador"];
-  }
-
-  if (subfiltros.length > 0) {
-    const subfilterSection = document.createElement("div");
-    subfilterSection.className = "mobile-filter-section";
-    subfilterSection.innerHTML = "<h4>Marcas</h4>";
-
-    subfiltros.forEach((subfiltro) => {
-      const btn = document.createElement("button");
-      btn.className = "mobile-subfilter-btn";
-      btn.textContent = subfiltro;
-      btn.onclick = () => {
-        filtrarPorMarca(subfiltro, categoria);
-        toggleMobileMenu(); // Cerrar menú después de seleccionar
-      };
-      subfilterSection.appendChild(btn);
-    });
-
-    // Agregar botón "Más marcas" para diseñador y árabes
-    if (
-      (categoria === "disenador" || categoria === "arabes") &&
-      subfiltros.length === 8
-    ) {
-      const btnMas = document.createElement("button");
-      btnMas.className = "mobile-subfilter-btn mobile-subfilter-btn-mas";
-      btnMas.textContent = "✨ Más marcas";
-      const url = categoria === "arabes" ? "marcas-arabes.html" : "marcas.html";
-      btnMas.onclick = () => (window.location.href = url);
-      subfilterSection.appendChild(btnMas);
-    }
-
-    mobileSubfilters.appendChild(subfilterSection);
-  }
-}
-
-// Función compartida para aplicar filtro de categoría
-function aplicarFiltroCategoria(categoria) {
-  // Limpiar subfiltros desktop
-  subfiltersDiv.innerHTML = "";
-
-  // Limpiar subfiltros de género
-  const generoSubfiltersDiv = document.getElementById("generoSubfilters");
-  if (generoSubfiltersDiv) {
-    generoSubfiltersDiv.innerHTML = "";
-  }
-
-  // Filtrar por categoría
-  let filtrados = [];
-  if (categoria === "todos") {
-    filtrados = [...todosLosPerfumes];
-  } else {
-    filtrados = todosLosPerfumes.filter((p) => p.categoria === categoria);
-  }
-
-  // Aplicar filtro de género adicional
-  filtrados = aplicarFiltroGenero(filtrados, filtroGeneroActual);
-
-  perfumesFiltrados = filtrados;
-
-  // Mostrar subfiltros desktop
-  mostrarSubfiltros(categoria);
-
-  // Mostrar perfumes filtrados
-  mostrarPerfumes(perfumesFiltrados);
-}
-
-// Función auxiliar para aplicar filtro de género
-function aplicarFiltroGenero(perfumes, genero) {
-  if (genero === "todos") {
-    return perfumes;
-  } else if (genero === "unisex") {
-    // Solo perfumes unisex
-    return perfumes.filter((p) => p.genero === "unisex");
-  } else if (genero === "hombre") {
-    // Hombres + unisex
-    return perfumes.filter(
-      (p) => p.genero === "hombre" || p.genero === "unisex"
-    );
-  } else if (genero === "mujer") {
-    // Mujeres + unisex
-    return perfumes.filter(
-      (p) => p.genero === "mujer" || p.genero === "unisex"
-    );
-  }
-  return perfumes;
-}
-
-// Mostrar subfiltros de género en desktop
-function mostrarFiltrosGenero(boton) {
-  const generoSubfiltersDiv = document.getElementById("generoSubfilters");
-
-  // Toggle: si ya están mostrados, ocultarlos
-  if (generoSubfiltersDiv.innerHTML !== "") {
-    generoSubfiltersDiv.innerHTML = "";
-    boton.classList.remove("active");
-    return;
-  }
-
-  // Desactivar todos los botones de categoría
-  document.querySelectorAll(".desktop-filters .btn").forEach((b) => {
-    b.classList.remove("active");
-  });
-
-  // Activar el botón de género
-  boton.classList.add("active");
-
-  // Limpiar subfiltros de marcas cuando se abre género
-  const subfiltersDiv = document.getElementById("subfilters");
-  if (subfiltersDiv) {
-    subfiltersDiv.innerHTML = "";
-  }
-
-  // Crear los botones de género
-  const opciones = [
-    { texto: "Masculino", valor: "hombre" },
-    { texto: "Femenino", valor: "mujer" },
-    { texto: "Unisex", valor: "unisex" },
-  ];
-
-  opciones.forEach((opcion) => {
-    const btn = document.createElement("button");
-    btn.classList.add("subfilter-btn");
-    if (opcion.valor === filtroGeneroActual) {
-      btn.classList.add("active");
-    }
-    btn.textContent = opcion.texto;
-    btn.onclick = () => filtrarGeneroDesktop(opcion.valor, btn);
-    generoSubfiltersDiv.appendChild(btn);
-  });
-}
-
-// Filtrar género desde menú móvil
-function filtrarGeneroMobile(genero, boton) {
-  // Actualizar botón activo en la sección de género
-  const generoSection = boton.closest(".mobile-filter-section");
-  if (generoSection) {
-    generoSection
-      .querySelectorAll(".mobile-filter-btn")
-      .forEach((b) => b.classList.remove("active"));
-  }
-  boton.classList.add("active");
-
-  // Actualizar filtro global
-  filtroGeneroActual = genero;
-
-  // Sincronizar con filtros desktop
-  document
-    .querySelectorAll(".btn-gender")
-    .forEach((b) => b.classList.remove("active"));
-  const desktopBtn = Array.from(document.querySelectorAll(".btn-gender")).find(
-    (b) => b.textContent.toLowerCase().trim() === genero
-  );
-  if (desktopBtn) desktopBtn.classList.add("active");
-
-  // Reaplicar filtros actuales con el nuevo género
-  const categoriaActual = Array.from(
-    document.querySelectorAll(
-      '.mobile-filter-btn[onclick*="filtrarCategoriaMobile"]'
-    )
-  ).find((b) => b.classList.contains("active"));
-  if (categoriaActual) {
-    const categoria = categoriaActual.textContent.toLowerCase().trim();
-    const categoriaMap = {
-      todos: "todos",
-      árabes: "arabes",
-      diseñador: "disenador",
-      sets: "sets",
-      nichos: "nichos",
-    };
-    aplicarFiltroCategoria(categoriaMap[categoria] || "todos");
-  } else {
-    aplicarFiltroCategoria("todos");
-  }
-}
-
-// Filtrar género desde desktop
-function filtrarGeneroDesktop(genero, boton) {
-  // Actualizar botón activo en subfiltros de género
-  const generoSubfiltersDiv = document.getElementById("generoSubfilters");
-  generoSubfiltersDiv
-    .querySelectorAll(".subfilter-btn")
-    .forEach((b) => b.classList.remove("active"));
-  boton.classList.add("active");
-
-  // Desactivar todos los botones de categoría excepto "Género"
-  document.querySelectorAll(".desktop-filters .btn").forEach((b) => {
-    if (!b.textContent.includes("Género")) {
-      b.classList.remove("active");
-    }
-  });
-
-  // Actualizar filtro global
-  filtroGeneroActual = genero;
-
-  // Sincronizar con filtros móviles
-  const generoMobileBtns = Array.from(
-    document.querySelectorAll(
-      '.mobile-filter-btn[onclick*="filtrarGeneroMobile"]'
-    )
-  );
-  generoMobileBtns.forEach((b) => b.classList.remove("active"));
-  const mobileBtn = generoMobileBtns.find(
-    (b) => b.textContent.toLowerCase().trim() === genero
-  );
-  if (mobileBtn) mobileBtn.classList.add("active");
-
-  // Aplicar filtro de género sobre todos los perfumes
-  aplicarFiltroCategoria("todos");
-}
-
-// ============ EXPONER FUNCIONES AL ÁMBITO GLOBAL ============
-// Necesario porque usamos type="module" en el HTML
-window.filtrarCategoria = filtrarCategoria;
-window.filtrarCategoriaMobile = filtrarCategoriaMobile;
-window.filtrarGeneroMobile = filtrarGeneroMobile;
-window.filtrarGeneroDesktop = filtrarGeneroDesktop;
-window.mostrarFiltrosGenero = mostrarFiltrosGenero;
-window.toggleSearch = toggleSearch;
-window.toggleMobileMenu = toggleMobileMenu;
-window.buscarPerfumes = buscarPerfumes;
-window.mostrarPaginaPerfume = mostrarPaginaPerfume;
-window.volverACatalogo = volverACatalogo;
-window.cargarPaginaAnterior = cargarPaginaAnterior;
-window.cargarSiguientePagina = cargarSiguientePagina;
