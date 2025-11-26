@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Perfumes Árabes - PerfumParadiseRD</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        background: #333;
+        min-height: 100vh;
+      }
+
+      .header {
+        text-align: center;
+        color: white;
+        padding: 30px 20px;
+      }
+
+      .header h1 {
+        font-size: 32px;
+        margin-bottom: 10px;
+      }
+
+      .back-btn {
+        display: inline-block;
+        background: white;
+        color: #667eea;
+        padding: 10px 25px;
+        border-radius: 25px;
+        text-decoration: none;
+        font-weight: 600;
+        margin-top: 15px;
+        transition: all 0.3s;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      .back-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+      }
+
+      .main-content {
+        display: flex;
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 20px;
+        gap: 20px;
+      }
+
+      .sidebar {
+        width: 250px;
+        background: rgba(237, 237, 237, 0.315);
+        border-radius: 15px;
+        padding: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        max-height: calc(100vh - 40px);
+        position: sticky;
+        top: 20px;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .sidebar h3 {
+        color: #ffffff;
+        margin-bottom: 15px;
+        font-size: 18px;
+        border-bottom: 2px solid #667eea;
+        padding-bottom: 8px;
+        flex-shrink: 0;
+      }
+
+      #marcasList {
+        overflow-y: auto;
+        overflow-x: hidden;
+        padding-right: 5px;
+      }
+
+      #marcasList::-webkit-scrollbar {
+        width: 8px;
+      }
+
+      #marcasList::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 10px;
+      }
+
+      #marcasList::-webkit-scrollbar-thumb {
+        background: #000;
+        border-radius: 10px;
+      }
+
+      #marcasList::-webkit-scrollbar-thumb:hover {
+        background: #555;
+      }
+
+      .marca-filter-btn {
+        display: block;
+        width: 100%;
+        background: #f5f5f5;
+        border: 1px solid #ddd;
+        padding: 10px 12px;
+        margin-bottom: 8px;
+        border-radius: 8px;
+        cursor: pointer;
+        text-align: left;
+        font-size: 14px;
+        transition: all 0.3s;
+        color: #333;
+      }
+
+      .marca-filter-btn:hover {
+        background: #e8e8e8;
+        border-color: #000000;
+      }
+
+      .marca-filter-btn.active {
+        background: #1b1a1a;
+        color: white;
+        border-color: #767676;
+        font-weight: 600;
+      }
+
+      .sidebar > .marca-filter-btn {
+        flex-shrink: 0;
+      }
+
+      .perfumes-content {
+        flex: 1;
+        background: white;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      }
+
+      .perfumes-header {
+        margin-bottom: 20px;
+      }
+
+      .perfumes-header h2 {
+        color: #667eea;
+        font-size: 24px;
+      }
+
+      .perfumes-count {
+        color: #666;
+        font-size: 14px;
+        margin-top: 5px;
+      }
+
+      .perfumes-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 25px;
+      }
+
+      .perfume-card {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+        overflow: hidden;
+        transition: all 0.3s;
+        cursor: pointer;
+      }
+
+      .perfume-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      }
+
+      .perfume-image {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+      }
+
+      .perfume-info {
+        padding: 15px;
+      }
+
+      .perfume-name {
+        font-size: 15px;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 8px;
+      }
+
+      .perfume-price {
+        color: #667eea;
+        font-size: 16px;
+        font-weight: 700;
+      }
+
+      .no-perfumes {
+        text-align: center;
+        padding: 60px 20px;
+        color: #999;
+      }
+
+      @media (max-width: 768px) {
+        .main-content {
+          flex-direction: column;
+          padding: 10px;
+        }
+
+        .sidebar {
+          width: 100%;
+          position: static;
+          margin-bottom: 20px;
+          max-height: 400px;
+        }
+
+        #marcasList {
+          max-height: 300px;
+        }
+
+        .perfumes-content {
+          padding: 20px;
+        }
+
+        .perfumes-grid {
+          grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+          gap: 15px;
+        }
+
+        .header h1 {
+          font-size: 24px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <h1>🌙 Perfumes Árabes</h1>
+      <a href="index.html" class="back-btn">← Volver al inicio</a>
+    </div>
+
+    <div class="main-content">
+      <aside class="sidebar">
+        <h3>Marcas</h3>
+        <button class="marca-filter-btn active" onclick="filtrarMarca('todas')">
+          Todas las marcas
+        </button>
+        <div id="marcasList"></div>
+      </aside>
+
+      <main class="perfumes-content">
+        <div class="perfumes-header">
+          <h2 id="tituloSeccion">Todos los Perfumes Árabes</h2>
+          <p class="perfumes-count" id="contadorPerfumes"></p>
+        </div>
+        <div class="perfumes-grid" id="perfumesGrid"></div>
+      </main>
+    </div>
+
+    <script type="module">
+      import { obtenerPerfumes } from "./firebase-config.js";
+
+      let todosLosPerfumes = [];
+      let perfumesFiltrados = [];
+      let marcaActual = "todas";
+
+      // Cargar datos desde Firebase
+      async function cargarPerfumes() {
+        try {
+          const data = await obtenerPerfumes();
+
+          // Procesar perfumes árabes
+          if (data.perfumes.arabes) {
+            Object.entries(data.perfumes.arabes).forEach(
+              ([marca, perfumes]) => {
+                perfumes.forEach((perfume) => {
+                  todosLosPerfumes.push({
+                    ...perfume,
+                    marca: marca,
+                    categoria: "arabes",
+                  });
+                });
+              }
+            );
+          }
+
+          perfumesFiltrados = [...todosLosPerfumes];
+
+          // Obtener marcas únicas y ordenarlas
+          const marcas = [
+            ...new Set(todosLosPerfumes.map((p) => p.marca)),
+          ].sort();
+
+          // Mostrar marcas en el sidebar
+          const marcasList = document.getElementById("marcasList");
+          marcas.forEach((marca) => {
+            const btn = document.createElement("button");
+            btn.className = "marca-filter-btn";
+            btn.textContent = marca;
+            btn.onclick = () => filtrarMarca(marca);
+            marcasList.appendChild(btn);
+          });
+
+          // Verificar si hay un filtro guardado
+          const filtroGuardado = sessionStorage.getItem("filtroMarcaMarcas");
+          if (filtroGuardado) {
+            filtrarMarca(filtroGuardado);
+            sessionStorage.removeItem("filtroMarcaMarcas");
+          } else {
+            // Mostrar todos los perfumes inicialmente
+            mostrarPerfumes(perfumesFiltrados);
+          }
+        } catch (error) {
+          console.error("Error al cargar perfumes:", error);
+        }
+      }
+
+      // Iniciar carga
+      cargarPerfumes();
+
+      // Filtrar por marca
+      function filtrarMarca(marca) {
+        marcaActual = marca;
+
+        // Guardar filtro en sessionStorage
+        sessionStorage.setItem("filtroMarcaMarcas", marca);
+
+        // Actualizar botones activos
+        document.querySelectorAll(".marca-filter-btn").forEach((btn) => {
+          btn.classList.remove("active");
+          if (
+            btn.textContent === marca ||
+            (marca === "todas" && btn.onclick.toString().includes("'todas'"))
+          ) {
+            btn.classList.add("active");
+          }
+        });
+
+        // Filtrar perfumes
+        if (marca === "todas") {
+          perfumesFiltrados = [...todosLosPerfumes];
+          document.getElementById("tituloSeccion").textContent =
+            "Todos los Perfumes Árabes";
+        } else {
+          perfumesFiltrados = todosLosPerfumes.filter((p) => p.marca === marca);
+          document.getElementById("tituloSeccion").textContent = marca;
+        }
+
+        mostrarPerfumes(perfumesFiltrados);
+      }
+
+      // Mostrar perfumes en la galería
+      function mostrarPerfumes(perfumes) {
+        const grid = document.getElementById("perfumesGrid");
+        const contador = document.getElementById("contadorPerfumes");
+
+        grid.innerHTML = "";
+        contador.textContent = `${perfumes.length} perfume${
+          perfumes.length !== 1 ? "s" : ""
+        }`;
+
+        if (perfumes.length === 0) {
+          grid.innerHTML =
+            '<div class="no-perfumes">No hay perfumes en esta marca</div>';
+          return;
+        }
+
+        perfumes.forEach((perfume) => {
+          const card = document.createElement("div");
+          card.className = "perfume-card";
+          card.onclick = () => abrirDetallePerfume(perfume);
+
+          // Calcular precio final con incremento
+          const precioBase = parseInt(perfume.precio) || 0;
+          const incremento = 1500; // Árabes +1500
+          const precioFinal = precioBase + incremento;
+
+          // Icono de género con símbolos y colores
+          let generoIcono = "";
+          if (perfume.genero === "hombre") {
+            generoIcono =
+              "<span style='color: #4A90E2; font-size: 1.3em;'>♂️</span>"; // Símbolo masculino azul
+          } else if (perfume.genero === "mujer") {
+            generoIcono =
+              "<span style='color: #FF69B4; font-size: 1.3em;'>♀️</span>"; // Símbolo femenino rosa
+          } else {
+            generoIcono =
+              "<span style='color: #9B59B6; font-size: 1.3em;'>⚧️</span>"; // Símbolo unisex morado
+          }
+
+          card.innerHTML = `
+            <img src="${perfume.imagen}" alt="${
+            perfume.nombre
+          }" class="perfume-image" 
+                 onerror="this.src='https://via.placeholder.com/200x200?text=Sin+Imagen'">
+            <div class="perfume-info">
+              <div class="perfume-name">${perfume.nombre} ${generoIcono}</div>
+              <div class="perfume-price">RD$ ${precioFinal.toLocaleString()}</div>
+            </div>
+          `;
+
+          grid.appendChild(card);
+        });
+      }
+
+      // Abrir página de detalle del perfume
+      function abrirDetallePerfume(perfume) {
+        // Guardar datos del perfume en sessionStorage
+        sessionStorage.setItem("perfumeDetail", JSON.stringify(perfume));
+        // Navegar a la página de detalles
+        window.location.href = "detalle-perfume.html";
+      }
+    </script>
+  </body>
+</html>

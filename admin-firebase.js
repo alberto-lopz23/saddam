@@ -120,10 +120,34 @@ async function cargarPerfumes() {
   } catch (error) {
     console.error("Error al cargar perfumes:", error);
     const tbody = document.getElementById("perfumesTableBody");
+
+    let mensajeError = error.message;
+    let sugerencia = "";
+
+    if (
+      error.message.includes("offline") ||
+      error.message.includes("Failed to get document") ||
+      error.message.includes("unavailable")
+    ) {
+      mensajeError = "Sin conexión a internet";
+      sugerencia =
+        "<br><br>💡 <strong>Soluciones:</strong><br>1. Verifica tu conexión a internet<br>2. Recarga la página (F5)<br>3. Si el problema persiste, limpia la caché del navegador";
+    } else if (error.message.includes("caché")) {
+      sugerencia =
+        "<br><br>💡 Por favor, conéctate a internet para cargar los datos";
+    }
+
     tbody.innerHTML = `
       <tr>
         <td colspan="6" style="text-align: center; padding: 40px; color: #e74c3c;">
-          ❌ Error al cargar perfumes: ${error.message}
+          <div style="font-size: 48px; margin-bottom: 20px;">⚠️</div>
+          <h3 style="margin: 0 0 10px 0;">Error al cargar perfumes</h3>
+          <p style="margin: 10px 0; font-size: 16px;">${mensajeError}</p>
+          ${sugerencia}
+          <br><br>
+          <button onclick="location.reload()" style="padding: 10px 20px; background: #667eea; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 14px;">
+            🔄 Reintentar
+          </button>
         </td>
       </tr>
     `;
@@ -406,7 +430,15 @@ function abrirEditarModal(categoria, marca, index) {
 }
 
 // ============ CERRAR MODAL ============
-window.closeEditModal = function () {
+window.closeEditModal = function (forzar = false) {
+  // Si no es forzado, preguntar confirmación
+  if (!forzar) {
+    const confirmar = confirm(
+      "⚠️ ¿Estás seguro de cerrar? Si no guardaste los cambios, se perderán."
+    );
+    if (!confirmar) return;
+  }
+
   document.getElementById("editModal").classList.remove("show");
   document.body.style.overflow = "";
   perfumeActual = null;
@@ -414,7 +446,7 @@ window.closeEditModal = function () {
 
 document
   .querySelector(".modal-overlay")
-  .addEventListener("click", closeEditModal);
+  .addEventListener("click", () => closeEditModal(false));
 
 // ============ GUARDAR CAMBIOS ============
 document.getElementById("editForm").addEventListener("submit", async (e) => {
@@ -507,13 +539,15 @@ document.getElementById("editForm").addEventListener("submit", async (e) => {
         `🔄 Moviendo perfume de "${categoriaAnterior}/${marcaAnterior}" a "${nuevaCategoria}/${nuevaMarca}"`
       );
 
+      // Primero agregar en la nueva ubicación
+      await agregarPerfume(nuevaCategoria, nuevaMarca, updates);
+
+      // Si se agregó exitosamente, eliminar de la ubicación anterior
       await eliminarPerfume(
         categoriaAnterior,
         marcaAnterior,
         perfumeActual.arrayIndex
       );
-
-      await agregarPerfume(nuevaCategoria, nuevaMarca, updates);
 
       alert("✅ Perfume movido exitosamente");
     } else {
@@ -530,16 +564,39 @@ document.getElementById("editForm").addEventListener("submit", async (e) => {
 
     // Limpiar caché y recargar
     limpiarCache();
-    closeEditModal();
+    closeEditModal(true); // Forzar cierre sin confirmación porque ya se guardó
     await cargarPerfumes();
   } catch (error) {
-    console.error("Error al guardar:", error);
-    alert("❌ Error al guardar: " + error.message);
+    console.error("❌ ERROR AL GUARDAR:", error);
+    console.error("Detalles:", {
+      categoria: perfumeActual.categoria,
+      marca: perfumeActual.marca,
+      index: perfumeActual.arrayIndex,
+      nombre: updates.nombre,
+    });
+    alert(
+      "❌ ERROR AL GUARDAR\n\n" +
+        "⚠️ NO CIERRES ESTE MODAL NI REFRESQUES LA PÁGINA\n\n" +
+        "Error: " +
+        error.message +
+        "\n\n" +
+        "Intenta guardar de nuevo o copia los datos y contacta al desarrollador."
+    );
+    // NO cerrar el modal para que no se pierdan los datos
   }
 });
 
 // ============ CERRAR MODAL DE AGREGAR ============
 window.closeAddModal = function () {
+  // Confirmar si hay datos ingresados
+  const nombre = document.getElementById("addNombre").value;
+  if (nombre && nombre.trim() !== "") {
+    const confirmar = confirm(
+      "⚠️ ¿Estás seguro de cerrar? Se perderán los datos ingresados."
+    );
+    if (!confirmar) return;
+  }
+
   document.getElementById("addModal").classList.remove("show");
   document.body.style.overflow = "";
   document.getElementById("addForm").reset();
@@ -565,7 +622,8 @@ document.getElementById("addForm").addEventListener("submit", async (e) => {
       return;
     }
   } else {
-    marca = marcaSelect.toLowerCase().trim();
+    // La marca seleccionada ya viene en lowercase de Firebase
+    marca = marcaSelect.trim();
   }
 
   const precioFinalInput =

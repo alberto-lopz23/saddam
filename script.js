@@ -23,22 +23,13 @@ async function cargarCatalogo() {
     catalogoData = await obtenerPerfumes();
     procesarDatos();
 
-    // Verificar si viene de la página de marcas
-    const marcaSeleccionada = sessionStorage.getItem("marcaSeleccionada");
-    const categoriaSeleccionada = sessionStorage.getItem(
-      "categoriaSeleccionada"
-    );
+    // Verificar si viene desde una navegación interna (modal de perfume)
+    const esNavegacionInterna = sessionStorage.getItem("navegacionInterna");
 
-    if (marcaSeleccionada && categoriaSeleccionada) {
-      // Limpiar sessionStorage
-      sessionStorage.removeItem("marcaSeleccionada");
-      sessionStorage.removeItem("categoriaSeleccionada");
+    if (esNavegacionInterna === "true") {
+      // Solo en este caso restaurar filtros
+      sessionStorage.removeItem("navegacionInterna");
 
-      // Aplicar filtro
-      filtrarPorMarca(marcaSeleccionada, categoriaSeleccionada);
-      mostrarSubfiltros(categoriaSeleccionada);
-    } else {
-      // Verificar si hay filtros guardados (al volver del modal)
       const filtroCategoria = sessionStorage.getItem("filtroCategoria");
       const filtroMarca = sessionStorage.getItem("filtroMarca");
 
@@ -76,12 +67,20 @@ async function cargarCatalogo() {
           }
         }
 
-        // Limpiar filtros guardados
+        // Limpiar filtros guardados después de restaurar
         sessionStorage.removeItem("filtroCategoria");
         sessionStorage.removeItem("filtroMarca");
       } else {
         mostrarPerfumes(todosLosPerfumes);
       }
+    } else {
+      // Es una carga nueva o un refresh - limpiar todo y empezar de cero
+      sessionStorage.removeItem("filtroCategoria");
+      sessionStorage.removeItem("filtroMarca");
+      sessionStorage.removeItem("marcaSeleccionada");
+      sessionStorage.removeItem("categoriaSeleccionada");
+
+      mostrarPerfumes(todosLosPerfumes);
     }
   } catch (error) {
     console.error("Error cargando catálogo:", error);
@@ -283,6 +282,9 @@ function mostrarPerfumes(lista, resetearPagina = true) {
 function cargarPaginaAnterior() {
   if (paginaActual > 1) {
     paginaActual--;
+    console.log(
+      `📄 Cargando página ${paginaActual}, filtrados: ${perfumesFiltrados.length}`
+    );
     mostrarPerfumes(perfumesFiltrados, false);
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
@@ -290,13 +292,37 @@ function cargarPaginaAnterior() {
 
 // Cargar siguiente página
 function cargarSiguientePagina() {
-  paginaActual++;
-  mostrarPerfumes(perfumesFiltrados, false);
-  window.scrollTo({ top: 0, behavior: "smooth" });
+  const totalPaginas = Math.ceil(perfumesFiltrados.length / perfumesPorPagina);
+
+  if (paginaActual < totalPaginas) {
+    paginaActual++;
+    console.log(
+      `📄 Cargando página ${paginaActual} de ${totalPaginas}, filtrados: ${perfumesFiltrados.length}`
+    );
+    mostrarPerfumes(perfumesFiltrados, false);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  } else {
+    console.warn("⚠️ Ya estás en la última página");
+  }
 }
 
 // Mostrar página completa del perfume
 function mostrarPaginaPerfume(perfume, precio) {
+  // Marcar como navegación interna
+  sessionStorage.setItem("navegacionInterna", "true");
+
+  // Guardar filtros activos
+  const categoriaActiva = document.querySelector(".btn.active");
+  if (categoriaActiva) {
+    const categoriaTexto = categoriaActiva.textContent.toLowerCase().trim();
+    sessionStorage.setItem("filtroCategoria", categoriaTexto);
+  }
+
+  const marcaActiva = document.querySelector(".subfilter-btn.active");
+  if (marcaActiva) {
+    sessionStorage.setItem("filtroMarca", marcaActiva.textContent);
+  }
+
   // Guardar estado actual
   sessionStorage.setItem("perfumeActual", JSON.stringify(perfume));
   sessionStorage.setItem("precioActual", precio);
@@ -555,7 +581,9 @@ function volverACatalogo() {
 
 // FUNCIÓN OBSOLETA - mantener por compatibilidad pero ya no se usa
 function openModal(perfume, precio) {
-  // Guardar estado del filtro actual antes de abrir modal
+  // Guardar estado del filtro actual y marcar como navegación interna
+  sessionStorage.setItem("navegacionInterna", "true");
+
   const categoriaActiva = document.querySelector(".btn.active");
   if (categoriaActiva) {
     const categoriaTexto = categoriaActiva.textContent.toLowerCase().trim();
@@ -715,12 +743,16 @@ function mostrarSubfiltros(categoria) {
     subfiltersDiv.appendChild(btn);
   });
 
-  // Agregar botón "Más marcas" solo para diseñador
-  if (categoria === "disenador" && subfiltros.length === 8) {
+  // Agregar botón "Más marcas" para diseñador y árabes
+  if (
+    (categoria === "disenador" || categoria === "arabes") &&
+    subfiltros.length === 8
+  ) {
     const btnMas = document.createElement("button");
     btnMas.className = "subfilter-btn subfilter-btn-mas";
     btnMas.textContent = "✨ Más marcas";
-    btnMas.onclick = () => (window.location.href = "marcas.html");
+    const url = categoria === "arabes" ? "marcas-arabes.html" : "marcas.html";
+    btnMas.onclick = () => (window.location.href = url);
     subfiltersDiv.appendChild(btnMas);
   }
 }
@@ -730,7 +762,14 @@ function filtrarPorMarca(marca, categoria) {
   const filtrados = todosLosPerfumes.filter(
     (p) => p.categoria === categoria && p.marca === marca
   );
-  mostrarPerfumes(filtrados);
+
+  // Aplicar filtro de género adicional
+  const filtradosConGenero = aplicarFiltroGenero(filtrados, filtroGeneroActual);
+
+  // Actualizar el array global para que la paginación funcione correctamente
+  perfumesFiltrados = filtradosConGenero;
+
+  mostrarPerfumes(perfumesFiltrados);
 }
 
 // Buscar perfumes por nombre
@@ -738,6 +777,8 @@ function buscarPerfumes() {
   const termino = searchInput.value.toLowerCase().trim();
 
   if (termino === "") {
+    // Si no hay término de búsqueda, restaurar los filtros actuales
+    // (ya sea por categoría, marca o género)
     mostrarPerfumes(perfumesFiltrados);
     return;
   }
@@ -748,7 +789,10 @@ function buscarPerfumes() {
       perfume.marca.toLowerCase().includes(termino)
   );
 
-  mostrarPerfumes(resultados);
+  // Actualizar el array global para que la paginación funcione correctamente
+  perfumesFiltrados = resultados;
+
+  mostrarPerfumes(perfumesFiltrados);
 }
 
 // Toggle del buscador expandible
@@ -910,12 +954,16 @@ function mostrarSubfiltrosMobile(categoria) {
       subfilterSection.appendChild(btn);
     });
 
-    // Agregar botón "Más marcas" solo para diseñador
-    if (categoria === "disenador" && subfiltros.length === 8) {
+    // Agregar botón "Más marcas" para diseñador y árabes
+    if (
+      (categoria === "disenador" || categoria === "arabes") &&
+      subfiltros.length === 8
+    ) {
       const btnMas = document.createElement("button");
       btnMas.className = "mobile-subfilter-btn mobile-subfilter-btn-mas";
       btnMas.textContent = "✨ Más marcas";
-      btnMas.onclick = () => (window.location.href = "marcas.html");
+      const url = categoria === "arabes" ? "marcas-arabes.html" : "marcas.html";
+      btnMas.onclick = () => (window.location.href = url);
       subfilterSection.appendChild(btnMas);
     }
 

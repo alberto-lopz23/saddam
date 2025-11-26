@@ -35,21 +35,51 @@ const CACHE_KEY = "perfumes_cache";
 const CACHE_TIMESTAMP_KEY = "perfumes_cache_timestamp";
 const CACHE_DURATION = 24 * 60 * 60 * 1000; // 24 horas
 
-// Obtener perfumes (SIN CACHÉ - siempre actualizado)
+// Obtener perfumes con fallback a caché si está offline
 export async function obtenerPerfumes() {
   try {
-    console.log("📖 Leyendo de Firebase (siempre actualizado)");
+    console.log("📖 Intentando leer de Firebase...");
     const docRef = doc(db, "catalogo", "perfumes");
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
       const data = docSnap.data();
+
+      // Guardar en caché para uso offline
+      try {
+        localStorage.setItem(CACHE_KEY, JSON.stringify(data));
+        localStorage.setItem(CACHE_TIMESTAMP_KEY, Date.now().toString());
+        console.log("✅ Datos actualizados y guardados en caché");
+      } catch (cacheError) {
+        console.warn("No se pudo guardar en caché:", cacheError);
+      }
+
       return data;
     } else {
       throw new Error("No se encontraron perfumes en Firebase");
     }
   } catch (error) {
-    console.error("Error al obtener perfumes:", error);
+    console.error("⚠️ Error al obtener perfumes de Firebase:", error);
+
+    // Intentar usar caché si está offline
+    if (
+      error.code === "unavailable" ||
+      error.message.includes("offline") ||
+      error.message.includes("Failed to get document")
+    ) {
+      console.log("📦 Intentando cargar desde caché offline...");
+      const cachedData = localStorage.getItem(CACHE_KEY);
+
+      if (cachedData) {
+        console.log("✅ Usando datos del caché (modo offline)");
+        return JSON.parse(cachedData);
+      } else {
+        throw new Error(
+          "Sin conexión y no hay datos en caché. Por favor, conéctate a internet."
+        );
+      }
+    }
+
     throw error;
   }
 }
@@ -102,7 +132,10 @@ export async function agregarPerfume(categoria, marca, nuevoPerfume) {
     // 1. Obtener data actual
     const data = await obtenerPerfumes();
 
-    // 2. Inicializar estructura si no existe
+    // 2. Normalizar la marca (lowercase, sin espacios extras)
+    marca = marca.toLowerCase().trim();
+
+    // 3. Inicializar estructura si no existe
     if (!data.perfumes[categoria]) {
       data.perfumes[categoria] = {};
     }
@@ -110,15 +143,21 @@ export async function agregarPerfume(categoria, marca, nuevoPerfume) {
       data.perfumes[categoria][marca] = [];
     }
 
-    // 3. Agregar el nuevo perfume
+    // 4. Agregar el nuevo perfume
     data.perfumes[categoria][marca].push(nuevoPerfume);
 
-    // 4. Guardar en Firebase
-    console.log("💾 Guardando nuevo perfume en Firebase (1 escritura)");
+    // 5. Calcular el índice del perfume recién agregado
+    const nuevoIndex = data.perfumes[categoria][marca].length - 1;
+
+    // 6. Guardar en Firebase
+    console.log(
+      `💾 Guardando nuevo perfume en Firebase (${categoria}/${marca}[${nuevoIndex}])`
+    );
     const docRef = doc(db, "catalogo", "perfumes");
     await setDoc(docRef, data);
 
-    return nuevoPerfume;
+    // 7. Retornar el índice del perfume agregado
+    return nuevoIndex;
   } catch (error) {
     console.error("Error al agregar perfume:", error);
     throw error;
