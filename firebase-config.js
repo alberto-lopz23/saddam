@@ -38,6 +38,7 @@ const CACHE_DURATION = 24 * 60 * 60 * 1000; // 24 horas
 
 // Obtener perfumes con estrategia CACHE-FIRST (carga instantánea)
 export async function obtenerPerfumes() {
+  // 1. PRIMERO: Intentar cargar desde caché (instantáneo)
   const cachedData = localStorage.getItem(CACHE_KEY);
   const cacheTimestamp = localStorage.getItem(CACHE_TIMESTAMP_KEY);
 
@@ -45,9 +46,15 @@ export async function obtenerPerfumes() {
     console.log("⚡ Cargando desde caché (instantáneo)...");
     const cacheAge = Date.now() - parseInt(cacheTimestamp || "0");
 
+    // Si la caché es reciente (menos de 24h), usarla directamente
     if (cacheAge < CACHE_DURATION) {
-      console.log(`✅ Usando caché (edad: ${Math.round(cacheAge / 1000 / 60)} minutos)`);
-      actualizarCacheEnBackground(); // Actualizar caché en segundo plano
+      console.log(
+        `✅ Usando caché (edad: ${Math.round(cacheAge / 1000 / 60)} minutos)`
+      );
+
+      // Intentar actualizar en background (sin esperar)
+      actualizarCacheEnBackground();
+
       return JSON.parse(cachedData);
     } else {
       console.log("⏰ Caché expirada, intentando actualizar...");
@@ -56,10 +63,13 @@ export async function obtenerPerfumes() {
     console.log("📦 No hay caché disponible");
   }
 
+  // 2. SEGUNDO: Intentar obtener de Firebase con timeout
   try {
     console.log("📖 Cargando desde Firebase...");
+
     const docRef = doc(db, "catalogo", "perfumes");
 
+    // Timeout de 8 segundos
     const timeoutPromise = new Promise((_, reject) =>
       setTimeout(() => reject(new Error("Timeout")), 8000)
     );
@@ -68,21 +78,36 @@ export async function obtenerPerfumes() {
 
     if (docSnap.exists()) {
       const data = docSnap.data();
-      localStorage.setItem(CACHE_KEY, JSON.stringify(data));
-      localStorage.setItem(CACHE_TIMESTAMP_KEY, Date.now().toString());
-      console.log("✅ Datos actualizados y guardados en caché");
+
+      // Guardar en caché
+      try {
+        localStorage.setItem(CACHE_KEY, JSON.stringify(data));
+        localStorage.setItem(CACHE_TIMESTAMP_KEY, Date.now().toString());
+        console.log("✅ Datos actualizados y guardados en caché");
+      } catch (cacheError) {
+        console.warn("⚠️ No se pudo guardar en caché:", cacheError);
+      }
+
       return data;
     } else {
       throw new Error("No se encontraron perfumes en Firebase");
     }
   } catch (error) {
     console.error("⚠️ Error al obtener de Firebase:", error.message);
+
+    // 3. FALLBACK: Usar caché aunque esté expirada
     if (cachedData) {
       console.log("📦 Usando caché expirada como fallback");
       return JSON.parse(cachedData);
     }
 
-    throw new Error("❌ Sin conexión y no hay datos en caché.");
+    throw new Error(
+      "❌ Sin conexión y no hay datos en caché.\n\n" +
+        "Soluciones:\n" +
+        "• Verifica tu conexión a internet\n" +
+        "• Recarga la página\n" +
+        "• Intenta de nuevo en unos momentos"
+    );
   }
 }
 
@@ -99,6 +124,7 @@ async function actualizarCacheEnBackground() {
       console.log("🔄 Caché actualizada en background");
     }
   } catch (error) {
+    // Silenciar errores de actualización en background
     console.log("ℹ️ No se pudo actualizar caché en background");
   }
 }
@@ -106,22 +132,39 @@ async function actualizarCacheEnBackground() {
 // Actualizar un perfume específico (solo admin) - OPTIMIZADO
 export async function actualizarPerfume(categoria, marca, index, updates) {
   try {
+    console.log(`📝 Actualizando perfume: ${categoria}/${marca}[${index}]`);
+
+    // Construir la ruta específica del perfume
     const perfumePath = `perfumes.${categoria}.${marca}.${index}`;
+
+    // Crear objeto con las rutas completas para cada campo a actualizar
     const updateData = {};
 
-    if (updates.nombre !== undefined) updateData[`${perfumePath}.nombre`] = updates.nombre;
-    if (updates.imagen !== undefined) updateData[`${perfumePath}.imagen`] = updates.imagen;
-    if (updates.precio !== undefined) updateData[`${perfumePath}.precio`] = updates.precio;
-    if (updates.genero !== undefined) updateData[`${perfumePath}.genero`] = updates.genero;
-    if (updates.descripcion !== undefined) updateData[`${perfumePath}.descripcion`] = updates.descripcion;
-    if (updates.notas !== undefined) updateData[`${perfumePath}.notas`] = updates.notas;
-    if (updates.tamanosDisponibles !== undefined) updateData[`${perfumePath}.tamanosDisponibles`] = updates.tamanosDisponibles;
-    if (updates.preciosPersonalizados !== undefined) updateData[`${perfumePath}.preciosPersonalizados`] = updates.preciosPersonalizados;
+    if (updates.nombre !== undefined)
+      updateData[`${perfumePath}.nombre`] = updates.nombre;
+    if (updates.imagen !== undefined)
+      updateData[`${perfumePath}.imagen`] = updates.imagen;
+    if (updates.precio !== undefined)
+      updateData[`${perfumePath}.precio`] = updates.precio;
+    if (updates.genero !== undefined)
+      updateData[`${perfumePath}.genero`] = updates.genero;
+    if (updates.descripcion !== undefined)
+      updateData[`${perfumePath}.descripcion`] = updates.descripcion;
+    if (updates.notas !== undefined)
+      updateData[`${perfumePath}.notas`] = updates.notas;
+    if (updates.tamanosDisponibles !== undefined)
+      updateData[`${perfumePath}.tamanosDisponibles`] =
+        updates.tamanosDisponibles;
+    if (updates.preciosPersonalizados !== undefined)
+      updateData[`${perfumePath}.preciosPersonalizados`] =
+        updates.preciosPersonalizados;
 
+    // Actualizar solo los campos específicos (MUCHO MÁS RÁPIDO)
+    console.log("💾 Actualizando solo campos modificados...");
     const docRef = doc(db, "catalogo", "perfumes");
     await updateDoc(docRef, updateData);
-    console.log("✅ Perfume actualizado correctamente");
 
+    console.log("✅ Perfume actualizado correctamente");
     return updates;
   } catch (error) {
     console.error("❌ Error al actualizar perfume:", error);
@@ -132,7 +175,12 @@ export async function actualizarPerfume(categoria, marca, index, updates) {
 // Agregar un nuevo perfume - OPTIMIZADO
 export async function agregarPerfume(categoria, marca, nuevoPerfume) {
   try {
+    console.log(`➕ Agregando nuevo perfume: ${categoria}/${marca}`);
+
+    // 1. Normalizar la marca (lowercase, sin espacios extras)
     marca = marca.toLowerCase().trim();
+
+    // 2. Leer solo la marca específica para obtener el array actual
     const docRef = doc(db, "catalogo", "perfumes");
     const docSnap = await getDoc(docRef);
 
@@ -141,10 +189,18 @@ export async function agregarPerfume(categoria, marca, nuevoPerfume) {
     }
 
     const data = docSnap.data();
+
+    // 3. Obtener el array actual de perfumes de esa marca
     const marcaPerfumes = data.perfumes?.[categoria]?.[marca] || [];
+
+    // 4. Calcular el índice del nuevo perfume
     const nuevoIndex = marcaPerfumes.length;
 
+    // 5. Construir la ruta del nuevo perfume
     const perfumePath = `perfumes.${categoria}.${marca}.${nuevoIndex}`;
+
+    // 6. Actualizar solo agregando el nuevo perfume (sin tocar el resto)
+    console.log(`💾 Guardando en: ${perfumePath}`);
     await updateDoc(docRef, {
       [perfumePath]: nuevoPerfume,
     });
@@ -158,71 +214,44 @@ export async function agregarPerfume(categoria, marca, nuevoPerfume) {
 }
 
 // Eliminar un perfume - OPTIMIZADO (solo actualiza la marca específica)
-// Versión robusta con:
-// - Comprobación segura de existencia usando 'in' operator
-// - Normalización de estructura (objeto → array) con verificación Array.isArray
-// - Manejo de errores claro y logs de depuración
 export async function eliminarPerfume(categoria, marca, index) {
   try {
-    console.debug(`🗑️ Eliminando perfume: ${categoria}/${marca}[${index}]`);
-    
+    console.log(`🗑️ Eliminando perfume: ${categoria}/${marca}[${index}]`);
+
+    // 1. Obtener solo la data necesaria
     const docRef = doc(db, "catalogo", "perfumes");
     const docSnap = await getDoc(docRef);
 
     if (!docSnap.exists()) {
-      console.error("❌ Documento de catálogo no encontrado en Firestore");
       throw new Error("Documento de catálogo no encontrado");
     }
 
     const data = docSnap.data();
 
-    // Paso 1: Verificar que la categoría existe
-    if (!data.perfumes || !data.perfumes[categoria]) {
-      console.error(`❌ Categoría "${categoria}" no encontrada`);
+    // 2. Verificar que el perfume existe
+    if (
+      !data.perfumes[categoria] ||
+      !data.perfumes[categoria][marca] ||
+      data.perfumes[categoria][marca][index] === undefined
+    ) {
       throw new Error("Perfume no encontrado");
     }
 
-    // Paso 2: Verificar que la marca existe
-    if (!data.perfumes[categoria][marca]) {
-      console.error(`❌ Marca "${marca}" no encontrada en categoría "${categoria}"`);
-      throw new Error("Perfume no encontrado");
-    }
+    // 3. Obtener el array de perfumes de esa marca
+    const marcaPerfumes = [...data.perfumes[categoria][marca]];
 
-    // Paso 3: Obtener la estructura de perfumes de la marca (puede ser objeto o array)
-    const marcaPerfumesRaw = data.perfumes[categoria][marca];
-    
-    // Paso 4: Normalizar a array si es objeto (para orden estable)
-    let marcaPerfumes;
-    if (Array.isArray(marcaPerfumesRaw)) {
-      marcaPerfumes = [...marcaPerfumesRaw]; // Copiar array
-      console.debug(`📋 Estructura es array con ${marcaPerfumes.length} elementos`);
-    } else if (typeof marcaPerfumesRaw === "object" && marcaPerfumesRaw !== null) {
-      marcaPerfumes = Object.values(marcaPerfumesRaw); // Convertir objeto a array
-      console.debug(`📋 Estructura normalizada de objeto a array con ${marcaPerfumes.length} elementos`);
-    } else {
-      console.error(`❌ Estructura de marca inválida: ${typeof marcaPerfumesRaw}`);
-      throw new Error("Perfume no encontrado");
-    }
-
-    // Paso 5: Verificar que el índice existe de forma segura usando 'in' operator
-    if (!(index in marcaPerfumes)) {
-      console.error(`❌ Índice ${index} no existe en marca "${marca}" (total: ${marcaPerfumes.length})`);
-      throw new Error("Perfume no encontrado");
-    }
-
-    // Paso 6: Eliminar el perfume del array usando splice
-    const perfumeEliminado = marcaPerfumes[index];
+    // 4. Eliminar el perfume del array
     marcaPerfumes.splice(index, 1);
-    console.debug(`✂️ Perfume eliminado: "${perfumeEliminado?.nombre || 'sin nombre'}"`);
-    console.debug(`📊 Nuevo total de perfumes en marca: ${marcaPerfumes.length}`);
 
-    // Paso 7: Actualizar Firestore con la nueva lista
+    // 5. Actualizar solo el array de esa marca específica
     const marcaPath = `perfumes.${categoria}.${marca}`;
+
+    console.log(`💾 Actualizando solo: ${marcaPath}`);
     await updateDoc(docRef, {
       [marcaPath]: marcaPerfumes,
     });
 
-    console.log(`✅ Perfume eliminado correctamente de Firestore: ${categoria}/${marca}[${index}]`);
+    console.log("✅ Perfume eliminado correctamente");
     return true;
   } catch (error) {
     console.error("❌ Error al eliminar perfume:", error);
@@ -230,11 +259,18 @@ export async function eliminarPerfume(categoria, marca, index) {
   }
 }
 
-// Limpiar caché de localStorage
+// Función de compatibilidad (ya no usa caché)
+// Limpiar caché manualmente (útil después de hacer cambios en admin)
 export function limpiarCache() {
-  localStorage.removeItem(CACHE_KEY);
-  localStorage.removeItem(CACHE_TIMESTAMP_KEY);
-  console.log("🗑️ Caché limpiada");
+  try {
+    localStorage.removeItem(CACHE_KEY);
+    localStorage.removeItem(CACHE_TIMESTAMP_KEY);
+    console.log("🗑️ Caché limpiada correctamente");
+    return true;
+  } catch (error) {
+    console.error("⚠️ Error al limpiar caché:", error);
+    return false;
+  }
 }
 
 // Obtener info de la caché
@@ -242,7 +278,9 @@ export function infoCacheActual() {
   const cachedData = localStorage.getItem(CACHE_KEY);
   const cacheTimestamp = localStorage.getItem(CACHE_TIMESTAMP_KEY);
 
-  if (!cachedData) return { existe: false };
+  if (!cachedData) {
+    return { existe: false };
+  }
 
   const cacheAge = Date.now() - parseInt(cacheTimestamp || "0");
   const minutosEdad = Math.round(cacheAge / 1000 / 60);
@@ -256,9 +294,14 @@ export function infoCacheActual() {
 }
 
 // ============ AUTENTICACIÓN ============
+
 export async function loginAdmin(email, password) {
   try {
-    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    const userCredential = await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
     return userCredential.user;
   } catch (error) {
     throw error;
@@ -287,7 +330,9 @@ export async function moverPerfume(
   perfumeData
 ) {
   try {
-    console.log(`🔄 Moviendo perfume: ${categoriaOrigen}/${marcaOrigen}[${indexOrigen}] → ${categoriaDestino}/${marcaDestino}`);
+    console.log(
+      `🔄 Moviendo perfume: ${categoriaOrigen}/${marcaOrigen}[${indexOrigen}] → ${categoriaDestino}/${marcaDestino}`
+    );
 
     const docRef = doc(db, "catalogo", "perfumes");
     const docSnap = await getDoc(docRef);
@@ -298,20 +343,25 @@ export async function moverPerfume(
 
     const data = docSnap.data();
 
+    // 1. Verificar que el perfume origen existe
     if (!data.perfumes[categoriaOrigen]?.[marcaOrigen]?.[indexOrigen]) {
       throw new Error("Perfume origen no encontrado");
     }
 
-    const arrayOrigen = Object.values(data.perfumes[categoriaOrigen][marcaOrigen]);
+    // 2. Obtener arrays actuales
+    const arrayOrigen = [...data.perfumes[categoriaOrigen][marcaOrigen]];
     const arrayDestino = data.perfumes[categoriaDestino]?.[marcaDestino]
-      ? Object.values(data.perfumes[categoriaDestino][marcaDestino])
+      ? [...data.perfumes[categoriaDestino][marcaDestino]]
       : [];
 
+    // 3. Eliminar de origen
     arrayOrigen.splice(indexOrigen, 1);
 
+    // 4. Agregar a destino
     const nuevoIndex = arrayDestino.length;
     arrayDestino.push(perfumeData);
 
+    // 5. Actualizar ambos arrays en una sola operación
     const updateData = {};
     updateData[`perfumes.${categoriaOrigen}.${marcaOrigen}`] = arrayOrigen;
     updateData[`perfumes.${categoriaDestino}.${marcaDestino}`] = arrayDestino;
