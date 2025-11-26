@@ -789,14 +789,16 @@ window.closeAddModal = function () {
 
 // ============ AGREGAR PERFUME ============
 
-document.getElementById("addForm").addEventListener("submit", async (e) => {
-  e.preventDefault();
+const addForm = document.getElementById("addForm");
+if (addForm) {
+  addForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-  const categoria = document.getElementById("addCategoria").value;
-  const marcaSelect = document.getElementById("addMarcaSelect").value;
-  const nombre = document.getElementById("addNombre").value;
-  const imagen = document.getElementById("addImagen").value;
-  const precioFinalInput = parseInt(document.getElementById("addPrecio").value) || 0;
+    const categoria = document.getElementById("addCategoria").value;
+    const marcaSelect = document.getElementById("addMarcaSelect").value;
+    const nombre = document.getElementById("addNombre").value;
+    const imagen = document.getElementById("addImagen").value;
+    const precioFinalInput = parseInt(document.getElementById("addPrecio").value, 10) || 0;
   const genero = document.getElementById("addGenero").value;
   const descripcion = document.getElementById("addDescripcion").value;
 
@@ -850,7 +852,7 @@ document.getElementById("addForm").addEventListener("submit", async (e) => {
     if (checkbox && checkbox.checked) {
       tamanosDisponibles.push(tamano);
       const precio = precioInput.value;
-      if (precio) preciosPersonalizados[tamano] = parseInt(precio);
+      if (precio) preciosPersonalizados[tamano] = parseInt(precio, 10);
     }
   });
 
@@ -886,11 +888,12 @@ document.getElementById("addForm").addEventListener("submit", async (e) => {
     limpiarCache();
     closeAddModal();
     await cargarPerfumes();
-  } catch (error) {
-    console.error("❌ Error al agregar perfume:", error);
-    alert("❌ Error al agregar perfume: " + error.message);
-  }
-});
+    } catch (error) {
+      console.error("❌ Error al agregar perfume:", error);
+      alert("❌ Error al agregar perfume: " + error.message);
+    }
+  });
+}
 
 // ============ EXPONER FUNCIONES AL ÁMBITO GLOBAL ============
 
