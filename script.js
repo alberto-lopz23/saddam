@@ -781,32 +781,6 @@ function toggleSearch() {
   }
 }
 
-// Filtrar por categoría
-function filtrarCategoria(categoria, boton) {
-  const yaEstaActivo = boton.classList.contains("active");
-
-  if (yaEstaActivo && categoria !== "todos") {
-    document.querySelectorAll(".btn").forEach((b) => b.classList.remove("active"));
-    document.querySelector('.btn[onclick*="todos"]').classList.add("active");
-    document.querySelectorAll(".mobile-filter-btn").forEach((b) => b.classList.remove("active"));
-    document.querySelector('.mobile-filter-btn[onclick*="todos"]').classList.add("active");
-    aplicarFiltroCategoria("todos");
-    return;
-  }
-
-  document.querySelectorAll(".btn").forEach((b) => b.classList.remove("active"));
-  boton.classList.add("active");
-
-  document.querySelectorAll(".mobile-filter-btn").forEach((b) => b.classList.remove("active"));
-  const mobileBtn = Array.from(document.querySelectorAll(".mobile-filter-btn")).find(
-    (b) => b.textContent.toLowerCase().trim() === categoria || 
-      (categoria === "todos" && b.textContent.toLowerCase().trim() === "todos")
-  );
-  if (mobileBtn) mobileBtn.classList.add("active");
-
-  aplicarFiltroCategoria(categoria);
-}
-
 // Mostrar filtros de género
 function mostrarFiltrosGenero(boton) {
   const generoSubfiltersDiv = document.getElementById("generoSubfilters");
@@ -841,3 +815,108 @@ function mostrarFiltrosGenero(boton) {
     generoSubfiltersDiv.appendChild(btn);
   });
 }
+
+// Toggle del menú móvil
+function toggleMobileMenu() {
+  const mobileMenu = document.getElementById("mobileMenu");
+  const overlay = document.getElementById("mobileMenuOverlay");
+  const hamburger = document.getElementById("hamburgerMenu");
+  
+  mobileMenu.classList.toggle("active");
+  overlay.classList.toggle("active");
+  if (hamburger) hamburger.classList.toggle("active");
+  
+  // Prevenir/restaurar scroll del body cuando el menú está abierto
+  if (mobileMenu.classList.contains("active")) {
+    document.body.style.overflow = "hidden";
+  } else {
+    document.body.style.overflow = "";
+  }
+}
+
+// Filtrar categoría desde menú móvil
+function filtrarCategoriaMobile(categoria, boton) {
+  // Llamar a la función principal de filtrado
+  filtrarCategoria(categoria, boton);
+  // Cerrar el menú móvil después de seleccionar
+  toggleMobileMenu();
+}
+
+// Filtrar género desde menú móvil
+function filtrarGeneroMobile(genero, boton) {
+  // Actualizar filtro de género activo
+  filtroGeneroActual = genero;
+  
+  // Actualizar botones activos en menú móvil
+  document.querySelectorAll(".mobile-filter-section .mobile-filter-btn").forEach((b) => {
+    if (b.textContent.toLowerCase().includes("masculino") ||
+        b.textContent.toLowerCase().includes("femenino") ||
+        b.textContent.toLowerCase().includes("unisex")) {
+      b.classList.remove("active");
+    }
+  });
+  boton.classList.add("active");
+  
+  // Aplicar filtro
+  const filtradosConGenero = aplicarFiltroGenero(perfumesFiltrados, genero);
+  mostrarPerfumes(filtradosConGenero);
+  
+  // Cerrar el menú móvil
+  toggleMobileMenu();
+}
+
+// Función auxiliar para aplicar filtro de género
+function aplicarFiltroGenero(perfumes, genero) {
+  if (genero === "todos") {
+    return perfumes;
+  }
+  return perfumes.filter(p => p.genero && p.genero.toLowerCase() === genero.toLowerCase());
+}
+
+// Función auxiliar para aplicar filtro de categoría
+function aplicarFiltroCategoria(categoria) {
+  let resultado;
+  
+  if (categoria === "todos") {
+    resultado = todosLosPerfumes;
+  } else {
+    resultado = todosLosPerfumes.filter(
+      (p) => p.categoria && p.categoria.toLowerCase() === categoria.toLowerCase()
+    );
+  }
+  
+  // Aplicar también el filtro de género si está activo
+  const resultadoConGenero = aplicarFiltroGenero(resultado, filtroGeneroActual);
+  perfumesFiltrados = resultadoConGenero;
+  mostrarPerfumes(resultadoConGenero);
+  
+  // Mostrar subfiltros de marcas si corresponde
+  if (categoria !== "todos") {
+    mostrarSubfiltros(categoria);
+  } else {
+    // Limpiar subfiltros
+    if (subfiltersDiv) subfiltersDiv.innerHTML = "";
+  }
+}
+
+// Filtrar género en desktop
+function filtrarGeneroDesktop(genero, boton) {
+  filtroGeneroActual = genero;
+  
+  // Actualizar botones activos
+  document.querySelectorAll(".subfilter-btn").forEach((b) => b.classList.remove("active"));
+  boton.classList.add("active");
+  
+  // Aplicar filtro
+  const filtradosConGenero = aplicarFiltroGenero(perfumesFiltrados, genero);
+  mostrarPerfumes(filtradosConGenero);
+}
+
+// Exponer funciones al objeto global window para que sean accesibles desde los manejadores onclick en HTML
+window.filtrarCategoria = filtrarCategoria;
+window.mostrarFiltrosGenero = mostrarFiltrosGenero;
+window.toggleSearch = toggleSearch;
+window.closeModal = closeModal;
+window.toggleMobileMenu = toggleMobileMenu;
+window.filtrarCategoriaMobile = filtrarCategoriaMobile;
+window.filtrarGeneroMobile = filtrarGeneroMobile;
