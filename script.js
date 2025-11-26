@@ -140,19 +140,27 @@ function procesarDatos() {
 
   // Helper para procesar cada categoría de forma optimizada
   const procesarCategoria = (categoria, data, tipo = "unisex") => {
-    if (!data) return;
+  if (!data) return;
 
-    for (const [marca, perfumes] of Object.entries(data)) {
-      for (const perfume of perfumes) {
-        todosLosPerfumes.push({
-          ...perfume,
-          categoria,
-          marca: categoria === "sets" ? `Set ${marca}` : marca,
-          tipo,
-        });
-      }
+  for (const [marca, perfumes] of Object.entries(data)) {
+    if (!perfumes) continue;
+
+    // Normalizar perfumes para que siempre sea un array
+    const lista = Array.isArray(perfumes)
+      ? perfumes
+      : Object.values(perfumes);
+
+    for (const perfume of lista) {
+      todosLosPerfumes.push({
+        ...perfume,
+        categoria,
+        marca: categoria === "sets" ? `Set ${marca}` : marca,
+        tipo,
+      });
     }
-  };
+  }
+};
+
 
   // Procesar todas las categorías
   procesarCategoria("arabes", catalogoData.perfumes?.arabes);
