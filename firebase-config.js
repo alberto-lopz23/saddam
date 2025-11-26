@@ -232,13 +232,13 @@ export async function eliminarPerfume(categoria, marca, index) {
     if (
       !data.perfumes[categoria] ||
       !data.perfumes[categoria][marca] ||
-      data.perfumes[categoria][marca][index] === undefined
+      !data.perfumes[categoria][marca][index]
     ) {
       throw new Error("Perfume no encontrado");
     }
 
     // 3. Obtener el array de perfumes de esa marca
-    const marcaPerfumes = [...data.perfumes[categoria][marca]];
+    const marcaPerfumes = Object.values(data.perfumes[categoria][marca]);  // Convertimos el objeto en array
 
     // 4. Eliminar el perfume del array
     marcaPerfumes.splice(index, 1);
@@ -248,7 +248,7 @@ export async function eliminarPerfume(categoria, marca, index) {
 
     console.log(`💾 Actualizando solo: ${marcaPath}`);
     await updateDoc(docRef, {
-      [marcaPath]: marcaPerfumes,
+      [marcaPath]: marcaPerfumes,  // Ahora, marcaPerfumes es un array
     });
 
     console.log("✅ Perfume eliminado correctamente");
@@ -259,19 +259,6 @@ export async function eliminarPerfume(categoria, marca, index) {
   }
 }
 
-// Función de compatibilidad (ya no usa caché)
-// Limpiar caché manualmente (útil después de hacer cambios en admin)
-export function limpiarCache() {
-  try {
-    localStorage.removeItem(CACHE_KEY);
-    localStorage.removeItem(CACHE_TIMESTAMP_KEY);
-    console.log("🗑️ Caché limpiada correctamente");
-    return true;
-  } catch (error) {
-    console.error("⚠️ Error al limpiar caché:", error);
-    return false;
-  }
-}
 
 // Obtener info de la caché
 export function infoCacheActual() {
@@ -348,10 +335,10 @@ export async function moverPerfume(
       throw new Error("Perfume origen no encontrado");
     }
 
-    // 2. Obtener arrays actuales
-    const arrayOrigen = [...data.perfumes[categoriaOrigen][marcaOrigen]];
+    // 2. Obtener arrays actuales (convertir objetos a arrays)
+    const arrayOrigen = Object.values(data.perfumes[categoriaOrigen][marcaOrigen]);  // Convertir objeto a array
     const arrayDestino = data.perfumes[categoriaDestino]?.[marcaDestino]
-      ? [...data.perfumes[categoriaDestino][marcaDestino]]
+      ? Object.values(data.perfumes[categoriaDestino][marcaDestino])  // Convertir objeto a array
       : [];
 
     // 3. Eliminar de origen
@@ -367,6 +354,7 @@ export async function moverPerfume(
     updateData[`perfumes.${categoriaDestino}.${marcaDestino}`] = arrayDestino;
 
     console.log("💾 Moviendo perfume (1 operación atómica)...");
+
     await updateDoc(docRef, updateData);
 
     console.log(`✅ Perfume movido exitosamente a índice ${nuevoIndex}`);
@@ -376,5 +364,6 @@ export async function moverPerfume(
     throw error;
   }
 }
+
 
 export { db, auth };
