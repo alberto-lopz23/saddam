@@ -2,20 +2,13 @@ import {
   obtenerPerfumes,
   actualizarPerfume,
   agregarPerfume,
+  eliminarPerfume as eliminarPerfumeFirestore,
   moverPerfume,
   limpiarCache,
   loginAdmin,
   logoutAdmin,
   onAuthChange,
-  db,
 } from "./firebase-config.js";
-
-// Importar funciones de Firestore necesarias para eliminarPerfume local
-import {
-  doc,
-  getDoc,
-  updateDoc,
-} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 let todosLosPerfumes = [];
 let perfumesFiltrados = [];
@@ -496,77 +489,23 @@ document.getElementById("editForm").addEventListener("submit", async (e) => {
 });
 
 // ============ ELIMINAR PERFUME (MODIFICADO – SIN RECARGA) ============
-// Versión robusta con:
-// - Comprobación segura de existencia usando 'in' operator y Array.isArray
-// - Normalización de estructura (objeto → array) si es necesario
-// - Actualización de caché local (todosLosPerfumes y perfumesFiltrados)
-// - Recálculo de arrayIndex para perfumes posteriores de la misma categoría/marca
-// - Logs de depuración y manejo de errores claro
+// Esta función wrapper:
+// - Usa la implementación compartida de firebase-config.js para la operación en Firestore
+// - Actualiza la caché local (todosLosPerfumes y perfumesFiltrados)
+// - Recalcula arrayIndex para perfumes posteriores de la misma categoría/marca
+// Esto evita duplicación de código y mantiene sincronizada la lógica de eliminación
 
 async function eliminarPerfume(categoria, marca, index) {
   try {
-    console.debug(`🗑️ Eliminando perfume: ${categoria}/${marca}[${index}]`);
+    console.debug(`🗑️ [Admin] Iniciando eliminación: ${categoria}/${marca}[${index}]`);
     
-    const docRef = doc(db, "catalogo", "perfumes");
-    const docSnap = await getDoc(docRef);
+    // Paso 1: Usar la implementación compartida para eliminar de Firestore
+    // Esta función ya tiene toda la lógica robusta de validación y normalización
+    await eliminarPerfumeFirestore(categoria, marca, index);
 
-    if (!docSnap.exists()) {
-      console.error("❌ Documento de catálogo no encontrado en Firestore");
-      throw new Error("Documento de catálogo no encontrado");
-    }
+    console.debug(`💾 Firestore actualizado correctamente`);
 
-    const data = docSnap.data();
-
-    // Paso 1: Verificar que la categoría existe
-    if (!data.perfumes || !data.perfumes[categoria]) {
-      console.error(`❌ Categoría "${categoria}" no encontrada`);
-      throw new Error("Perfume no encontrado");
-    }
-
-    // Paso 2: Verificar que la marca existe
-    if (!data.perfumes[categoria][marca]) {
-      console.error(`❌ Marca "${marca}" no encontrada en categoría "${categoria}"`);
-      throw new Error("Perfume no encontrado");
-    }
-
-    // Paso 3: Obtener la estructura de perfumes de la marca (puede ser objeto o array)
-    const marcaPerfumesRaw = data.perfumes[categoria][marca];
-    
-    // Paso 4: Normalizar a array si es objeto (para orden estable)
-    let marcaPerfumes;
-    if (Array.isArray(marcaPerfumesRaw)) {
-      marcaPerfumes = [...marcaPerfumesRaw]; // Copiar array
-      console.debug(`📋 Estructura es array con ${marcaPerfumes.length} elementos`);
-    } else if (typeof marcaPerfumesRaw === "object" && marcaPerfumesRaw !== null) {
-      marcaPerfumes = Object.values(marcaPerfumesRaw); // Convertir objeto a array
-      console.debug(`📋 Estructura normalizada de objeto a array con ${marcaPerfumes.length} elementos`);
-    } else {
-      console.error(`❌ Estructura de marca inválida: ${typeof marcaPerfumesRaw}`);
-      throw new Error("Perfume no encontrado");
-    }
-
-    // Paso 5: Verificar que el índice existe de forma segura usando 'in' operator
-    if (!(index in marcaPerfumes)) {
-      console.error(`❌ Índice ${index} no existe en marca "${marca}" (total: ${marcaPerfumes.length})`);
-      throw new Error("Perfume no encontrado");
-    }
-
-    // Paso 6: Eliminar el perfume del array usando splice
-    const perfumeEliminado = marcaPerfumes[index];
-    marcaPerfumes.splice(index, 1);
-    console.debug(`✂️ Perfume eliminado: "${perfumeEliminado?.nombre || 'sin nombre'}"`);
-    console.debug(`📊 Nuevo total de perfumes en marca: ${marcaPerfumes.length}`);
-
-    // Paso 7: Actualizar Firestore con la nueva lista
-    const marcaPath = `perfumes.${categoria}.${marca}`;
-    await updateDoc(docRef, {
-      [marcaPath]: marcaPerfumes,
-    });
-
-    console.debug(`💾 Firestore actualizado: ${categoria}/${marca}`);
-
-    // Paso 8: Actualizar caché local - eliminar el perfume
-    // Eliminar el perfume con el índice especificado
+    // Paso 2: Actualizar caché local - eliminar el perfume
     todosLosPerfumes = todosLosPerfumes.filter(
       (p) =>
         !(p.categoria === categoria && p.marca === marca && p.arrayIndex === index)
@@ -574,7 +513,7 @@ async function eliminarPerfume(categoria, marca, index) {
 
     console.debug(`🗂️ Perfume eliminado de caché local`);
 
-    // Paso 9: CRÍTICO - Recalcular arrayIndex para perfumes posteriores de la misma categoría/marca
+    // Paso 3: CRÍTICO - Recalcular arrayIndex para perfumes posteriores de la misma categoría/marca
     // Esto evita que los índices queden obsoletos y causa "Perfumes no encontrados"
     todosLosPerfumes = todosLosPerfumes.map((p) => {
       // Solo ajustar perfumes de la misma categoría/marca con índice mayor al eliminado
@@ -590,10 +529,10 @@ async function eliminarPerfume(categoria, marca, index) {
 
     console.debug(`🔢 Índices recalculados para perfumes posteriores`);
 
-    // Paso 10: Actualizar perfumesFiltrados con los cambios
+    // Paso 4: Actualizar perfumesFiltrados con los cambios
     perfumesFiltrados = [...todosLosPerfumes];
 
-    // Paso 11: Actualizar la UI sin recargar
+    // Paso 5: Actualizar la UI sin recargar
     mostrarPerfumes();
 
     console.log(`✅ Perfume eliminado exitosamente: ${categoria}/${marca}[${index}]`);
