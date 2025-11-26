@@ -2,7 +2,7 @@ import {
   obtenerPerfumes,
   actualizarPerfume,
   agregarPerfume,
-  eliminarPerfume as eliminarPerfumeFirestore,
+  eliminarPerfume,
   moverPerfume,
   limpiarCache,
   loginAdmin,
@@ -16,15 +16,13 @@ let perfumeActual = null;
 let usuarioActual = null;
 
 // ============ AUTENTICACIÓN ============
-
 onAuthChange((user) => {
   if (user) {
     usuarioActual = user;
     document.getElementById("loginScreen").style.display = "none";
     document.getElementById("adminPanel").style.display = "block";
     document.getElementById("adminUsername").textContent = user.email;
-    inicializarEventListeners(); // Configurar los event listeners para filtros
-    cargarPerfumes(); // Carga los perfumes cuando el usuario inicia sesión
+    cargarPerfumes();
   } else {
     usuarioActual = null;
     document.getElementById("loginScreen").style.display = "flex";
@@ -33,7 +31,6 @@ onAuthChange((user) => {
 });
 
 // ============ LOGIN ============
-
 document.getElementById("loginForm").addEventListener("submit", async (e) => {
   e.preventDefault();
 
@@ -41,14 +38,13 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
   const password = document.getElementById("password").value;
   const errorEl = document.getElementById("loginError");
 
-  errorEl.style.display = "none"; // Inicialmente, ocultamos el mensaje de error
+  errorEl.style.display = "none";
 
   try {
     await loginAdmin(email, password);
   } catch (error) {
     let mensaje = "Error al iniciar sesión";
 
-    // Definir mensajes de error según el código de error de Firebase
     if (error.code === "auth/invalid-credential") {
       mensaje = "Email o contraseña incorrectos";
     } else if (error.code === "auth/user-not-found") {
@@ -66,7 +62,6 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
 });
 
 // ============ LOGOUT ============
-
 document.getElementById("logoutBtn").addEventListener("click", async () => {
   try {
     await logoutAdmin();
@@ -76,7 +71,6 @@ document.getElementById("logoutBtn").addEventListener("click", async () => {
 });
 
 // ============ CARGAR PERFUMES ============
-
 async function cargarPerfumes() {
   try {
     console.log("📖 Cargando perfumes desde Firebase...");
@@ -89,49 +83,40 @@ async function cargarPerfumes() {
 
     Object.keys(data.perfumes).forEach((categoria) => {
       Object.keys(data.perfumes[categoria]).forEach((marca) => {
-        const perfumesObj = data.perfumes[categoria][marca];
+        data.perfumes[categoria][marca].forEach((perfume, index) => {
+          const precioBase = parseInt(perfume.precio) || 0;
+          let precioFinal = precioBase;
 
-        // Verificamos que perfumesObj sea un objeto válido
-        if (perfumesObj && typeof perfumesObj === "object") {
-          Object.keys(perfumesObj).forEach((key) => {
-            const perfume = perfumesObj[key];
+          switch (categoria) {
+            case "arabes":
+              precioFinal = precioBase + 1800;
+              break;
+            case "disenador":
+              precioFinal = precioBase + 2300;
+              break;
+            case "nicho":
+              precioFinal = precioBase + 3000;
+              break;
+            case "sets":
+              precioFinal = precioBase;
+              break;
+          }
 
-            const precioBase = parseInt(perfume.precio) || 0;
-            let precioFinal = precioBase;
-
-            // Definir el precio final según la categoría
-            switch (categoria) {
-              case "arabes":
-                precioFinal = precioBase + 1800;
-                break;
-              case "disenador":
-                precioFinal = precioBase + 2300;
-                break;
-              case "nicho":
-                precioFinal = precioBase + 3000;
-                break;
-              case "sets":
-                precioFinal = precioBase;
-                break;
-            }
-
-            // Agregar el perfume procesado a la lista
-            todosLosPerfumes.push({
-              ...perfume,
-              categoria,
-              marca,
-              arrayIndex: parseInt(key, 10),
-              precioBase,
-              precioFinal,
-            });
+          todosLosPerfumes.push({
+            ...perfume,
+            categoria,
+            marca,
+            arrayIndex: index,
+            precioBase,
+            precioFinal,
           });
-        }
+        });
       });
     });
 
-    perfumesFiltrados = [...todosLosPerfumes]; // Inicializamos perfumesFiltrados con todos los perfumes
-    actualizarEstadisticas(); // Actualizamos las estadísticas
-    mostrarPerfumes(); // Mostramos los perfumes en la UI
+    perfumesFiltrados = [...todosLosPerfumes];
+    actualizarEstadisticas();
+    mostrarPerfumes();
     console.log("✅ Perfumes cargados:", todosLosPerfumes.length);
   } catch (error) {
     console.error("Error al cargar perfumes:", error);
@@ -140,7 +125,6 @@ async function cargarPerfumes() {
     let mensajeError = error.message;
     let sugerencia = "";
 
-    // Error handling para posibles problemas de conexión
     if (
       error.message.includes("offline") ||
       error.message.includes("Failed to get document") ||
@@ -154,7 +138,7 @@ async function cargarPerfumes() {
         "<br><br>💡 Por favor, conéctate a internet para cargar los datos";
     }
 
-    tbody.innerHTML = ` 
+    tbody.innerHTML = `
       <tr>
         <td colspan="6" style="text-align: center; padding: 40px; color: #e74c3c;">
           <div style="font-size: 48px; margin-bottom: 20px;">⚠️</div>
@@ -171,30 +155,148 @@ async function cargarPerfumes() {
   }
 }
 
-// ============ BOTÓN REFRESCAR ============
+// ============ ESTADÍSTICAS ============
+function actualizarEstadisticas() {
+  document.getElementById("totalPerfumes").textContent =
+    todosLosPerfumes.length;
+  document.getElementById("totalArabes").textContent = todosLosPerfumes.filter(
+    (p) => p.categoria === "arabes"
+  ).length;
+  document.getElementById("totalDisenador").textContent =
+    todosLosPerfumes.filter((p) => p.categoria === "disenador").length;
+  document.getElementById("totalNicho").textContent = todosLosPerfumes.filter(
+    (p) => p.categoria === "nicho"
+  ).length;
+  document.getElementById("totalSets").textContent = todosLosPerfumes.filter(
+    (p) => p.categoria === "sets"
+  ).length;
+}
 
-document.getElementById("refreshBtn").addEventListener("click", async () => {
-  try {
-    limpiarCache();
-    await cargarPerfumes(); // Esperamos a que los perfumes se carguen
-    document.getElementById("searchInput").value = "";
-    document.getElementById("categoryFilter").value = "";
-  } catch (error) {
-    console.error("Error al refrescar los perfumes:", error);
-    alert("❌ Error al refrescar. Intenta de nuevo más tarde.");
+// ============ MOSTRAR PERFUMES ============
+function mostrarPerfumes() {
+  const tbody = document.getElementById("perfumesTableBody");
+  tbody.innerHTML = "";
+
+  if (perfumesFiltrados.length === 0) {
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="6" style="text-align: center; padding: 40px; color: #999;">
+          No se encontraron perfumes
+        </td>
+      </tr>
+    `;
+    return;
   }
+
+  perfumesFiltrados.forEach((perfume) => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td><img src="${perfume.imagen}" alt="${
+      perfume.nombre
+    }" class="perfume-img"></td>
+      <td><strong>${perfume.nombre}</strong></td>
+      <td>${capitalizar(perfume.marca)}</td>
+      <td><span class="category-badge category-${perfume.categoria}">
+        ${capitalizar(perfume.categoria)}
+      </span></td>
+      <td><strong>$${perfume.precioFinal.toLocaleString()}</strong></td>
+      <td>
+        <button class="btn-edit" data-categoria="${
+          perfume.categoria
+        }" data-marca="${perfume.marca}" data-index="${perfume.arrayIndex}">
+          ✏️ Editar
+        </button>
+        <button class="btn-delete" data-categoria="${
+          perfume.categoria
+        }" data-marca="${perfume.marca}" data-index="${perfume.arrayIndex}">
+          🗑️ Eliminar
+        </button>
+      </td>
+    `;
+
+    tr.querySelector(".btn-edit").addEventListener("click", function () {
+      abrirEditarModal(
+        this.dataset.categoria,
+        this.dataset.marca,
+        parseInt(this.dataset.index)
+      );
+    });
+
+    tr.querySelector(".btn-delete").addEventListener("click", function () {
+      eliminarPerfumeConfirm(
+        this.dataset.categoria,
+        this.dataset.marca,
+        parseInt(this.dataset.index),
+        perfume.nombre
+      );
+    });
+
+    tbody.appendChild(tr);
+  });
+}
+
+// ============ BÚSQUEDA ============
+document.getElementById("searchInput").addEventListener("input", (e) => {
+  const query = e.target.value.toLowerCase();
+
+  perfumesFiltrados = todosLosPerfumes.filter((perfume) => {
+    return (
+      perfume.nombre.toLowerCase().includes(query) ||
+      perfume.marca.toLowerCase().includes(query)
+    );
+  });
+
+  const categoriaSeleccionada = document.getElementById("categoryFilter").value;
+  if (categoriaSeleccionada) {
+    perfumesFiltrados = perfumesFiltrados.filter(
+      (p) => p.categoria === categoriaSeleccionada
+    );
+  }
+
+  mostrarPerfumes();
+});
+
+// ============ FILTRO POR CATEGORÍA ============
+document.getElementById("categoryFilter").addEventListener("change", (e) => {
+  const categoria = e.target.value;
+
+  if (categoria) {
+    perfumesFiltrados = todosLosPerfumes.filter(
+      (p) => p.categoria === categoria
+    );
+  } else {
+    perfumesFiltrados = [...todosLosPerfumes];
+  }
+
+  const query = document.getElementById("searchInput").value.toLowerCase();
+  if (query) {
+    perfumesFiltrados = perfumesFiltrados.filter((perfume) => {
+      return (
+        perfume.nombre.toLowerCase().includes(query) ||
+        perfume.marca.toLowerCase().includes(query)
+      );
+    });
+  }
+
+  mostrarPerfumes();
+});
+
+// ============ BOTÓN REFRESCAR ============
+document.getElementById("refreshBtn").addEventListener("click", () => {
+  limpiarCache();
+  cargarPerfumes();
+  document.getElementById("searchInput").value = "";
+  document.getElementById("categoryFilter").value = "";
 });
 
 // ============ BOTÓN AGREGAR PERFUME ============
-
 document.getElementById("addPerfumeBtn").addEventListener("click", () => {
-  cargarMarcasDisponibles(); // Aseguramos que las marcas estén cargadas
+  cargarMarcasDisponibles();
   document.getElementById("addModal").classList.add("show");
-  document.body.style.overflow = "hidden"; // Deshabilitar scroll cuando el modal está abierto
+  document.body.style.overflow = "hidden";
 });
 
 // ============ CARGAR MARCAS DISPONIBLES ============
-
 function cargarMarcasDisponibles() {
   const categoriaSelect = document.getElementById("addCategoria");
   const marcaSelect = document.getElementById("addMarcaSelect");
@@ -241,7 +343,6 @@ function cargarMarcasDisponibles() {
 }
 
 // ============ ABRIR MODAL DE EDICIÓN ============
-
 function abrirEditarModal(categoria, marca, index) {
   perfumeActual = todosLosPerfumes.find(
     (p) =>
@@ -253,7 +354,6 @@ function abrirEditarModal(categoria, marca, index) {
     return;
   }
 
-  // Actualizamos los campos con los datos del perfume
   document.getElementById("editImage").src = perfumeActual.imagen;
   document.getElementById("editCategoriaTexto").textContent =
     capitalizar(categoria);
@@ -331,7 +431,6 @@ function abrirEditarModal(categoria, marca, index) {
 }
 
 // ============ CERRAR MODAL ============
-
 window.closeEditModal = function (forzar = false) {
   // Si no es forzado, preguntar confirmación
   if (!forzar) {
@@ -351,7 +450,6 @@ document
   .addEventListener("click", () => closeEditModal(false));
 
 // ============ GUARDAR CAMBIOS ============
-
 document.getElementById("editForm").addEventListener("submit", async (e) => {
   e.preventDefault();
 
@@ -489,429 +587,163 @@ document.getElementById("editForm").addEventListener("submit", async (e) => {
   }
 });
 
-// ============ ELIMINAR PERFUME (MODIFICADO – SIN RECARGA) ============
-// Esta función wrapper:
-// - Usa la implementación compartida de firebase-config.js para la operación en Firestore
-// - Actualiza la caché local (todosLosPerfumes y perfumesFiltrados)
-// - Recalcula arrayIndex para perfumes posteriores de la misma categoría/marca
-// Esto evita duplicación de código y mantiene sincronizada la lógica de eliminación
-
-async function eliminarPerfume(categoria, marca, index) {
-  try {
-    console.debug(`🗑️ [Admin] Iniciando eliminación: ${categoria}/${marca}[${index}]`);
-    
-    // Paso 1: Usar la implementación compartida para eliminar de Firestore
-    // Esta función ya tiene toda la lógica robusta de validación y normalización
-    await eliminarPerfumeFirestore(categoria, marca, index);
-
-    console.debug(`💾 Firestore actualizado correctamente`);
-
-    // Paso 2: Actualizar caché local - eliminar el perfume
-    // Usar findIndex + splice para mejor rendimiento con datasets grandes
-    const indexEnCache = todosLosPerfumes.findIndex(
-      (p) => p.categoria === categoria && p.marca === marca && p.arrayIndex === index
+// ============ CERRAR MODAL DE AGREGAR ============
+window.closeAddModal = function () {
+  // Confirmar si hay datos ingresados
+  const nombre = document.getElementById("addNombre").value;
+  if (nombre && nombre.trim() !== "") {
+    const confirmar = confirm(
+      "⚠️ ¿Estás seguro de cerrar? Se perderán los datos ingresados."
     );
-    
-    if (indexEnCache !== -1) {
-      todosLosPerfumes.splice(indexEnCache, 1);
-      console.debug(`🗂️ Perfume eliminado de caché local en posición ${indexEnCache}`);
-    } else {
-      console.warn(`⚠️ Perfume no encontrado en caché local (esto es normal si se acabó de agregar)`);
-    }
+    if (!confirmar) return;
+  }
 
-    // Paso 3: CRÍTICO - Recalcular arrayIndex para perfumes posteriores de la misma categoría/marca
-    // Esto evita que los índices queden obsoletos y causa "Perfumes no encontrados"
-    todosLosPerfumes = todosLosPerfumes.map((p) => {
-      // Solo ajustar perfumes de la misma categoría/marca con índice mayor al eliminado
-      if (p.categoria === categoria && p.marca === marca && p.arrayIndex > index) {
-        console.debug(`📉 Recalculando índice: ${p.arrayIndex} → ${p.arrayIndex - 1} para "${p.nombre}"`);
-        return {
-          ...p,
-          arrayIndex: p.arrayIndex - 1, // Reducir índice en 1
-        };
-      }
-      return p; // Mantener otros perfumes sin cambios
+  document.getElementById("addModal").classList.remove("show");
+  document.body.style.overflow = "";
+  document.getElementById("addForm").reset();
+};
+
+document
+  .querySelector("#addModal .modal-overlay")
+  .addEventListener("click", closeAddModal);
+
+// ============ GUARDAR NUEVO PERFUME (MODIFICADO – SIN RECARGA) ============
+document.getElementById("addForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const categoria = document.getElementById("addCategoria").value;
+  const marcaSelect = document.getElementById("addMarcaSelect").value;
+
+  // Determinar la marca: existente o nueva
+  let marca;
+  if (marcaSelect === "__NUEVA__") {
+    marca = document.getElementById("addMarcaInput").value.toLowerCase().trim();
+    if (!marca) {
+      alert("Por favor ingresa el nombre de la nueva marca");
+      return;
+    }
+  } else {
+    // La marca seleccionada ya viene en lowercase de Firebase
+    marca = marcaSelect.trim();
+  }
+
+  const precioFinalInput =
+    parseInt(document.getElementById("addPrecio").value) || 0;
+
+  let precioBase = precioFinalInput;
+
+  switch (categoria) {
+    case "arabes":
+      precioBase = precioFinalInput - 1800;
+      break;
+    case "disenador":
+      precioBase = precioFinalInput - 2300;
+      break;
+    case "nicho":
+      precioBase = precioFinalInput - 3000;
+      break;
+    case "sets":
+      precioBase = precioFinalInput;
+      break;
+  }
+
+  // Obtener tamaños disponibles y precios personalizados
+  const tamanosDisponibles = [];
+  const preciosPersonalizados = {};
+
+  const tamanos = [30, 50, 60, 75, 80, 90, 100, 120, 125, 200];
+  tamanos.forEach((tamano) => {
+    const checkbox = document.getElementById(`addTamano${tamano}`);
+    const precioInput = document.getElementById(`addPrecio${tamano}`);
+
+    if (checkbox && checkbox.checked) {
+      tamanosDisponibles.push(tamano);
+      const precio = precioInput.value;
+      if (precio) preciosPersonalizados[tamano] = parseInt(precio);
+    }
+  });
+
+  const nuevoPerfume = {
+    nombre: document.getElementById("addNombre").value,
+    imagen: document.getElementById("addImagen").value,
+    precio: precioBase,
+    genero: document.getElementById("addGenero").value,
+    tamanosDisponibles: tamanosDisponibles,
+    preciosPersonalizados:
+      Object.keys(preciosPersonalizados).length > 0
+        ? preciosPersonalizados
+        : null,
+    descripcion: document.getElementById("addDescripcion").value || "",
+    notas: {
+      salida: document.getElementById("addNotasSalida").value || "",
+      corazon: document.getElementById("addNotasCorazon").value || "",
+      fondo: document.getElementById("addNotasFondo").value || "",
+    },
+  };
+
+  try {
+    const indexNuevo = await agregarPerfume(categoria, marca, nuevoPerfume);
+
+    // --- AÑADIR LOCAL SIN RECARGAR ---
+    todosLosPerfumes.push({
+      ...nuevoPerfume,
+      categoria,
+      marca,
+      arrayIndex: indexNuevo,
+      precioBase,
+      precioFinal: precioFinalInput,
     });
 
-    console.debug(`🔢 Índices recalculados para perfumes posteriores`);
-
-    // Paso 4: Actualizar perfumesFiltrados con los cambios
     perfumesFiltrados = [...todosLosPerfumes];
 
-    // Paso 5: Actualizar estadísticas
-    actualizarEstadisticas();
+    mostrarPerfumes();
+    closeAddModal();
 
-    // Paso 6: Actualizar la UI sin recargar
+    alert("✅ Perfume agregado exitosamente");
+  } catch (error) {
+    console.error("Error al agregar:", error);
+    alert("❌ Error al agregar: " + error.message);
+  }
+});
+
+// ============ ELIMINAR PERFUME (MODIFICADO – SIN RECARGA) ============
+async function eliminarPerfumeConfirm(categoria, marca, index, nombre) {
+  const confirmacion = confirm(
+    `¿Estás seguro de eliminar este perfume?\n\n` +
+      `Nombre: ${nombre}\n` +
+      `Marca: ${marca}\n` +
+      `Categoría: ${categoria}\n\n` +
+      `Esta acción no se puede deshacer.`
+  );
+
+  if (!confirmacion) return;
+
+  try {
+    await eliminarPerfume(categoria, marca, index);
+
+    // --- ELIMINAR LOCAL SIN RECARGAR ---
+    todosLosPerfumes = todosLosPerfumes.filter(
+      (p) =>
+        !(
+          p.categoria === categoria &&
+          p.marca === marca &&
+          p.arrayIndex === index
+        )
+    );
+
+    perfumesFiltrados = [...todosLosPerfumes];
+
     mostrarPerfumes();
 
-    console.log(`✅ Perfume eliminado exitosamente: ${categoria}/${marca}[${index}]`);
     alert("✅ Perfume eliminado exitosamente");
   } catch (error) {
-    console.error("❌ Error al eliminar el perfume:", error);
+    console.error("Error al eliminar:", error);
     alert("❌ Error al eliminar: " + error.message);
   }
 }
 
-// ============ ACTUALIZAR ESTADÍSTICAS ============
-
-function actualizarEstadisticas() {
-  try {
-    // Calcular totales a partir de todosLosPerfumes
-    const total = todosLosPerfumes.length;
-    const totalArabes = todosLosPerfumes.filter(p => p.categoria === 'arabes').length;
-    const totalDisenador = todosLosPerfumes.filter(p => p.categoria === 'disenador').length;
-    const totalNicho = todosLosPerfumes.filter(p => p.categoria === 'nicho').length;
-    const totalSets = todosLosPerfumes.filter(p => p.categoria === 'sets').length;
-
-    // Log de debug con los totales
-    console.log('📊 Estadísticas actualizadas:', {
-      total,
-      arabes: totalArabes,
-      disenador: totalDisenador,
-      nicho: totalNicho,
-      sets: totalSets
-    });
-
-    // Actualizar elementos del DOM de forma segura (verificar que existan)
-    const elementoTotalPerfumes = document.getElementById('totalPerfumes');
-    if (elementoTotalPerfumes) elementoTotalPerfumes.textContent = total;
-
-    const elementoTotalArabes = document.getElementById('totalArabes');
-    if (elementoTotalArabes) elementoTotalArabes.textContent = totalArabes;
-
-    const elementoTotalDisenador = document.getElementById('totalDisenador');
-    if (elementoTotalDisenador) elementoTotalDisenador.textContent = totalDisenador;
-
-    const elementoTotalNicho = document.getElementById('totalNicho');
-    if (elementoTotalNicho) elementoTotalNicho.textContent = totalNicho;
-
-    const elementoTotalSets = document.getElementById('totalSets');
-    if (elementoTotalSets) elementoTotalSets.textContent = totalSets;
-
-  } catch (error) {
-    console.error('⚠️ Error al actualizar estadísticas:', error);
-    // No lanzar la excepción para evitar romper la carga de perfumes
-  }
-}
-
-// ============ MOSTRAR PERFUMES EN LA TABLA ============
-
-function mostrarPerfumes() {
-  try {
-    const tbody = document.getElementById('perfumesTableBody');
-    if (!tbody) {
-      console.error('❌ No se encontró el elemento perfumesTableBody');
-      return;
-    }
-
-    // Si no hay perfumes para mostrar
-    if (perfumesFiltrados.length === 0) {
-      tbody.innerHTML = `
-        <tr>
-          <td colspan="6" style="text-align: center; padding: 40px; color: #999;">
-            <div style="font-size: 48px; margin-bottom: 20px;">🔍</div>
-            <h3 style="margin: 0;">No se encontraron perfumes</h3>
-            <p style="margin: 10px 0;">Intenta ajustar los filtros de búsqueda</p>
-          </td>
-        </tr>
-      `;
-      return;
-    }
-
-    // Generar las filas de la tabla
-    tbody.innerHTML = perfumesFiltrados.map(perfume => {
-      const nombreEscapado = escaparHTML(perfume.nombre);
-      const marcaEscapada = escaparHTML(perfume.marca);
-      const imagenValidada = validarURL(perfume.imagen);
-      const nombreParaConfirm = escaparAtributo(perfume.nombre);
-      const categoriaParaOnclick = escaparAtributo(perfume.categoria);
-      const marcaParaOnclick = escaparAtributo(perfume.marca);
-      // arrayIndex es un número, pero lo validamos por seguridad
-      const arrayIndexSeguro = parseInt(perfume.arrayIndex, 10);
-      if (isNaN(arrayIndexSeguro)) {
-        console.error('arrayIndex inválido para perfume:', perfume.nombre);
-        return ''; // Saltar este perfume si el índice es inválido
-      }
-      
-      return `
-        <tr>
-          <td>
-            <img src="${escaparHTML(imagenValidada)}" alt="${nombreEscapado}" 
-                 style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;" 
-                 onerror="this.src='logo2.jpeg'">
-          </td>
-          <td>${nombreEscapado}</td>
-          <td>${capitalizar(marcaEscapada)}</td>
-          <td>
-            <span class="category-badge category-${perfume.categoria}">
-              ${capitalizar(perfume.categoria)}
-            </span>
-          </td>
-          <td>$${perfume.precioFinal.toLocaleString()}</td>
-          <td>
-            <button class="btn-edit" onclick="abrirEditarModal('${categoriaParaOnclick}', '${marcaParaOnclick}', ${arrayIndexSeguro})" title="Editar">
-              ✏️
-            </button>
-            <button class="btn-delete" onclick="if(confirm('¿Eliminar ${nombreParaConfirm}?')) eliminarPerfume('${categoriaParaOnclick}', '${marcaParaOnclick}', ${arrayIndexSeguro})" title="Eliminar">
-              🗑️
-            </button>
-          </td>
-        </tr>
-      `;
-    }).join('');
-
-    console.log(`✅ Mostrando ${perfumesFiltrados.length} perfumes en la tabla`);
-
-  } catch (error) {
-    console.error('❌ Error al mostrar perfumes:', error);
-    const tbody = document.getElementById('perfumesTableBody');
-    if (tbody) {
-      tbody.innerHTML = `
-        <tr>
-          <td colspan="6" style="text-align: center; padding: 40px; color: #e74c3c;">
-            <div style="font-size: 48px; margin-bottom: 20px;">⚠️</div>
-            <h3>Error al mostrar perfumes</h3>
-            <p>${error.message}</p>
-          </td>
-        </tr>
-      `;
-    }
-  }
-}
-
-// ============ FILTROS Y BÚSQUEDA ============
-
-function aplicarFiltros() {
-  try {
-    const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
-    const categoryFilter = document.getElementById('categoryFilter').value;
-
-    perfumesFiltrados = todosLosPerfumes.filter(perfume => {
-      // Filtro de búsqueda (nombre o marca)
-      const matchesSearch = !searchTerm || 
-        perfume.nombre.toLowerCase().includes(searchTerm) ||
-        perfume.marca.toLowerCase().includes(searchTerm);
-
-      // Filtro de categoría
-      const matchesCategory = !categoryFilter || perfume.categoria === categoryFilter;
-
-      return matchesSearch && matchesCategory;
-    });
-
-    mostrarPerfumes();
-    console.log(`🔍 Filtros aplicados: ${perfumesFiltrados.length} de ${todosLosPerfumes.length} perfumes`);
-
-  } catch (error) {
-    console.error('❌ Error al aplicar filtros:', error);
-  }
-}
-
-// Agregar event listeners para los filtros cuando el DOM esté listo
-// Se ejecutan después de que el usuario haya iniciado sesión y se haya cargado el panel
-function inicializarEventListeners() {
-  const searchInput = document.getElementById('searchInput');
-  const categoryFilter = document.getElementById('categoryFilter');
-  
-  if (searchInput) {
-    searchInput.addEventListener('input', aplicarFiltros);
-  }
-  
-  if (categoryFilter) {
-    categoryFilter.addEventListener('change', aplicarFiltros);
-  }
-}
-
-// Llamar a la inicialización cuando sea necesario (después del login)
-// Los event listeners se configurarán en onAuthChange cuando el usuario inicie sesión
-
 // ============ UTILIDADES ============
-
 function capitalizar(str) {
   if (!str) return "";
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
-
-function escaparHTML(str) {
-  if (!str) return "";
-  const div = document.createElement('div');
-  div.textContent = str;
-  return div.innerHTML;
-}
-
-function escaparAtributo(str) {
-  if (!str) return "";
-  // Escapar caracteres peligrosos para atributos HTML
-  return str
-    .replace(/&/g, '&amp;')
-    .replace(/'/g, '&#39;')
-    .replace(/"/g, '&quot;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/`/g, '&#96;')
-    .replace(/\n/g, '&#10;')
-    .replace(/\r/g, '&#13;');
-}
-
-function validarURL(url) {
-  if (!url) return 'logo2.jpeg';
-  try {
-    // Permitir URLs relativas y URLs HTTP/HTTPS
-    if (url.startsWith('/') || url.startsWith('./') || url.startsWith('../')) {
-      return url;
-    }
-    const urlObj = new URL(url);
-    if (urlObj.protocol === 'http:' || urlObj.protocol === 'https:') {
-      return url;
-    }
-  } catch (e) {
-    // Si no es una URL válida, usar imagen por defecto
-    return 'logo2.jpeg';
-  }
-  return 'logo2.jpeg';
-}
-
-// ============ CERRAR MODAL DE AGREGAR ============
-
-window.closeAddModal = function () {
-  const modal = document.getElementById("addModal");
-  if (modal) {
-    modal.classList.remove("show");
-    document.body.style.overflow = "";
-    // Resetear el formulario
-    document.getElementById("addForm").reset();
-    // Resetear estado de marca nueva
-    const marcaInputGroup = document.getElementById("addMarcaInputGroup");
-    if (marcaInputGroup) {
-      marcaInputGroup.style.display = "none";
-    }
-  }
-};
-
-// ============ AGREGAR PERFUME ============
-
-const addForm = document.getElementById("addForm");
-if (addForm) {
-  addForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    const categoria = document.getElementById("addCategoria").value;
-    const marcaSelect = document.getElementById("addMarcaSelect").value;
-    const nombre = document.getElementById("addNombre").value;
-    const imagen = document.getElementById("addImagen").value;
-    const precioFinalInput = parseInt(document.getElementById("addPrecio").value, 10) || 0;
-    const genero = document.getElementById("addGenero").value;
-    const descripcion = document.getElementById("addDescripcion").value;
-
-    // Validar campos obligatorios
-    if (!categoria) {
-      alert("Por favor selecciona una categoría");
-      return;
-    }
-
-    if (!nombre || !nombre.trim()) {
-      alert("Por favor ingresa el nombre del perfume");
-      return;
-    }
-
-    if (!imagen || !imagen.trim()) {
-      alert("Por favor ingresa la URL de la imagen");
-      return;
-    }
-
-    if (!precioFinalInput || precioFinalInput <= 0) {
-      alert("Por favor ingresa un precio válido");
-      return;
-    }
-
-    // Obtener marca (existente o nueva)
-    let marca;
-    if (marcaSelect === "__NUEVA__") {
-      marca = document.getElementById("addMarcaInput").value.toLowerCase().trim();
-      if (!marca) {
-        alert("Por favor ingresa el nombre de la nueva marca");
-        return;
-      }
-    } else if (!marcaSelect) {
-      alert("Por favor selecciona una marca");
-      return;
-    } else {
-      marca = marcaSelect.trim();
-    }
-
-    // Calcular precio base (restar incremento según categoría)
-    let precioBase = precioFinalInput;
-    switch (categoria) {
-      case "arabes":
-        precioBase = precioFinalInput - 1800;
-        break;
-      case "disenador":
-        precioBase = precioFinalInput - 2300;
-        break;
-      case "nicho":
-        precioBase = precioFinalInput - 3000;
-        break;
-      case "sets":
-        precioBase = precioFinalInput;
-        break;
-    }
-
-    // Obtener tamaños disponibles y precios personalizados
-    const tamanosDisponibles = [];
-    const preciosPersonalizados = {};
-
-    const tamanos = [30, 50, 60, 75, 80, 90, 100, 120, 125, 200];
-    tamanos.forEach((tamano) => {
-      const checkbox = document.getElementById(`addTamano${tamano}`);
-      const precioInput = document.getElementById(`addPrecio${tamano}`);
-
-      if (checkbox && checkbox.checked) {
-        tamanosDisponibles.push(tamano);
-        const precio = precioInput.value;
-        if (precio) preciosPersonalizados[tamano] = parseInt(precio, 10);
-      }
-    });
-
-    // Si no hay tamaños seleccionados, usar 100ml por defecto
-    if (tamanosDisponibles.length === 0) {
-      tamanosDisponibles.push(100);
-    }
-
-    // Construir objeto de perfume
-    const nuevoPerfume = {
-      nombre,
-      imagen,
-      precio: precioBase,
-      genero,
-      descripcion,
-      tamanosDisponibles,
-      preciosPersonalizados: Object.keys(preciosPersonalizados).length > 0 ? preciosPersonalizados : null,
-      notas: {
-        salida: document.getElementById("addNotasSalida").value || "",
-        corazon: document.getElementById("addNotasCorazon").value || "",
-        fondo: document.getElementById("addNotasFondo").value || "",
-      },
-    };
-
-    try {
-      console.log("➕ Agregando nuevo perfume:", { categoria, marca, nuevoPerfume });
-      
-      await agregarPerfume(categoria, marca, nuevoPerfume);
-      
-      alert("✅ Perfume agregado exitosamente");
-      
-      // Limpiar caché y recargar
-      limpiarCache();
-      closeAddModal();
-      await cargarPerfumes();
-    } catch (error) {
-      console.error("❌ Error al agregar perfume:", error);
-      alert("❌ Error al agregar perfume: " + error.message);
-    }
-  });
-}
-
-// ============ EXPONER FUNCIONES AL ÁMBITO GLOBAL ============
-
-// Exponer funciones que son llamadas desde el HTML con onclick
-window.abrirEditarModal = abrirEditarModal;
-window.eliminarPerfume = eliminarPerfume;
