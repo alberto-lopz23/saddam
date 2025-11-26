@@ -762,6 +762,7 @@ function buscarPerfumes() {
 }
 
 // Toggle del buscador expandible
+// Toggle del buscador expandible
 function toggleSearch() {
   const container = document.getElementById("searchContainer");
   const input = document.getElementById("searchInput");
@@ -780,14 +781,63 @@ function toggleSearch() {
   }
 }
 
-// Cerrar búsqueda al hacer clic fuera
-document.addEventListener("click", function (e) {
-  const container = document.getElementById("searchContainer");
-  const input = document.getElementById("searchInput");
+// Filtrar por categoría
+function filtrarCategoria(categoria, boton) {
+  const yaEstaActivo = boton.classList.contains("active");
 
-  if (container && !container.contains(e.target)) {
-    if (input.value.trim() === "") {
-      container.classList.remove("active");
-    }
+  if (yaEstaActivo && categoria !== "todos") {
+    document.querySelectorAll(".btn").forEach((b) => b.classList.remove("active"));
+    document.querySelector('.btn[onclick*="todos"]').classList.add("active");
+    document.querySelectorAll(".mobile-filter-btn").forEach((b) => b.classList.remove("active"));
+    document.querySelector('.mobile-filter-btn[onclick*="todos"]').classList.add("active");
+    aplicarFiltroCategoria("todos");
+    return;
   }
-});
+
+  document.querySelectorAll(".btn").forEach((b) => b.classList.remove("active"));
+  boton.classList.add("active");
+
+  document.querySelectorAll(".mobile-filter-btn").forEach((b) => b.classList.remove("active"));
+  const mobileBtn = Array.from(document.querySelectorAll(".mobile-filter-btn")).find(
+    (b) => b.textContent.toLowerCase().trim() === categoria || 
+      (categoria === "todos" && b.textContent.toLowerCase().trim() === "todos")
+  );
+  if (mobileBtn) mobileBtn.classList.add("active");
+
+  aplicarFiltroCategoria(categoria);
+}
+
+// Mostrar filtros de género
+function mostrarFiltrosGenero(boton) {
+  const generoSubfiltersDiv = document.getElementById("generoSubfilters");
+
+  // Toggle: si ya están mostrados, ocultarlos
+  if (generoSubfiltersDiv.innerHTML !== "") {
+    generoSubfiltersDiv.innerHTML = "";
+    boton.classList.remove("active");
+    return;
+  }
+
+  document.querySelectorAll(".desktop-filters .btn").forEach((b) => {
+    b.classList.remove("active");
+  });
+
+  boton.classList.add("active");
+
+  const opciones = [
+    { texto: "Masculino", valor: "hombre" },
+    { texto: "Femenino", valor: "mujer" },
+    { texto: "Unisex", valor: "unisex" }
+  ];
+
+  opciones.forEach((opcion) => {
+    const btn = document.createElement("button");
+    btn.classList.add("subfilter-btn");
+    if (opcion.valor === filtroGeneroActual) {
+      btn.classList.add("active");
+    }
+    btn.textContent = opcion.texto;
+    btn.onclick = () => filtrarGeneroDesktop(opcion.valor, btn);
+    generoSubfiltersDiv.appendChild(btn);
+  });
+}
