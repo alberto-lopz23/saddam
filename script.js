@@ -1,3 +1,6 @@
+// Log inicial: script cargado
+console.log("✅ script.js cargado correctamente");
+
 const NUMERO_WHATSAPP = "+18298070599";
 
 // Variables globales
@@ -8,13 +11,35 @@ let paginaActual = 1;
 const perfumesPorPagina = 20;
 let filtroGeneroActual = "todos"; // Filtro de género por defecto
 
-// Elementos del DOM
-const galeria = document.getElementById("galeria");
-const subfiltersDiv = document.getElementById("subfilters");
-const searchInput = document.getElementById("searchInput");
+// Elementos del DOM - se inicializarán en DOMContentLoaded
+let galeria = null;
+let subfiltersDiv = null;
+let searchInput = null;
 
 // Cargar datos desde Firebase (con caché para cero costos)
+/*
+ * Esta función es el punto de entrada principal para cargar perfumes.
+ * Estrategia:
+ * 1. Mostrar indicador de carga
+ * 2. Importar dinámicamente obtenerPerfumes() de firebase-config.js
+ * 3. Obtener datos (con sistema de caché automático de 24h)
+ * 4. Procesar datos en formato normalizado
+ * 5. Mostrar perfumes en la galería
+ * 
+ * Protección contra errores:
+ * - Si falla la importación, muestra error en consola y mensaje en galería
+ * - Si falla obtenerPerfumes(), muestra error con botón de reintentar
+ * - Logs en cada paso para facilitar debugging
+ */
 async function cargarCatalogo() {
+  console.log("📦 cargarCatalogo: Iniciando carga del catálogo");
+  
+  // Validación: asegurar que galeria existe
+  if (!galeria) {
+    console.error("❌ cargarCatalogo: elemento #galeria no disponible");
+    return;
+  }
+  
   // Mostrar indicador de carga con animación
   galeria.innerHTML = `
     <div style="grid-column: 1/-1; text-align: center; padding: 60px 20px; color: #667eea;">
@@ -29,12 +54,21 @@ async function cargarCatalogo() {
 
   try {
     // Importar Firebase dinámicamente
+    console.log("📥 Importando módulo firebase-config.js...");
     const { obtenerPerfumes } = await import("./firebase-config.js");
+    console.log("✅ Módulo firebase-config.js importado correctamente");
 
     // Obtener perfumes (usa caché automático de 24h)
-    console.time("📦 Carga desde Firebase");
+    console.log("🔍 Llamando a obtenerPerfumes()...");
+    console.time("📦 Carga total desde Firebase/Caché");
     catalogoData = await obtenerPerfumes();
-    console.timeEnd("📦 Carga desde Firebase");
+    console.timeEnd("📦 Carga total desde Firebase/Caché");
+    
+    console.log("✅ Datos obtenidos:", catalogoData ? "OK" : "NULL");
+    
+    if (!catalogoData || !catalogoData.perfumes) {
+      throw new Error("No se recibieron datos de perfumes desde Firebase");
+    }
 
     console.time("⚡ Procesamiento de datos");
     procesarDatos();
@@ -44,6 +78,7 @@ async function cargarCatalogo() {
     const esNavegacionInterna = sessionStorage.getItem("navegacionInterna");
 
     if (esNavegacionInterna === "true") {
+      console.log("🔙 Navegación interna detectada, restaurando filtros...");
       // Solo en este caso restaurar filtros
       sessionStorage.removeItem("navegacionInterna");
 
@@ -88,9 +123,11 @@ async function cargarCatalogo() {
         sessionStorage.removeItem("filtroCategoria");
         sessionStorage.removeItem("filtroMarca");
       } else {
+        console.log("📋 Mostrando todos los perfumes");
         mostrarPerfumes(todosLosPerfumes);
       }
     } else {
+      console.log("🆕 Carga nueva/refresh - mostrando todos los perfumes");
       // Es una carga nueva o un refresh - limpiar todo y empezar de cero
       sessionStorage.removeItem("filtroCategoria");
       sessionStorage.removeItem("filtroMarca");
@@ -101,6 +138,7 @@ async function cargarCatalogo() {
     }
   } catch (error) {
     console.error("❌ Error cargando catálogo:", error);
+    console.error("❌ Detalles del error:", error.stack);
 
     // Mostrar mensaje de error más amigable
     galeria.innerHTML = `  
@@ -121,12 +159,13 @@ async function cargarCatalogo() {
           🔄 Reintentar
         </button>
         <div style="margin-top: 30px; padding: 20px; background: #f5f5f5; border-radius: 10px; max-width: 500px; margin-left: auto; margin-right: auto; text-align: left;">
-          <strong style="color: #333;">💡 Consejos:</strong>
+          <strong style="color: #333;">💡 Consejos de depuración:</strong>
           <ul style="margin-top: 10px; color: #666; line-height: 1.8;">
+            <li>Abre la consola (F12) para ver logs detallados</li>
             <li>Verifica tu conexión a internet</li>
-            <li>Si estás en modo avión, desactívalo</li>
-            <li>Intenta recargar la página en unos segundos</li>
-            <li>Si el problema persiste, limpia la caché del navegador</li>
+            <li>Limpia la caché: <code>localStorage.removeItem('perfumes_cache')</code></li>
+            <li>Recarga la página para forzar carga desde Firebase</li>
+            <li>Si el problema persiste, contacta al administrador</li>
           </ul>
         </div>
       </div>
@@ -135,30 +174,59 @@ async function cargarCatalogo() {
 }
 
 // Procesar y normalizar datos del JSON (OPTIMIZADO - Carga progresiva)
+/*
+ * Esta función convierte la estructura anidada de Firebase en un array plano
+ * Estructura de entrada: catalogoData.perfumes[categoria][marca][index] = {...}
+ * Estructura de salida: todosLosPerfumes = [{categoria, marca, arrayIndex, ...perfumeData}]
+ * 
+ * Incrementos de precio por categoría (aplicados en calcularPrecioFinal):
+ * - Árabes: +1800 (precioBase + 1800)
+ * - Diseñador: +2300 (precioBase + 2300)
+ * - Nicho: +3000 (precioBase + 3000)
+ * - Sets: +0 (sin incremento, precio original)
+ * 
+ * La normalización permite:
+ * - Iterar y filtrar perfumes de forma eficiente
+ * - Aplicar búsquedas y ordenamientos
+ * - Mantener referencia al índice original (arrayIndex) para actualizaciones
+ */
 function procesarDatos() {
+  console.log("⚙️ procesarDatos: Iniciando procesamiento...");
   todosLosPerfumes = [];
 
   // Helper para procesar cada categoría de forma optimizada
   const procesarCategoria = (categoria, data, tipo = "unisex") => {
-    if (!data) return;
+    if (!data) {
+      console.warn(`⚠️ procesarDatos: No hay datos para categoría "${categoria}"`);
+      return;
+    }
 
-    for (const [marca, perfumes] of Object.entries(data)) {
-      if (!perfumes) continue;
+    let contadorCategoria = 0;
+    
+    // Iterar marcas en la categoría
+    for (const [marca, perfumesObj] of Object.entries(data)) {
+      if (!perfumesObj) continue;
 
       // Normalizar perfumes para que siempre sea un array
-      const lista = Array.isArray(perfumes)
-        ? perfumes
-        : Object.values(perfumes);
+      // Firebase puede devolver objeto {0: {...}, 1: {...}} o array [{...}, {...}]
+      const lista = Array.isArray(perfumesObj)
+        ? perfumesObj
+        : Object.values(perfumesObj);
 
-      for (const perfume of lista) {
+      // Procesar cada perfume en la marca
+      lista.forEach((perfume, arrayIndex) => {
         todosLosPerfumes.push({
           ...perfume,
           categoria,
           marca: categoria === "sets" ? `Set ${marca}` : marca,
           tipo,
+          arrayIndex, // Guardar índice original para referencia
         });
-      }
+        contadorCategoria++;
+      });
     }
+    
+    console.log(`  ✓ Categoría "${categoria}": ${contadorCategoria} perfumes`);
   };
 
   // Procesar todas las categorías
@@ -169,10 +237,33 @@ function procesarDatos() {
 
   perfumesFiltrados = [...todosLosPerfumes];
 
-  console.log(`✅ ${todosLosPerfumes.length} perfumes procesados`);
+  console.log(`✅ procesarDatos: Total ${todosLosPerfumes.length} perfumes procesados y listos`);
+  
+  // Debug: mostrar resumen por categoría
+  const resumen = {
+    arabes: todosLosPerfumes.filter(p => p.categoria === "arabes").length,
+    disenador: todosLosPerfumes.filter(p => p.categoria === "disenador").length,
+    nichos: todosLosPerfumes.filter(p => p.categoria === "nichos").length,
+    sets: todosLosPerfumes.filter(p => p.categoria === "sets").length,
+  };
+  console.log("📊 Resumen por categoría:", resumen);
 }
 
 // Calcular precio final con incrementos por categoría
+/*
+ * Aplica incrementos de precio según la categoría del perfume
+ * Estos incrementos reflejan costos adicionales de importación, 
+ * exclusividad y demanda del mercado
+ * 
+ * Incrementos por categoría:
+ * - Árabes: +1800 (perfumes árabes de alta gama)
+ * - Diseñador: +2300 (marcas de diseñador internacionales)
+ * - Nichos: +3000 (perfumes nicho exclusivos)
+ * - Sets: +0 (mantienen precio original, ya incluyen descuento)
+ * 
+ * @param {Object} perfume - Objeto perfume con propiedades categoria y precio
+ * @returns {String} Precio formateado o "Consultar"
+ */
 function calcularPrecioFinal(perfume) {
   if (!perfume.precio || perfume.precio === "Consultar") {
     return "Consultar";
@@ -203,7 +294,17 @@ function calcularPrecioFinal(perfume) {
 }
 
 // Mostrar perfumes en la galería
+/*
+ * Renderiza las tarjetas de perfumes en el contenedor #galeria
+ * Usa DocumentFragment para optimizar el rendimiento (agrega todos los elementos de una vez)
+ * Implementa paginación para no sobrecargar el DOM con miles de elementos
+ * 
+ * @param {Array} lista - Array de objetos de perfumes a mostrar
+ * @param {Boolean} resetearPagina - Si true, vuelve a página 1 (default: true)
+ */
 function mostrarPerfumes(lista, resetearPagina = true) {
+  console.log(`🎨 mostrarPerfumes: Mostrando ${lista.length} perfumes (resetear: ${resetearPagina})`);
+  
   if (resetearPagina) {
     paginaActual = 1;
   }
@@ -211,8 +312,9 @@ function mostrarPerfumes(lista, resetearPagina = true) {
   galeria.innerHTML = "";
 
   if (lista.length === 0) {
+    console.warn("⚠️ mostrarPerfumes: No hay perfumes para mostrar");
     galeria.innerHTML =
-      '<div style="text-align: center; padding: 40px; grid-column: 1/-1;"><h3>No se encontraron perfumes</h3></div>';
+      '<div style="text-align: center; padding: 40px; grid-column: 1/-1;"><h3>No hay perfumes disponibles</h3><p style="color: #666; margin-top: 10px;">Intenta ajustar los filtros o buscar otro término</p></div>';
     return;
   }
 
@@ -264,6 +366,7 @@ function mostrarPerfumes(lista, resetearPagina = true) {
 
   // Agregar todas las cards de una vez (más eficiente)
   galeria.appendChild(fragment);
+  console.log(`✅ Renderizados ${perfumesPagina.length} perfumes en página ${paginaActual}`);
 
   // Agregar botones de navegación si es necesario
   const totalPaginas = Math.ceil(lista.length / perfumesPorPagina);
@@ -911,6 +1014,46 @@ function filtrarGeneroDesktop(genero, boton) {
   const filtradosConGenero = aplicarFiltroGenero(perfumesFiltrados, genero);
   mostrarPerfumes(filtradosConGenero);
 }
+
+// ============ INICIALIZACIÓN AL CARGAR EL DOM ============
+/*
+ * Protección: Esperar a que el DOM esté listo antes de acceder a elementos
+ * Esto evita errores donde elementos como #galeria o #searchInput no existen aún
+ * 
+ * DEBUGGING: Si los perfumes no cargan:
+ * 1. Abrir consola del navegador (F12)
+ * 2. Buscar logs que empiecen con ✅, 📦, ⚡, ❌
+ * 3. Para limpiar caché: localStorage.removeItem('perfumes_cache')
+ * 4. Recargar la página para forzar carga desde Firebase
+ */
+document.addEventListener('DOMContentLoaded', function() {
+  console.log("🚀 DOMContentLoaded: Iniciando aplicación");
+  
+  // Inicialización defensiva de elementos del DOM
+  // Si algún elemento no existe, registramos advertencia pero no bloqueamos la app
+  galeria = document.getElementById("galeria");
+  subfiltersDiv = document.getElementById("subfilters");
+  searchInput = document.getElementById("searchInput");
+  
+  if (!galeria) {
+    console.error("❌ Elemento #galeria no encontrado en el DOM");
+    return; // No podemos continuar sin la galería
+  }
+  
+  if (!subfiltersDiv) {
+    console.warn("⚠️ Elemento #subfilters no encontrado - los subfiltros no funcionarán");
+  }
+  
+  if (!searchInput) {
+    console.warn("⚠️ Elemento #searchInput no encontrado - la búsqueda no funcionará");
+  }
+  
+  console.log("📋 Elementos DOM inicializados correctamente");
+  
+  // Iniciar carga del catálogo
+  console.log("🔄 Iniciando carga del catálogo...");
+  cargarCatalogo();
+});
 
 // Exponer funciones al objeto global window para que sean accesibles desde los manejadores onclick en HTML
 window.filtrarCategoria = filtrarCategoria;
