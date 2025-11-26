@@ -41,7 +41,6 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
 
   try {
     await loginAdmin(email, password);
-    // onAuthChange se encargará de mostrar el panel
   } catch (error) {
     let mensaje = "Error al iniciar sesión";
 
@@ -81,7 +80,6 @@ async function cargarPerfumes() {
     const data = await obtenerPerfumes();
     todosLosPerfumes = [];
 
-    // Convertir a array con precios finales
     Object.keys(data.perfumes).forEach((categoria) => {
       Object.keys(data.perfumes[categoria]).forEach((marca) => {
         data.perfumes[categoria][marca].forEach((perfume, index) => {
@@ -105,11 +103,11 @@ async function cargarPerfumes() {
 
           todosLosPerfumes.push({
             ...perfume,
-            categoria: categoria,
-            marca: marca,
+            categoria,
+            marca,
             arrayIndex: index,
-            precioBase: precioBase,
-            precioFinal: precioFinal,
+            precioBase,
+            precioFinal,
           });
         });
       });
@@ -168,30 +166,23 @@ function mostrarPerfumes() {
   perfumesFiltrados.forEach((perfume) => {
     const tr = document.createElement("tr");
     tr.innerHTML = `
-      <td><img src="${perfume.imagen}" alt="${
-      perfume.nombre
-    }" class="perfume-img"></td>
+      <td><img src="${perfume.imagen}" alt="${perfume.nombre}" class="perfume-img"></td>
       <td><strong>${perfume.nombre}</strong></td>
       <td>${capitalizar(perfume.marca)}</td>
-      <td><span class="category-badge category-${
-        perfume.categoria
-      }">${capitalizar(perfume.categoria)}</span></td>
+      <td><span class="category-badge category-${perfume.categoria}">
+        ${capitalizar(perfume.categoria)}
+      </span></td>
       <td><strong>$${perfume.precioFinal.toLocaleString()}</strong></td>
       <td>
-        <button class="btn-edit" data-categoria="${
-          perfume.categoria
-        }" data-marca="${perfume.marca}" data-index="${perfume.arrayIndex}">
+        <button class="btn-edit" data-categoria="${perfume.categoria}" data-marca="${perfume.marca}" data-index="${perfume.arrayIndex}">
           ✏️ Editar
         </button>
-        <button class="btn-delete" data-categoria="${
-          perfume.categoria
-        }" data-marca="${perfume.marca}" data-index="${perfume.arrayIndex}">
+        <button class="btn-delete" data-categoria="${perfume.categoria}" data-marca="${perfume.marca}" data-index="${perfume.arrayIndex}">
           🗑️ Eliminar
         </button>
       </td>
     `;
 
-    // Event listeners para los botones
     tr.querySelector(".btn-edit").addEventListener("click", function () {
       abrirEditarModal(
         this.dataset.categoria,
@@ -261,7 +252,7 @@ document.getElementById("categoryFilter").addEventListener("change", (e) => {
 
 // ============ BOTÓN REFRESCAR ============
 document.getElementById("refreshBtn").addEventListener("click", () => {
-  limpiarCache(); // Forzar recarga desde Firebase
+  limpiarCache();
   cargarPerfumes();
   document.getElementById("searchInput").value = "";
   document.getElementById("categoryFilter").value = "";
@@ -322,8 +313,6 @@ function cargarMarcasDisponibles() {
 
 // ============ ABRIR MODAL DE EDICIÓN ============
 function abrirEditarModal(categoria, marca, index) {
-  console.log("Abriendo modal:", { categoria, marca, index });
-
   perfumeActual = todosLosPerfumes.find(
     (p) =>
       p.categoria === categoria && p.marca === marca && p.arrayIndex === index
@@ -407,23 +396,6 @@ document
   .querySelector(".modal-overlay")
   .addEventListener("click", closeEditModal);
 
-// Evento para mostrar/ocultar campo de nueva marca en modal de edición
-document
-  .getElementById("editMarcaSelect")
-  .addEventListener("change", function () {
-    const inputGroup = document.getElementById("editMarcaInputGroup");
-    const input = document.getElementById("editMarcaInput");
-
-    if (this.value === "__NUEVA__") {
-      inputGroup.style.display = "block";
-      input.required = true;
-    } else {
-      inputGroup.style.display = "none";
-      input.required = false;
-      input.value = "";
-    }
-  });
-
 // ============ GUARDAR CAMBIOS ============
 document.getElementById("editForm").addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -434,7 +406,6 @@ document.getElementById("editForm").addEventListener("submit", async (e) => {
     parseInt(document.getElementById("editPrecio").value) || 0;
   let precioBase = precioFinalInput;
 
-  // Calcular precio base restando incremento
   switch (perfumeActual.categoria) {
     case "arabes":
       precioBase = precioFinalInput - 1800;
@@ -510,43 +481,25 @@ document.getElementById("editForm").addEventListener("submit", async (e) => {
   };
 
   try {
-    if (cambioDeMarca) {
-      // Si cambió la marca, eliminar de la marca anterior y agregar a la nueva
-      console.log(
-        `🔄 Moviendo perfume de "${marcaAnterior}" a "${nuevaMarca}"`
-      );
+    console.log("💾 Guardando cambios...", updates);
 
-      await eliminarPerfume(
-        perfumeActual.categoria,
-        marcaAnterior,
-        perfumeActual.arrayIndex
-      );
+    await actualizarPerfume(
+      perfumeActual.categoria,
+      perfumeActual.marca,
+      perfumeActual.arrayIndex,
+      updates
+    );
 
-      await agregarPerfume(perfumeActual.categoria, nuevaMarca, updates);
+    // Limpiar caché para que los cambios se vean inmediatamente
+    limpiarCache();
 
-      alert("✅ Perfume movido exitosamente a la nueva marca");
-    } else {
-      // Actualización normal sin cambio de marca
-      await actualizarPerfume(
-        perfumeActual.categoria,
-        perfumeActual.marca,
-        perfumeActual.arrayIndex,
-        updates
-      );
-
-      alert("✅ Perfume actualizado correctamente");
-    }
-
-    // --- ACTUALIZAR LOCAL SIN RECARGAR ---
-    Object.assign(perfumeActual, updates);
-    perfumeActual.precioBase = precioBase;
-    perfumeActual.precioFinal = precioFinalInput;
-    if (cambioDeMarca) {
-      perfumeActual.marca = nuevaMarca;
-    }
-
-    mostrarPerfumes();
+    alert(
+      "✅ Perfume actualizado exitosamente\n\n💡 Caché limpiado: Los cambios se verán en la página principal al recargar"
+    );
     closeEditModal();
+
+    // Recargar perfumes desde Firebase (sin caché)
+    await cargarPerfumes();
   } catch (error) {
     console.error("Error al guardar:", error);
     alert("❌ Error al guardar: " + error.message);
@@ -564,7 +517,7 @@ document
   .querySelector("#addModal .modal-overlay")
   .addEventListener("click", closeAddModal);
 
-// ============ GUARDAR NUEVO PERFUME ============
+// ============ GUARDAR NUEVO PERFUME (MODIFICADO – SIN RECARGA) ============
 document.getElementById("addForm").addEventListener("submit", async (e) => {
   e.preventDefault();
 
@@ -586,8 +539,8 @@ document.getElementById("addForm").addEventListener("submit", async (e) => {
   const precioFinalInput =
     parseInt(document.getElementById("addPrecio").value) || 0;
 
-  // Calcular precio base restando incremento
   let precioBase = precioFinalInput;
+
   switch (categoria) {
     case "arabes":
       precioBase = precioFinalInput - 1800;
@@ -642,22 +595,31 @@ document.getElementById("addForm").addEventListener("submit", async (e) => {
   };
 
   try {
-    console.log("➕ Agregando nuevo perfume...", nuevoPerfume);
+    const indexNuevo = await agregarPerfume(categoria, marca, nuevoPerfume);
 
-    await agregarPerfume(categoria, marca, nuevoPerfume);
+    // --- AÑADIR LOCAL SIN RECARGAR ---
+    todosLosPerfumes.push({
+      ...nuevoPerfume,
+      categoria,
+      marca,
+      arrayIndex: indexNuevo,
+      precioBase,
+      precioFinal: precioFinalInput,
+    });
 
-    alert("✅ Perfume agregado exitosamente");
+    perfumesFiltrados = [...todosLosPerfumes];
+
+    mostrarPerfumes();
     closeAddModal();
 
-    // Recargar perfumes
-    await cargarPerfumes();
+    alert("✅ Perfume agregado exitosamente");
   } catch (error) {
     console.error("Error al agregar:", error);
     alert("❌ Error al agregar: " + error.message);
   }
 });
 
-// ============ ELIMINAR PERFUME ============
+// ============ ELIMINAR PERFUME (MODIFICADO – SIN RECARGA) ============
 async function eliminarPerfumeConfirm(categoria, marca, index, nombre) {
   const confirmacion = confirm(
     `¿Estás seguro de eliminar este perfume?\n\n` +
@@ -670,14 +632,23 @@ async function eliminarPerfumeConfirm(categoria, marca, index, nombre) {
   if (!confirmacion) return;
 
   try {
-    console.log("🗑️ Eliminando perfume...");
-
     await eliminarPerfume(categoria, marca, index);
 
-    alert("✅ Perfume eliminado exitosamente");
+    // --- ELIMINAR LOCAL SIN RECARGAR ---
+    todosLosPerfumes = todosLosPerfumes.filter(
+      (p) =>
+        !(
+          p.categoria === categoria &&
+          p.marca === marca &&
+          p.arrayIndex === index
+        )
+    );
 
-    // Recargar perfumes
-    await cargarPerfumes();
+    perfumesFiltrados = [...todosLosPerfumes];
+
+    mostrarPerfumes();
+
+    alert("✅ Perfume eliminado exitosamente");
   } catch (error) {
     console.error("Error al eliminar:", error);
     alert("❌ Error al eliminar: " + error.message);
