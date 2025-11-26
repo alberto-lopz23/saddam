@@ -15,13 +15,30 @@ const searchInput = document.getElementById("searchInput");
 
 // Cargar datos desde Firebase (con caché para cero costos)
 async function cargarCatalogo() {
+  // Mostrar indicador de carga con animación
+  galeria.innerHTML = `
+    <div style="grid-column: 1/-1; text-align: center; padding: 60px 20px; color: #667eea;">
+      <div style="font-size: 48px; margin-bottom: 20px; animation: pulse 1.5s infinite;">⏳</div>
+      <h3 style="color: #333; font-size: 24px;">Cargando catálogo...</h3>
+      <p style="color: #666; margin-top: 10px;">Esto puede tardar unos segundos</p>
+      <div style="margin-top: 20px; font-size: 14px; color: #999;">
+        Optimizando la carga de ${catalogoData ? "datos" : "imágenes"}...
+      </div>
+    </div>
+  `;
+
   try {
     // Importar Firebase dinámicamente
     const { obtenerPerfumes } = await import("./firebase-config.js");
 
     // Obtener perfumes (usa caché automático de 24h)
+    console.time("📦 Carga desde Firebase");
     catalogoData = await obtenerPerfumes();
+    console.timeEnd("📦 Carga desde Firebase");
+
+    console.time("⚡ Procesamiento de datos");
     procesarDatos();
+    console.timeEnd("⚡ Procesamiento de datos");
 
     // Verificar si viene desde una navegación interna (modal de perfume)
     const esNavegacionInterna = sessionStorage.getItem("navegacionInterna");
@@ -90,72 +107,35 @@ async function cargarCatalogo() {
   }
 }
 
-// Procesar y normalizar datos del JSON
+// Procesar y normalizar datos del JSON (OPTIMIZADO - Carga progresiva)
 function procesarDatos() {
   todosLosPerfumes = [];
 
-  // Procesar perfumes árabes
-  if (catalogoData.perfumes?.arabes) {
-    Object.entries(catalogoData.perfumes.arabes).forEach(
-      ([marca, perfumes]) => {
-        perfumes.forEach((perfume) => {
-          todosLosPerfumes.push({
-            ...perfume,
-            categoria: "arabes",
-            marca: marca,
-            tipo: "unisex",
-          });
-        });
-      }
-    );
-  }
+  // Helper para procesar cada categoría de forma optimizada
+  const procesarCategoria = (categoria, data, tipo = "unisex") => {
+    if (!data) return;
 
-  // Procesar perfumes de diseñador
-  if (catalogoData.perfumes?.disenador) {
-    Object.entries(catalogoData.perfumes.disenador).forEach(
-      ([marca, perfumes]) => {
-        perfumes.forEach((perfume) => {
-          todosLosPerfumes.push({
-            ...perfume,
-            categoria: "disenador",
-            marca: marca,
-            tipo: "unisex",
-          });
-        });
-      }
-    );
-  }
-
-  // Procesar sets
-  if (catalogoData.perfumes?.sets) {
-    Object.entries(catalogoData.perfumes.sets).forEach(([tipoSet, sets]) => {
-      sets.forEach((set) => {
-        todosLosPerfumes.push({
-          ...set,
-          categoria: "sets",
-          marca: `Set ${tipoSet}`,
-          tipo: "set",
-        });
-      });
-    });
-  }
-
-  // Procesar nichos
-  if (catalogoData.perfumes?.nicho) {
-    Object.entries(catalogoData.perfumes.nicho).forEach(([marca, perfumes]) => {
-      perfumes.forEach((perfume) => {
+    for (const [marca, perfumes] of Object.entries(data)) {
+      for (const perfume of perfumes) {
         todosLosPerfumes.push({
           ...perfume,
-          categoria: "nichos",
-          marca: marca,
-          tipo: "nicho",
-          precio: perfume.precio || "Consultar",
+          categoria,
+          marca: categoria === "sets" ? `Set ${marca}` : marca,
+          tipo,
         });
-      });
-    });
-  }
+      }
+    }
+  };
+
+  // Procesar todas las categorías
+  procesarCategoria("arabes", catalogoData.perfumes?.arabes);
+  procesarCategoria("disenador", catalogoData.perfumes?.disenador);
+  procesarCategoria("sets", catalogoData.perfumes?.sets, "set");
+  procesarCategoria("nichos", catalogoData.perfumes?.nicho, "nicho");
 
   perfumesFiltrados = [...todosLosPerfumes];
+
+  console.log(`✅ ${todosLosPerfumes.length} perfumes procesados`);
 }
 
 // Calcular precio final con incrementos por categoría
@@ -208,6 +188,9 @@ function mostrarPerfumes(lista, resetearPagina = true) {
   const perfumesPagina = lista.slice(inicio, fin);
   const hayMasPerfumes = fin < lista.length;
 
+  // Renderizado optimizado con DocumentFragment
+  const fragment = document.createDocumentFragment();
+
   perfumesPagina.forEach((perfume, index) => {
     const card = document.createElement("div");
     card.className = "card";
@@ -228,7 +211,7 @@ function mostrarPerfumes(lista, resetearPagina = true) {
     }
 
     card.innerHTML = `
-      <img src="${perfume.imagen}" alt="${perfume.nombre}" onerror="this.src='https://placehold.co/400x500?text=Perfume'">
+      <img loading="lazy" src="${perfume.imagen}" alt="${perfume.nombre}" onerror="this.src='https://placehold.co/400x500?text=Perfume'">
       <h3>${perfume.nombre}</h3>
       <p class="marca">${perfume.marca} ${generoIcono}</p>
       <p class="precio">${precio}</p>
@@ -237,9 +220,16 @@ function mostrarPerfumes(lista, resetearPagina = true) {
     // Hacer la card clickeable para abrir página de detalle
     card.addEventListener("click", () => mostrarPaginaPerfume(perfume, precio));
 
-    galeria.appendChild(card);
-    setTimeout(() => card.classList.add("is-visible"), index * 50);
+    fragment.appendChild(card);
+
+    // Aplicar animación después de agregar al DOM
+    requestAnimationFrame(() => {
+      setTimeout(() => card.classList.add("is-visible"), index * 50);
+    });
   });
+
+  // Agregar todas las cards de una vez (más eficiente)
+  galeria.appendChild(fragment);
 
   // Agregar botones de navegación si es necesario
   const totalPaginas = Math.ceil(lista.length / perfumesPorPagina);

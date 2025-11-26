@@ -3,6 +3,7 @@ import {
   actualizarPerfume,
   agregarPerfume,
   eliminarPerfume,
+  moverPerfume,
   limpiarCache,
   loginAdmin,
   logoutAdmin,
@@ -534,19 +535,19 @@ document.getElementById("editForm").addEventListener("submit", async (e) => {
 
   try {
     if (seMovio) {
-      // Si cambió la marca o categoría, eliminar de la ubicación anterior y agregar a la nueva
+      // Si cambió la marca o categoría, usar moverPerfume (1 operación optimizada)
       console.log(
         `🔄 Moviendo perfume de "${categoriaAnterior}/${marcaAnterior}" a "${nuevaCategoria}/${nuevaMarca}"`
       );
 
-      // Primero agregar en la nueva ubicación
-      await agregarPerfume(nuevaCategoria, nuevaMarca, updates);
-
-      // Si se agregó exitosamente, eliminar de la ubicación anterior
-      await eliminarPerfume(
+      // Mover en una sola operación (MUCHO MÁS RÁPIDO)
+      await moverPerfume(
         categoriaAnterior,
         marcaAnterior,
-        perfumeActual.arrayIndex
+        perfumeActual.arrayIndex,
+        nuevaCategoria,
+        nuevaMarca,
+        updates
       );
 
       alert("✅ Perfume movido exitosamente");
