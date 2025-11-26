@@ -928,6 +928,12 @@ function aplicarFiltroCategoria(categoria) {
   // Limpiar subfiltros desktop
   subfiltersDiv.innerHTML = "";
 
+  // Limpiar subfiltros de género
+  const generoSubfiltersDiv = document.getElementById("generoSubfilters");
+  if (generoSubfiltersDiv) {
+    generoSubfiltersDiv.innerHTML = "";
+  }
+
   // Filtrar por categoría
   let filtrados = [];
   if (categoria === "todos") {
@@ -976,7 +982,22 @@ function mostrarFiltrosGenero(boton) {
   // Toggle: si ya están mostrados, ocultarlos
   if (generoSubfiltersDiv.innerHTML !== "") {
     generoSubfiltersDiv.innerHTML = "";
+    boton.classList.remove("active");
     return;
+  }
+
+  // Desactivar todos los botones de categoría
+  document.querySelectorAll(".desktop-filters .btn").forEach((b) => {
+    b.classList.remove("active");
+  });
+
+  // Activar el botón de género
+  boton.classList.add("active");
+
+  // Limpiar subfiltros de marcas cuando se abre género
+  const subfiltersDiv = document.getElementById("subfilters");
+  if (subfiltersDiv) {
+    subfiltersDiv.innerHTML = "";
   }
 
   // Crear los botones de género
@@ -988,7 +1009,7 @@ function mostrarFiltrosGenero(boton) {
 
   opciones.forEach((opcion) => {
     const btn = document.createElement("button");
-    btn.classList.add("subfiltro-btn");
+    btn.classList.add("subfilter-btn");
     if (opcion.valor === filtroGeneroActual) {
       btn.classList.add("active");
     }
@@ -1047,9 +1068,16 @@ function filtrarGeneroDesktop(genero, boton) {
   // Actualizar botón activo en subfiltros de género
   const generoSubfiltersDiv = document.getElementById("generoSubfilters");
   generoSubfiltersDiv
-    .querySelectorAll(".subfiltro-btn")
+    .querySelectorAll(".subfilter-btn")
     .forEach((b) => b.classList.remove("active"));
   boton.classList.add("active");
+
+  // Desactivar todos los botones de categoría excepto "Género"
+  document.querySelectorAll(".desktop-filters .btn").forEach((b) => {
+    if (!b.textContent.includes("Género")) {
+      b.classList.remove("active");
+    }
+  });
 
   // Actualizar filtro global
   filtroGeneroActual = genero;
@@ -1066,25 +1094,8 @@ function filtrarGeneroDesktop(genero, boton) {
   );
   if (mobileBtn) mobileBtn.classList.add("active");
 
-  // Reaplicar filtros actuales con el nuevo género
-  const categoriaActual = Array.from(
-    document.querySelectorAll(".desktop-filters .btn")
-  ).find(
-    (b) => b.classList.contains("active") && !b.textContent.includes("Género")
-  );
-  if (categoriaActual) {
-    const categoria = categoriaActual.textContent.toLowerCase().trim();
-    const categoriaMap = {
-      todos: "todos",
-      árabes: "arabes",
-      diseñador: "disenador",
-      sets: "sets",
-      nichos: "nichos",
-    };
-    aplicarFiltroCategoria(categoriaMap[categoria] || "todos");
-  } else {
-    aplicarFiltroCategoria("todos");
-  }
+  // Aplicar filtro de género sobre todos los perfumes
+  aplicarFiltroCategoria("todos");
 }
 
 // ============ EXPONER FUNCIONES AL ÁMBITO GLOBAL ============
