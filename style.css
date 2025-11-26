@@ -1269,6 +1269,49 @@ body.menu-open {
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
 }
 
+.detail-ml-selector {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  padding: 12px 15px;
+  margin: 15px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.detail-ml-selector label {
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.detail-ml-selector select {
+  flex: 1;
+  padding: 8px 12px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  font-size: 14px;
+  background: rgba(255, 255, 255, 0.95);
+  color: #333;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.detail-ml-selector select:hover {
+  border-color: #667eea;
+  background: #ffffff;
+}
+
+.detail-ml-selector select:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+  background: #ffffff;
+}
+
 .detail-description,
 .detail-notes-section {
   background: rgba(255, 255, 255, 0.05);

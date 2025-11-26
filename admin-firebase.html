@@ -147,14 +147,50 @@
                 <p>
                   <strong>Categoría:</strong> <span id="editCategoria"></span>
                 </p>
-                <p><strong>Marca:</strong> <span id="editMarca"></span></p>
                 <p><strong>Índice:</strong> <span id="editIndex"></span></p>
               </div>
             </div>
 
             <div class="form-group">
+              <label for="editMarcaSelect">Marca *</label>
+              <select id="editMarcaSelect" required>
+                <option value="">Seleccionar marca existente</option>
+                <option value="__NUEVA__">➕ Agregar nueva marca</option>
+              </select>
+            </div>
+
+            <div
+              class="form-group"
+              id="editMarcaInputGroup"
+              style="display: none"
+            >
+              <label for="editMarcaInput">Nueva Marca *</label>
+              <input
+                type="text"
+                id="editMarcaInput"
+                placeholder="Ej: Dior, Chanel, Afnan"
+              />
+              <small style="color: #666; font-size: 12px"
+                >Escribe el nombre de la nueva marca</small
+              >
+            </div>
+
+            <div class="form-group">
               <label for="editNombre">Nombre del Perfume</label>
               <input type="text" id="editNombre" required />
+            </div>
+
+            <div class="form-group">
+              <label for="editImagen">URL de la Imagen *</label>
+              <input
+                type="url"
+                id="editImagen"
+                required
+                placeholder="https://ejemplo.com/imagen.jpg"
+              />
+              <small style="color: #666; font-size: 12px">
+                Puedes cambiar la imagen del perfume aquí
+              </small>
             </div>
 
             <div class="form-group">
@@ -179,6 +215,51 @@
                 <option value="hombre">Hombre</option>
                 <option value="mujer">Mujer</option>
               </select>
+            </div>
+
+            <div class="form-group">
+              <label>Tamaños y Precios Disponibles</label>
+              <small style="color: #666; font-size: 12px; display: block; margin-bottom: 10px">
+                Selecciona los tamaños y define el precio para cada uno
+              </small>
+              
+              <div style="display: flex; flex-direction: column; gap: 12px;">
+                <div style="display: flex; align-items: center; gap: 10px; padding: 10px; background: #f8f9fa; border-radius: 8px;">
+                  <input type="checkbox" id="editTamano60" value="60" style="cursor: pointer;" />
+                  <label for="editTamano60" style="margin: 0; cursor: pointer; min-width: 60px;">60 ML</label>
+                  <input 
+                    type="number" 
+                    id="editPrecio60" 
+                    placeholder="Precio (opcional)"
+                    style="flex: 1; padding: 8px; border: 1px solid #ddd; border-radius: 5px;"
+                  />
+                </div>
+                
+                <div style="display: flex; align-items: center; gap: 10px; padding: 10px; background: #f8f9fa; border-radius: 8px;">
+                  <input type="checkbox" id="editTamano100" value="100" style="cursor: pointer;" />
+                  <label for="editTamano100" style="margin: 0; cursor: pointer; min-width: 60px;">100 ML</label>
+                  <input 
+                    type="number" 
+                    id="editPrecio100" 
+                    placeholder="Precio (opcional)"
+                    style="flex: 1; padding: 8px; border: 1px solid #ddd; border-radius: 5px;"
+                  />
+                </div>
+                
+                <div style="display: flex; align-items: center; gap: 10px; padding: 10px; background: #f8f9fa; border-radius: 8px;">
+                  <input type="checkbox" id="editTamano120" value="120" style="cursor: pointer;" />
+                  <label for="editTamano120" style="margin: 0; cursor: pointer; min-width: 60px;">120 ML</label>
+                  <input 
+                    type="number" 
+                    id="editPrecio120" 
+                    placeholder="Precio (opcional)"
+                    style="flex: 1; padding: 8px; border: 1px solid #ddd; border-radius: 5px;"
+                  />
+                </div>
+              </div>
+              <small style="color: #666; font-size: 12px; margin-top: 8px; display: block;">
+                💡 Si dejas el precio vacío, se calculará automáticamente (60ML=70%, 100ML=100%, 120ML=120%)
+              </small>
             </div>
 
             <div class="form-group">
@@ -256,15 +337,26 @@
             </div>
 
             <div class="form-group">
-              <label for="addMarca">Marca *</label>
+              <label for="addMarcaSelect">Marca *</label>
+              <select id="addMarcaSelect" required>
+                <option value="">Seleccionar marca existente</option>
+                <option value="__NUEVA__">➕ Agregar nueva marca</option>
+              </select>
+            </div>
+
+            <div
+              class="form-group"
+              id="addMarcaInputGroup"
+              style="display: none"
+            >
+              <label for="addMarcaInput">Nueva Marca *</label>
               <input
                 type="text"
-                id="addMarca"
-                required
+                id="addMarcaInput"
                 placeholder="Ej: Dior, Chanel, Afnan"
               />
               <small style="color: #666; font-size: 12px"
-                >Escribe el nombre de la marca (se creará si no existe)</small
+                >Escribe el nombre de la nueva marca</small
               >
             </div>
 
@@ -308,6 +400,59 @@
                 <option value="hombre">Hombre</option>
                 <option value="mujer">Mujer</option>
               </select>
+            </div>
+
+            <div class="form-group">
+              <label>Tamaños y Precios Disponibles</label>
+              <small style="color: #666; font-size: 12px; display: block; margin-bottom: 10px">
+                Selecciona los tamaños y define el precio para cada uno
+              </small>
+              
+              <div style="display: flex; flex-direction: column; gap: 12px;">
+                <div style="display: flex; align-items: center; gap: 10px; padding: 10px; background: #f8f9fa; border-radius: 8px;">
+                  <input type="checkbox" id="addTamano60" value="60" style="cursor: pointer;" />
+                  <label for="addTamano60" style="margin: 0; cursor: pointer; min-width: 60px;">60 ML</label>
+                  <input 
+                    type="number" 
+                    id="addPrecio60" 
+                    placeholder="Precio (opcional)"
+                    style="flex: 1; padding: 8px; border: 1px solid #ddd; border-radius: 5px;"
+                  />
+                </div>
+                
+                <div style="display: flex; align-items: center; gap: 10px; padding: 10px; background: #f8f9fa; border-radius: 8px;">
+                  <input type="checkbox" id="addTamano100" value="100" checked style="cursor: pointer;" />
+                  <label for="addTamano100" style="margin: 0; cursor: pointer; min-width: 60px;">100 ML</label>
+                  <input 
+                    type="number" 
+                    id="addPrecio100" 
+                    placeholder="Precio (opcional)"
+                    style="flex: 1; padding: 8px; border: 1px solid #ddd; border-radius: 5px;"
+                  />
+                </div>
+                
+                <div style="display: flex; align-items: center; gap: 10px; padding: 10px; background: #f8f9fa; border-radius: 8px;">
+                  <input type="checkbox" id="addTamano120" value="120" style="cursor: pointer;" />
+                  <label
+                  style="
+                    display: flex;
+                    align-items: center;
+                    gap: 5px;
+                    cursor: pointer;
+                  "
+                >
+                  <label for="addTamano120" style="margin: 0; cursor: pointer; min-width: 60px;">120 ML</label>
+                  <input 
+                    type="number" 
+                    id="addPrecio120" 
+                    placeholder="Precio (opcional)"
+                    style="flex: 1; padding: 8px; border: 1px solid #ddd; border-radius: 5px;"
+                  />
+                </div>
+              </div>
+              <small style="color: #666; font-size: 12px; margin-top: 8px; display: block;">
+                💡 Si dejas el precio vacío, se calculará automáticamente (60ML=70%, 100ML=100%, 120ML=120%)
+              </small>
             </div>
 
             <div class="form-group">

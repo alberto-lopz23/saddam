@@ -366,8 +366,14 @@ function mostrarPaginaPerfume(perfume, precio) {
       <div class="detail-info-section">
         <div class="detail-header">
           <p class="detail-marca">${perfume.marca}</p>
-          <h1 class="detail-nombre">${perfume.nombre}</h1>
-          <p class="detail-precio">${precio}</p>
+          <h1 class="detail-nombre" id="detailNombre">${perfume.nombre}</h1>
+          <p class="detail-precio" id="detailPrecio">${precio}</p>
+        </div>
+        
+        <div class="detail-ml-selector" id="mlSelectorContainer">
+          <label for="detailMlSelect">Tamaño:</label>
+          <select id="detailMlSelect">
+          </select>
         </div>
         
         <div class="detail-description">
@@ -389,6 +395,138 @@ function mostrarPaginaPerfume(perfume, precio) {
 
   detallePage.style.display = "block";
   window.scrollTo(0, 0);
+
+  // Configurar el selector de ML (sin setTimeout para evitar parpadeo)
+  const mlSelect = document.getElementById("detailMlSelect");
+  const whatsappBtn = document.querySelector(".detail-whatsapp-btn");
+
+  if (mlSelect && whatsappBtn) {
+    // Obtener tamaños disponibles
+    const tamanosDisponibles =
+      perfume.tamanosDisponibles && perfume.tamanosDisponibles.length > 0
+        ? perfume.tamanosDisponibles
+        : [];
+
+    // Obtener precios personalizados si existen
+    const preciosPersonalizados = perfume.preciosPersonalizados || {};
+    const precioNumerico = parseInt(precio.replace(/[^0-9]/g, ""));
+
+    // Definir multiplicadores para cada tamaño (por defecto)
+    const multiplicadores = {
+      60: 0.7,
+      100: 1.0,
+      120: 1.2,
+    };
+
+    const mlSelectorContainer = document.getElementById("mlSelectorContainer");
+
+    // Si no tiene tamaños configurados, ocultar selector y mostrar nombre sin ML
+    if (tamanosDisponibles.length === 0) {
+      mlSelectorContainer.style.display = "none";
+      document.getElementById("detailNombre").textContent = perfume.nombre;
+      return; // Salir aquí, no hay nada más que hacer
+    }
+
+    // Generar opciones dinámicamente
+    mlSelect.innerHTML = "";
+    tamanosDisponibles.forEach((tamano, index) => {
+      const option = document.createElement("option");
+      option.value = tamano;
+
+      // Usar precio personalizado si existe, sino usar multiplicador
+      if (preciosPersonalizados[tamano]) {
+        option.dataset.precioFijo = preciosPersonalizados[tamano];
+        option.dataset.multiplier = null;
+      } else {
+        option.dataset.multiplier = multiplicadores[tamano];
+        option.dataset.precioFijo = null;
+      }
+
+      option.textContent = `${tamano} ML`;
+      if (index === 0) option.selected = true;
+      mlSelect.appendChild(option);
+    });
+
+    // Si solo hay un tamaño, ocultar el selector
+    if (tamanosDisponibles.length === 1) {
+      mlSelectorContainer.style.display = "none";
+      const tamano = tamanosDisponibles[0];
+      document.getElementById(
+        "detailNombre"
+      ).textContent = `${perfume.nombre} ${tamano}ML`;
+
+      // Actualizar precio si hay precio personalizado
+      if (preciosPersonalizados[tamano]) {
+        document.getElementById(
+          "detailPrecio"
+        ).textContent = `$${preciosPersonalizados[tamano].toLocaleString()}`;
+      } else {
+        const precioConMultiplicador = Math.round(
+          precioNumerico * multiplicadores[tamano]
+        );
+        document.getElementById(
+          "detailPrecio"
+        ).textContent = `$${precioConMultiplicador.toLocaleString()}`;
+      }
+    } else {
+      // Mostrar el selector cuando hay múltiples tamaños
+      mlSelectorContainer.style.display = "flex";
+
+      // Actualizar nombre y precio inicial con el primer tamaño
+      const tamanoInicial = tamanosDisponibles[0];
+      document.getElementById(
+        "detailNombre"
+      ).textContent = `${perfume.nombre} ${tamanoInicial}ML`;
+
+      // Actualizar precio inicial
+      if (preciosPersonalizados[tamanoInicial]) {
+        document.getElementById(
+          "detailPrecio"
+        ).textContent = `$${preciosPersonalizados[
+          tamanoInicial
+        ].toLocaleString()}`;
+      } else {
+        const precioConMultiplicador = Math.round(
+          precioNumerico * multiplicadores[tamanoInicial]
+        );
+        document.getElementById(
+          "detailPrecio"
+        ).textContent = `$${precioConMultiplicador.toLocaleString()}`;
+      }
+    }
+
+    mlSelect.addEventListener("change", function () {
+      const selectedOption = this.options[this.selectedIndex];
+      const mlValue = this.value;
+      let nuevoPrecio;
+
+      // Usar precio fijo personalizado si existe, sino calcular con multiplicador
+      if (selectedOption.dataset.precioFijo) {
+        nuevoPrecio = parseInt(selectedOption.dataset.precioFijo);
+      } else {
+        const multiplier = parseFloat(selectedOption.dataset.multiplier);
+        nuevoPrecio = Math.round(precioNumerico * multiplier);
+      }
+
+      // Actualizar precio en pantalla
+      document.getElementById(
+        "detailPrecio"
+      ).textContent = `$${nuevoPrecio.toLocaleString()}`;
+
+      // Actualizar nombre del perfume con el tamaño
+      document.getElementById(
+        "detailNombre"
+      ).textContent = `${perfume.nombre} ${mlValue}ML`;
+
+      // Actualizar mensaje de WhatsApp
+      const nuevoMensaje = encodeURIComponent(
+        `Hola! Me interesa el perfume:\n\n*${perfume.nombre}*\n${
+          perfume.marca
+        }\nTamaño: ${mlValue}ML\nPrecio: RD$ ${nuevoPrecio.toLocaleString()}`
+      );
+      whatsappBtn.href = `https://wa.me/${NUMERO_WHATSAPP}?text=${nuevoMensaje}`;
+    });
+  }
 }
 
 // Volver al catálogo
@@ -805,5 +943,6 @@ window.toggleSearch = toggleSearch;
 window.toggleMobileMenu = toggleMobileMenu;
 window.buscarPerfumes = buscarPerfumes;
 window.mostrarPaginaPerfume = mostrarPaginaPerfume;
+window.volverACatalogo = volverACatalogo;
 window.cargarPaginaAnterior = cargarPaginaAnterior;
 window.cargarSiguientePagina = cargarSiguientePagina;

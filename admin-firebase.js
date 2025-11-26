@@ -269,9 +269,56 @@ document.getElementById("refreshBtn").addEventListener("click", () => {
 
 // ============ BOTÓN AGREGAR PERFUME ============
 document.getElementById("addPerfumeBtn").addEventListener("click", () => {
+  cargarMarcasDisponibles();
   document.getElementById("addModal").classList.add("show");
   document.body.style.overflow = "hidden";
 });
+
+// ============ CARGAR MARCAS DISPONIBLES ============
+function cargarMarcasDisponibles() {
+  const categoriaSelect = document.getElementById("addCategoria");
+  const marcaSelect = document.getElementById("addMarcaSelect");
+
+  // Listener para cuando cambia la categoría
+  categoriaSelect.addEventListener("change", () => {
+    const categoria = categoriaSelect.value;
+    marcaSelect.innerHTML =
+      '<option value="">Seleccionar marca existente</option><option value="__NUEVA__">➕ Agregar nueva marca</option>';
+
+    if (!categoria) return;
+
+    // Obtener marcas únicas de esa categoría
+    const marcas = new Set();
+    todosLosPerfumes
+      .filter((p) => p.categoria === categoria)
+      .forEach((p) => marcas.add(p.marca));
+
+    // Agregar opciones al select
+    Array.from(marcas)
+      .sort()
+      .forEach((marca) => {
+        const option = document.createElement("option");
+        option.value = marca;
+        option.textContent = capitalizar(marca);
+        marcaSelect.appendChild(option);
+      });
+  });
+
+  // Listener para mostrar/ocultar campo de nueva marca
+  marcaSelect.addEventListener("change", () => {
+    const inputGroup = document.getElementById("addMarcaInputGroup");
+    const input = document.getElementById("addMarcaInput");
+
+    if (marcaSelect.value === "__NUEVA__") {
+      inputGroup.style.display = "block";
+      input.required = true;
+    } else {
+      inputGroup.style.display = "none";
+      input.required = false;
+      input.value = "";
+    }
+  });
+}
 
 // ============ ABRIR MODAL DE EDICIÓN ============
 function abrirEditarModal(categoria, marca, index) {
@@ -289,14 +336,52 @@ function abrirEditarModal(categoria, marca, index) {
 
   document.getElementById("editImage").src = perfumeActual.imagen;
   document.getElementById("editCategoria").textContent = capitalizar(categoria);
-  document.getElementById("editMarca").textContent = capitalizar(marca);
   document.getElementById("editIndex").textContent = index;
   document.getElementById("editNombre").value = perfumeActual.nombre;
+  document.getElementById("editImagen").value = perfumeActual.imagen;
   document.getElementById("editPrecio").value = perfumeActual.precioFinal;
   document.getElementById("editGenero").value =
     perfumeActual.genero || "unisex";
   document.getElementById("editDescripcion").value =
     perfumeActual.descripcion || "";
+
+  // Cargar marcas disponibles en el selector
+  const editMarcaSelect = document.getElementById("editMarcaSelect");
+  editMarcaSelect.innerHTML =
+    '<option value="">Seleccionar marca existente</option><option value="__NUEVA__">➕ Agregar nueva marca</option>';
+
+  const marcas = new Set();
+  todosLosPerfumes
+    .filter((p) => p.categoria === categoria)
+    .forEach((p) => marcas.add(p.marca));
+
+  Array.from(marcas)
+    .sort()
+    .forEach((m) => {
+      const option = document.createElement("option");
+      option.value = m;
+      option.textContent = capitalizar(m);
+      if (m === marca) option.selected = true;
+      editMarcaSelect.appendChild(option);
+    });
+
+  // Cargar tamaños disponibles y precios personalizados
+  const tamanosDisponibles = perfumeActual.tamanosDisponibles || [100];
+  const preciosPersonalizados = perfumeActual.preciosPersonalizados || {};
+
+  document.getElementById("editTamano60").checked =
+    tamanosDisponibles.includes(60);
+  document.getElementById("editTamano100").checked =
+    tamanosDisponibles.includes(100);
+  document.getElementById("editTamano120").checked =
+    tamanosDisponibles.includes(120);
+
+  document.getElementById("editPrecio60").value =
+    preciosPersonalizados[60] || "";
+  document.getElementById("editPrecio100").value =
+    preciosPersonalizados[100] || "";
+  document.getElementById("editPrecio120").value =
+    preciosPersonalizados[120] || "";
 
   if (perfumeActual.notas) {
     document.getElementById("editNotasSalida").value =
@@ -321,6 +406,23 @@ window.closeEditModal = function () {
 document
   .querySelector(".modal-overlay")
   .addEventListener("click", closeEditModal);
+
+// Evento para mostrar/ocultar campo de nueva marca en modal de edición
+document
+  .getElementById("editMarcaSelect")
+  .addEventListener("change", function () {
+    const inputGroup = document.getElementById("editMarcaInputGroup");
+    const input = document.getElementById("editMarcaInput");
+
+    if (this.value === "__NUEVA__") {
+      inputGroup.style.display = "block";
+      input.required = true;
+    } else {
+      inputGroup.style.display = "none";
+      input.required = false;
+      input.value = "";
+    }
+  });
 
 // ============ GUARDAR CAMBIOS ============
 document.getElementById("editForm").addEventListener("submit", async (e) => {
@@ -348,10 +450,57 @@ document.getElementById("editForm").addEventListener("submit", async (e) => {
       break;
   }
 
+  // Obtener tamaños disponibles
+  // Obtener tamaños disponibles y precios personalizados
+  const tamanosDisponibles = [];
+  const preciosPersonalizados = {};
+
+  if (document.getElementById("editTamano60").checked) {
+    tamanosDisponibles.push(60);
+    const precio60 = document.getElementById("editPrecio60").value;
+    if (precio60) preciosPersonalizados[60] = parseInt(precio60);
+  }
+  if (document.getElementById("editTamano100").checked) {
+    tamanosDisponibles.push(100);
+    const precio100 = document.getElementById("editPrecio100").value;
+    if (precio100) preciosPersonalizados[100] = parseInt(precio100);
+  }
+  if (document.getElementById("editTamano120").checked) {
+    tamanosDisponibles.push(120);
+    const precio120 = document.getElementById("editPrecio120").value;
+    if (precio120) preciosPersonalizados[120] = parseInt(precio120);
+  }
+
+  // Obtener marca del selector o del input de nueva marca
+  const marcaSelect = document.getElementById("editMarcaSelect").value;
+  let nuevaMarca;
+  if (marcaSelect === "__NUEVA__") {
+    nuevaMarca = document
+      .getElementById("editMarcaInput")
+      .value.toLowerCase()
+      .trim();
+    if (!nuevaMarca) {
+      alert("Por favor ingresa el nombre de la nueva marca");
+      return;
+    }
+  } else {
+    // La marca del selector ya viene en el formato correcto (lowercase desde Firebase)
+    nuevaMarca = marcaSelect.trim();
+  }
+
+  const marcaAnterior = perfumeActual.marca;
+  const cambioDeMarca = nuevaMarca !== marcaAnterior;
+
   const updates = {
     nombre: document.getElementById("editNombre").value,
+    imagen: document.getElementById("editImagen").value,
     precio: precioBase,
     genero: document.getElementById("editGenero").value,
+    tamanosDisponibles: tamanosDisponibles,
+    preciosPersonalizados:
+      Object.keys(preciosPersonalizados).length > 0
+        ? preciosPersonalizados
+        : null,
     descripcion: document.getElementById("editDescripcion").value,
     notas: {
       salida: document.getElementById("editNotasSalida").value,
@@ -361,25 +510,43 @@ document.getElementById("editForm").addEventListener("submit", async (e) => {
   };
 
   try {
-    console.log("💾 Guardando cambios...", updates);
+    if (cambioDeMarca) {
+      // Si cambió la marca, eliminar de la marca anterior y agregar a la nueva
+      console.log(
+        `🔄 Moviendo perfume de "${marcaAnterior}" a "${nuevaMarca}"`
+      );
 
-    await actualizarPerfume(
-      perfumeActual.categoria,
-      perfumeActual.marca,
-      perfumeActual.arrayIndex,
-      updates
-    );
+      await eliminarPerfume(
+        perfumeActual.categoria,
+        marcaAnterior,
+        perfumeActual.arrayIndex
+      );
 
-    // Limpiar caché para que los cambios se vean inmediatamente
-    limpiarCache();
+      await agregarPerfume(perfumeActual.categoria, nuevaMarca, updates);
 
-    alert(
-      "✅ Perfume actualizado exitosamente\n\n💡 Caché limpiado: Los cambios se verán en la página principal al recargar"
-    );
+      alert("✅ Perfume movido exitosamente a la nueva marca");
+    } else {
+      // Actualización normal sin cambio de marca
+      await actualizarPerfume(
+        perfumeActual.categoria,
+        perfumeActual.marca,
+        perfumeActual.arrayIndex,
+        updates
+      );
+
+      alert("✅ Perfume actualizado correctamente");
+    }
+
+    // --- ACTUALIZAR LOCAL SIN RECARGAR ---
+    Object.assign(perfumeActual, updates);
+    perfumeActual.precioBase = precioBase;
+    perfumeActual.precioFinal = precioFinalInput;
+    if (cambioDeMarca) {
+      perfumeActual.marca = nuevaMarca;
+    }
+
+    mostrarPerfumes();
     closeEditModal();
-
-    // Recargar perfumes desde Firebase (sin caché)
-    await cargarPerfumes();
   } catch (error) {
     console.error("Error al guardar:", error);
     alert("❌ Error al guardar: " + error.message);
@@ -402,7 +569,20 @@ document.getElementById("addForm").addEventListener("submit", async (e) => {
   e.preventDefault();
 
   const categoria = document.getElementById("addCategoria").value;
-  const marca = document.getElementById("addMarca").value.toLowerCase().trim();
+  const marcaSelect = document.getElementById("addMarcaSelect").value;
+
+  // Determinar la marca: existente o nueva
+  let marca;
+  if (marcaSelect === "__NUEVA__") {
+    marca = document.getElementById("addMarcaInput").value.toLowerCase().trim();
+    if (!marca) {
+      alert("Por favor ingresa el nombre de la nueva marca");
+      return;
+    }
+  } else {
+    marca = marcaSelect.toLowerCase().trim();
+  }
+
   const precioFinalInput =
     parseInt(document.getElementById("addPrecio").value) || 0;
 
@@ -423,11 +603,36 @@ document.getElementById("addForm").addEventListener("submit", async (e) => {
       break;
   }
 
+  // Obtener tamaños disponibles y precios personalizados
+  const tamanosDisponibles = [];
+  const preciosPersonalizados = {};
+
+  if (document.getElementById("addTamano60").checked) {
+    tamanosDisponibles.push(60);
+    const precio60 = document.getElementById("addPrecio60").value;
+    if (precio60) preciosPersonalizados[60] = parseInt(precio60);
+  }
+  if (document.getElementById("addTamano100").checked) {
+    tamanosDisponibles.push(100);
+    const precio100 = document.getElementById("addPrecio100").value;
+    if (precio100) preciosPersonalizados[100] = parseInt(precio100);
+  }
+  if (document.getElementById("addTamano120").checked) {
+    tamanosDisponibles.push(120);
+    const precio120 = document.getElementById("addPrecio120").value;
+    if (precio120) preciosPersonalizados[120] = parseInt(precio120);
+  }
+
   const nuevoPerfume = {
     nombre: document.getElementById("addNombre").value,
     imagen: document.getElementById("addImagen").value,
     precio: precioBase,
     genero: document.getElementById("addGenero").value,
+    tamanosDisponibles: tamanosDisponibles,
+    preciosPersonalizados:
+      Object.keys(preciosPersonalizados).length > 0
+        ? preciosPersonalizados
+        : null,
     descripcion: document.getElementById("addDescripcion").value || "",
     notas: {
       salida: document.getElementById("addNotasSalida").value || "",

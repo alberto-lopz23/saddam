@@ -70,11 +70,16 @@ export async function actualizarPerfume(categoria, marca, index, updates) {
 
       // Actualizar campos
       if (updates.nombre !== undefined) perfume.nombre = updates.nombre;
+      if (updates.imagen !== undefined) perfume.imagen = updates.imagen;
       if (updates.precio !== undefined) perfume.precio = updates.precio;
       if (updates.genero !== undefined) perfume.genero = updates.genero;
       if (updates.descripcion !== undefined)
         perfume.descripcion = updates.descripcion;
       if (updates.notas !== undefined) perfume.notas = updates.notas;
+      if (updates.tamanosDisponibles !== undefined)
+        perfume.tamanosDisponibles = updates.tamanosDisponibles;
+      if (updates.preciosPersonalizados !== undefined)
+        perfume.preciosPersonalizados = updates.preciosPersonalizados;
 
       // 3. Guardar todo el documento (1 ESCRITURA)
       console.log("💾 Guardando en Firebase (1 escritura)");
