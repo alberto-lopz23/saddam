@@ -188,7 +188,9 @@ async function cargarCatalogo() {
  * La normalización permite:
  * - Iterar y filtrar perfumes de forma eficiente
  * - Aplicar búsquedas y ordenamientos
- * - Mantener referencia al índice original (arrayIndex) para actualizaciones
+ * - Mantener metadatos (categoria, marca, tipo) junto con datos del perfume
+ * 
+ * Nota: arrayIndex se guarda para referencia pero no se usa actualmente en el flujo de usuario
  */
 function procesarDatos() {
   console.log("⚙️ procesarDatos: Iniciando procesamiento...");
