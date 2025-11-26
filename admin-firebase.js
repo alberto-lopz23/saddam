@@ -769,3 +769,131 @@ function validarURL(url) {
   }
   return 'logo2.jpeg';
 }
+
+// ============ CERRAR MODAL DE AGREGAR ============
+
+window.closeAddModal = function () {
+  const modal = document.getElementById("addModal");
+  if (modal) {
+    modal.classList.remove("show");
+    document.body.style.overflow = "";
+    // Resetear el formulario
+    document.getElementById("addForm").reset();
+    // Resetear estado de marca nueva
+    const marcaInputGroup = document.getElementById("addMarcaInputGroup");
+    if (marcaInputGroup) {
+      marcaInputGroup.style.display = "none";
+    }
+  }
+};
+
+// ============ AGREGAR PERFUME ============
+
+document.getElementById("addForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const categoria = document.getElementById("addCategoria").value;
+  const marcaSelect = document.getElementById("addMarcaSelect").value;
+  const nombre = document.getElementById("addNombre").value;
+  const imagen = document.getElementById("addImagen").value;
+  const precioFinalInput = parseInt(document.getElementById("addPrecio").value) || 0;
+  const genero = document.getElementById("addGenero").value;
+  const descripcion = document.getElementById("addDescripcion").value;
+
+  // Validar campos obligatorios
+  if (!categoria) {
+    alert("Por favor selecciona una categoría");
+    return;
+  }
+
+  // Obtener marca (existente o nueva)
+  let marca;
+  if (marcaSelect === "__NUEVA__") {
+    marca = document.getElementById("addMarcaInput").value.toLowerCase().trim();
+    if (!marca) {
+      alert("Por favor ingresa el nombre de la nueva marca");
+      return;
+    }
+  } else if (!marcaSelect) {
+    alert("Por favor selecciona una marca");
+    return;
+  } else {
+    marca = marcaSelect.trim();
+  }
+
+  // Calcular precio base (restar incremento según categoría)
+  let precioBase = precioFinalInput;
+  switch (categoria) {
+    case "arabes":
+      precioBase = precioFinalInput - 1800;
+      break;
+    case "disenador":
+      precioBase = precioFinalInput - 2300;
+      break;
+    case "nicho":
+      precioBase = precioFinalInput - 3000;
+      break;
+    case "sets":
+      precioBase = precioFinalInput;
+      break;
+  }
+
+  // Obtener tamaños disponibles y precios personalizados
+  const tamanosDisponibles = [];
+  const preciosPersonalizados = {};
+
+  const tamanos = [30, 50, 60, 75, 80, 90, 100, 120, 125, 200];
+  tamanos.forEach((tamano) => {
+    const checkbox = document.getElementById(`addTamano${tamano}`);
+    const precioInput = document.getElementById(`addPrecio${tamano}`);
+
+    if (checkbox && checkbox.checked) {
+      tamanosDisponibles.push(tamano);
+      const precio = precioInput.value;
+      if (precio) preciosPersonalizados[tamano] = parseInt(precio);
+    }
+  });
+
+  // Si no hay tamaños seleccionados, usar 100ml por defecto
+  if (tamanosDisponibles.length === 0) {
+    tamanosDisponibles.push(100);
+  }
+
+  // Construir objeto de perfume
+  const nuevoPerfume = {
+    nombre,
+    imagen,
+    precio: precioBase,
+    genero,
+    descripcion,
+    tamanosDisponibles,
+    preciosPersonalizados: Object.keys(preciosPersonalizados).length > 0 ? preciosPersonalizados : null,
+    notas: {
+      salida: document.getElementById("addNotasSalida").value || "",
+      corazon: document.getElementById("addNotasCorazon").value || "",
+      fondo: document.getElementById("addNotasFondo").value || "",
+    },
+  };
+
+  try {
+    console.log("➕ Agregando nuevo perfume:", { categoria, marca, nuevoPerfume });
+    
+    await agregarPerfume(categoria, marca, nuevoPerfume);
+    
+    alert("✅ Perfume agregado exitosamente");
+    
+    // Limpiar caché y recargar
+    limpiarCache();
+    closeAddModal();
+    await cargarPerfumes();
+  } catch (error) {
+    console.error("❌ Error al agregar perfume:", error);
+    alert("❌ Error al agregar perfume: " + error.message);
+  }
+});
+
+// ============ EXPONER FUNCIONES AL ÁMBITO GLOBAL ============
+
+// Exponer funciones que son llamadas desde el HTML con onclick
+window.abrirEditarModal = abrirEditarModal;
+window.eliminarPerfume = eliminarPerfume;

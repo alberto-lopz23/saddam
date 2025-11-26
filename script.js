@@ -1061,7 +1061,11 @@ document.addEventListener('DOMContentLoaded', function() {
 window.filtrarCategoria = filtrarCategoria;
 window.mostrarFiltrosGenero = mostrarFiltrosGenero;
 window.toggleSearch = toggleSearch;
+window.buscarPerfumes = buscarPerfumes;
 window.closeModal = closeModal;
 window.toggleMobileMenu = toggleMobileMenu;
 window.filtrarCategoriaMobile = filtrarCategoriaMobile;
 window.filtrarGeneroMobile = filtrarGeneroMobile;
+window.volverACatalogo = volverACatalogo;
+window.cargarPaginaAnterior = cargarPaginaAnterior;
+window.cargarSiguientePagina = cargarSiguientePagina;
