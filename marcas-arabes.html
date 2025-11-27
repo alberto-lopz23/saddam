@@ -278,12 +278,25 @@
           if (data.perfumes.arabes) {
             Object.entries(data.perfumes.arabes).forEach(
               ([marca, perfumes]) => {
-                perfumes.forEach((perfume) => {
-                  todosLosPerfumes.push({
-                    ...perfume,
-                    marca: marca,
-                    categoria: "arabes",
-                  });
+                // Manejar arrays y objetos
+                let arrayPerfumes;
+                if (Array.isArray(perfumes)) {
+                  arrayPerfumes = perfumes;
+                } else if (typeof perfumes === "object" && perfumes !== null) {
+                  arrayPerfumes = Object.values(perfumes);
+                } else {
+                  console.warn(`⚠️ Marca "${marca}" tiene formato inválido`);
+                  return;
+                }
+
+                arrayPerfumes.forEach((perfume) => {
+                  if (perfume && typeof perfume === "object") {
+                    todosLosPerfumes.push({
+                      ...perfume,
+                      marca: marca,
+                      categoria: "arabes",
+                    });
+                  }
                 });
               }
             );
@@ -377,7 +390,7 @@
 
           // Calcular precio final con incremento
           const precioBase = parseInt(perfume.precio) || 0;
-          const incremento = 1500; // Árabes +1500
+          const incremento = 1800; // Árabes +1800
           const precioFinal = precioBase + incremento;
 
           // Icono de género con símbolos y colores

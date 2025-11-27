@@ -81,9 +81,44 @@ async function cargarPerfumes() {
     const data = await obtenerPerfumes();
     todosLosPerfumes = [];
 
-    Object.keys(data.perfumes).forEach((categoria) => {
-      Object.keys(data.perfumes[categoria]).forEach((marca) => {
-        data.perfumes[categoria][marca].forEach((perfume, index) => {
+    Object.keys(data.perfumes).forEach((categoriaFirebase) => {
+      // Convertir categoria de Firebase a formato frontend
+      const categoria =
+        categoriaFirebase === "nicho" ? "nichos" : categoriaFirebase;
+
+      Object.keys(data.perfumes[categoriaFirebase]).forEach((marca) => {
+        const perfumesData = data.perfumes[categoriaFirebase][marca];
+
+        // Manejar diferentes estructuras de datos
+        let perfumesArray = [];
+        let esObjeto = false;
+
+        if (Array.isArray(perfumesData)) {
+          // Es un array normal
+          perfumesArray = perfumesData.map((p, idx) => ({
+            perfume: p,
+            originalIndex: idx,
+          }));
+        } else if (typeof perfumesData === "object" && perfumesData !== null) {
+          // Es un objeto - guardar las claves originales
+          esObjeto = true;
+          perfumesArray = Object.entries(perfumesData).map(
+            ([key, perfume]) => ({
+              perfume,
+              originalIndex: parseInt(key),
+            })
+          );
+        } else {
+          console.warn(
+            `⚠️ "${marca}" en "${categoria}" tiene formato inválido`
+          );
+          return;
+        }
+
+        perfumesArray.forEach(({ perfume, originalIndex }) => {
+          // Validar que perfume sea un objeto válido
+          if (!perfume || typeof perfume !== "object") return;
+
           const precioBase = parseInt(perfume.precio) || 0;
           let precioFinal = precioBase;
 
@@ -94,7 +129,7 @@ async function cargarPerfumes() {
             case "disenador":
               precioFinal = precioBase + 2300;
               break;
-            case "nicho":
+            case "nichos":
               precioFinal = precioBase + 3000;
               break;
             case "sets":
@@ -105,8 +140,9 @@ async function cargarPerfumes() {
           todosLosPerfumes.push({
             ...perfume,
             categoria,
-            marca,
-            arrayIndex: index,
+            marca: categoria === "sets" ? `Set ${marca}` : marca,
+            arrayIndex: originalIndex,
+            esObjetoEnFirebase: esObjeto,
             precioBase,
             precioFinal,
           });
@@ -240,10 +276,9 @@ document.getElementById("searchInput").addEventListener("input", (e) => {
   const query = e.target.value.toLowerCase();
 
   perfumesFiltrados = todosLosPerfumes.filter((perfume) => {
-    return (
-      perfume.nombre.toLowerCase().includes(query) ||
-      perfume.marca.toLowerCase().includes(query)
-    );
+    const nombre = perfume.nombre?.toLowerCase() || "";
+    const marca = perfume.marca?.toLowerCase() || "";
+    return nombre.includes(query) || marca.includes(query);
   });
 
   const categoriaSeleccionada = document.getElementById("categoryFilter").value;
@@ -466,7 +501,7 @@ document.getElementById("editForm").addEventListener("submit", async (e) => {
     case "disenador":
       precioBase = precioFinalInput - 2300;
       break;
-    case "nicho":
+    case "nichos":
       precioBase = precioFinalInput - 3000;
       break;
     case "sets":
@@ -549,6 +584,9 @@ document.getElementById("editForm").addEventListener("submit", async (e) => {
         nuevaMarca,
         updates
       );
+
+      // Limpiar caché para que la página principal se actualice
+      limpiarCache();
 
       alert("✅ Perfume movido exitosamente");
     } else {
@@ -639,7 +677,7 @@ document.getElementById("addForm").addEventListener("submit", async (e) => {
     case "disenador":
       precioBase = precioFinalInput - 2300;
       break;
-    case "nicho":
+    case "nichos":
       precioBase = precioFinalInput - 3000;
       break;
     case "sets":
@@ -688,7 +726,7 @@ document.getElementById("addForm").addEventListener("submit", async (e) => {
     todosLosPerfumes.push({
       ...nuevoPerfume,
       categoria,
-      marca,
+      marca: categoria === "sets" ? `Set ${marca}` : marca,
       arrayIndex: indexNuevo,
       precioBase,
       precioFinal: precioFinalInput,
@@ -697,6 +735,10 @@ document.getElementById("addForm").addEventListener("submit", async (e) => {
     perfumesFiltrados = [...todosLosPerfumes];
 
     mostrarPerfumes();
+
+    // Limpiar caché para que la página principal muestre el nuevo perfume
+    limpiarCache();
+
     closeAddModal();
 
     alert("✅ Perfume agregado exitosamente");
@@ -734,6 +776,9 @@ async function eliminarPerfumeConfirm(categoria, marca, index, nombre) {
     perfumesFiltrados = [...todosLosPerfumes];
 
     mostrarPerfumes();
+
+    // Limpiar caché para que la página principal se actualice
+    limpiarCache();
 
     alert("✅ Perfume eliminado exitosamente");
   } catch (error) {

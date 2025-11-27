@@ -129,8 +129,28 @@ async function actualizarCacheEnBackground() {
   }
 }
 
+// Helper: Normalizar categoría para Firebase (frontend usa "nichos", Firebase usa "nicho")
+function normalizarCategoriaParaFirebase(categoria) {
+  if (categoria === "nichos") {
+    return "nicho";
+  }
+  return categoria;
+}
+
+// Helper: Normalizar marca para Firebase (remover prefijo "Set " si existe)
+function normalizarMarcaParaFirebase(categoria, marca) {
+  // Si es categoría sets y la marca tiene el prefijo "Set ", quitarlo
+  if (categoria === "sets" && marca.startsWith("Set ")) {
+    return marca.substring(4).toLowerCase().trim();
+  }
+  return marca.toLowerCase().trim();
+}
+
 // Actualizar un perfume específico (solo admin) - OPTIMIZADO
 export async function actualizarPerfume(categoria, marca, index, updates) {
+  // Normalizar marca primero (usa categoría original), luego categoría
+  marca = normalizarMarcaParaFirebase(categoria, marca);
+  categoria = normalizarCategoriaParaFirebase(categoria);
   try {
     console.log(`📝 Actualizando perfume: ${categoria}/${marca}[${index}]`);
 
@@ -172,15 +192,16 @@ export async function actualizarPerfume(categoria, marca, index, updates) {
   }
 }
 
-// Agregar un nuevo perfume - OPTIMIZADO
+// Agregar un nuevo perfume - OPTIMIZADO (maneja arrays y objetos)
 export async function agregarPerfume(categoria, marca, nuevoPerfume) {
   try {
     console.log(`➕ Agregando nuevo perfume: ${categoria}/${marca}`);
 
-    // 1. Normalizar la marca (lowercase, sin espacios extras)
-    marca = marca.toLowerCase().trim();
+    // 1. Normalizar marca primero (usa categoría original), luego categoría
+    marca = normalizarMarcaParaFirebase(categoria, marca);
+    categoria = normalizarCategoriaParaFirebase(categoria);
 
-    // 2. Leer solo la marca específica para obtener el array actual
+    // 2. Leer datos actuales
     const docRef = doc(db, "catalogo", "perfumes");
     const docSnap = await getDoc(docRef);
 
@@ -190,20 +211,37 @@ export async function agregarPerfume(categoria, marca, nuevoPerfume) {
 
     const data = docSnap.data();
 
-    // 3. Obtener el array actual de perfumes de esa marca
-    const marcaPerfumes = data.perfumes?.[categoria]?.[marca] || [];
+    // 3. Obtener la estructura actual de la marca
+    const marcaData = data.perfumes?.[categoria]?.[marca];
+    let nuevoIndex;
+    let updateData = {};
 
-    // 4. Calcular el índice del nuevo perfume
-    const nuevoIndex = marcaPerfumes.length;
+    if (Array.isArray(marcaData)) {
+      // CASO 1: Es un array - agregar al final
+      const arrayActualizado = [...marcaData, nuevoPerfume];
+      nuevoIndex = marcaData.length;
+      const marcaPath = `perfumes.${categoria}.${marca}`;
+      updateData[marcaPath] = arrayActualizado;
+    } else if (typeof marcaData === "object" && marcaData !== null) {
+      // CASO 2: Es un objeto - encontrar el siguiente índice disponible
+      const indicesExistentes = Object.keys(marcaData).map((k) => parseInt(k));
+      nuevoIndex =
+        indicesExistentes.length > 0 ? Math.max(...indicesExistentes) + 1 : 0;
 
-    // 5. Construir la ruta del nuevo perfume
-    const perfumePath = `perfumes.${categoria}.${marca}.${nuevoIndex}`;
+      // Agregar solo el nuevo perfume en su índice específico
+      const perfumePath = `perfumes.${categoria}.${marca}.${nuevoIndex}`;
+      updateData[perfumePath] = nuevoPerfume;
+    } else {
+      // CASO 3: La marca no existe - crear array nuevo
+      nuevoIndex = 0;
+      const marcaPath = `perfumes.${categoria}.${marca}`;
+      updateData[marcaPath] = [nuevoPerfume];
+    }
 
-    // 6. Actualizar solo agregando el nuevo perfume (sin tocar el resto)
-    console.log(`💾 Guardando en: ${perfumePath}`);
-    await updateDoc(docRef, {
-      [perfumePath]: nuevoPerfume,
-    });
+    console.log(
+      `💾 Guardando en: perfumes.${categoria}.${marca}[${nuevoIndex}]`
+    );
+    await updateDoc(docRef, updateData);
 
     console.log(`✅ Perfume agregado en índice ${nuevoIndex}`);
     return nuevoIndex;
@@ -213,12 +251,17 @@ export async function agregarPerfume(categoria, marca, nuevoPerfume) {
   }
 }
 
-// Eliminar un perfume - OPTIMIZADO (solo actualiza la marca específica)
+// Eliminar un perfume - OPTIMIZADO (maneja arrays y objetos)
 export async function eliminarPerfume(categoria, marca, index) {
   try {
-    console.log(`🗑️ Eliminando perfume: ${categoria}/${marca}[${index}]`);
+    // Normalizar marca primero (usa categoría original), luego categoría
+    const marcaNormalizada = normalizarMarcaParaFirebase(categoria, marca);
+    categoria = normalizarCategoriaParaFirebase(categoria);
+    console.log(
+      `🗑️ Eliminando perfume: ${categoria}/${marcaNormalizada}[${index}]`
+    );
 
-    // 1. Obtener solo la data necesaria
+    // 1. Obtener datos actuales
     const docRef = doc(db, "catalogo", "perfumes");
     const docSnap = await getDoc(docRef);
 
@@ -228,28 +271,51 @@ export async function eliminarPerfume(categoria, marca, index) {
 
     const data = docSnap.data();
 
-    // 2. Verificar que el perfume existe
+    // 2. Verificar que la estructura existe
     if (
       !data.perfumes[categoria] ||
-      !data.perfumes[categoria][marca] ||
-      data.perfumes[categoria][marca][index] === undefined
+      !data.perfumes[categoria][marcaNormalizada]
     ) {
       throw new Error("Perfume no encontrado");
     }
 
-    // 3. Obtener el array de perfumes de esa marca
-    const marcaPerfumes = [...data.perfumes[categoria][marca]];
+    // 3. Obtener la estructura de la marca
+    const marcaData = data.perfumes[categoria][marcaNormalizada];
 
-    // 4. Eliminar el perfume del array
-    marcaPerfumes.splice(index, 1);
+    if (Array.isArray(marcaData)) {
+      // CASO 1: Es un array - eliminar por índice
+      if (index < 0 || index >= marcaData.length) {
+        throw new Error(`Perfume no encontrado en índice ${index}`);
+      }
 
-    // 5. Actualizar solo el array de esa marca específica
-    const marcaPath = `perfumes.${categoria}.${marca}`;
+      const arrayActualizado = [...marcaData];
+      arrayActualizado.splice(index, 1);
 
-    console.log(`💾 Actualizando solo: ${marcaPath}`);
-    await updateDoc(docRef, {
-      [marcaPath]: marcaPerfumes,
-    });
+      const marcaPath = `perfumes.${categoria}.${marcaNormalizada}`;
+      console.log(`💾 Actualizando array: ${marcaPath}`);
+      await updateDoc(docRef, {
+        [marcaPath]: arrayActualizado,
+      });
+    } else if (typeof marcaData === "object" && marcaData !== null) {
+      // CASO 2: Es un objeto - verificar que la clave existe
+      if (!(index.toString() in marcaData)) {
+        throw new Error(`Perfume no encontrado en clave ${index}`);
+      }
+
+      // Crear nuevo objeto sin la clave eliminada
+      const objetoActualizado = { ...marcaData };
+      delete objetoActualizado[index.toString()];
+
+      const marcaPath = `perfumes.${categoria}.${marcaNormalizada}`;
+      console.log(
+        `💾 Actualizando objeto: ${marcaPath} (eliminando clave ${index})`
+      );
+      await updateDoc(docRef, {
+        [marcaPath]: objetoActualizado,
+      });
+    } else {
+      throw new Error("Estructura de datos inválida");
+    }
 
     console.log("✅ Perfume eliminado correctamente");
     return true;
@@ -330,8 +396,20 @@ export async function moverPerfume(
   perfumeData
 ) {
   try {
+    // Normalizar marcas primero (usan categoría original), luego categorías
+    const marcaOrigenNorm = normalizarMarcaParaFirebase(
+      categoriaOrigen,
+      marcaOrigen
+    );
+    const marcaDestinoNorm = normalizarMarcaParaFirebase(
+      categoriaDestino,
+      marcaDestino
+    );
+    categoriaOrigen = normalizarCategoriaParaFirebase(categoriaOrigen);
+    categoriaDestino = normalizarCategoriaParaFirebase(categoriaDestino);
+
     console.log(
-      `🔄 Moviendo perfume: ${categoriaOrigen}/${marcaOrigen}[${indexOrigen}] → ${categoriaDestino}/${marcaDestino}`
+      `🔄 Moviendo perfume: ${categoriaOrigen}/${marcaOrigenNorm}[${indexOrigen}] → ${categoriaDestino}/${marcaDestinoNorm}`
     );
 
     const docRef = doc(db, "catalogo", "perfumes");
@@ -343,28 +421,52 @@ export async function moverPerfume(
 
     const data = docSnap.data();
 
-    // 1. Verificar que el perfume origen existe
-    if (!data.perfumes[categoriaOrigen]?.[marcaOrigen]?.[indexOrigen]) {
+    // 1. Obtener estructura origen (puede ser array u objeto)
+    const marcaOrigenData = data.perfumes[categoriaOrigen]?.[marcaOrigenNorm];
+    let arrayOrigen = [];
+
+    if (Array.isArray(marcaOrigenData)) {
+      arrayOrigen = [...marcaOrigenData];
+    } else if (
+      typeof marcaOrigenData === "object" &&
+      marcaOrigenData !== null
+    ) {
+      arrayOrigen = Object.values(marcaOrigenData);
+    } else {
       throw new Error("Perfume origen no encontrado");
     }
 
-    // 2. Obtener arrays actuales
-    const arrayOrigen = [...data.perfumes[categoriaOrigen][marcaOrigen]];
-    const arrayDestino = data.perfumes[categoriaDestino]?.[marcaDestino]
-      ? [...data.perfumes[categoriaDestino][marcaDestino]]
-      : [];
+    // 2. Verificar que el índice existe
+    if (indexOrigen < 0 || indexOrigen >= arrayOrigen.length) {
+      throw new Error(`Índice ${indexOrigen} fuera de rango`);
+    }
 
-    // 3. Eliminar de origen
+    // 3. Obtener estructura destino (puede ser array u objeto)
+    const marcaDestinoData =
+      data.perfumes[categoriaDestino]?.[marcaDestinoNorm];
+    let arrayDestino = [];
+
+    if (Array.isArray(marcaDestinoData)) {
+      arrayDestino = [...marcaDestinoData];
+    } else if (
+      typeof marcaDestinoData === "object" &&
+      marcaDestinoData !== null
+    ) {
+      arrayDestino = Object.values(marcaDestinoData);
+    }
+
+    // 4. Eliminar de origen
     arrayOrigen.splice(indexOrigen, 1);
 
-    // 4. Agregar a destino
+    // 5. Agregar a destino
     const nuevoIndex = arrayDestino.length;
     arrayDestino.push(perfumeData);
 
-    // 5. Actualizar ambos arrays en una sola operación
+    // 6. Actualizar ambos arrays en una sola operación
     const updateData = {};
-    updateData[`perfumes.${categoriaOrigen}.${marcaOrigen}`] = arrayOrigen;
-    updateData[`perfumes.${categoriaDestino}.${marcaDestino}`] = arrayDestino;
+    updateData[`perfumes.${categoriaOrigen}.${marcaOrigenNorm}`] = arrayOrigen;
+    updateData[`perfumes.${categoriaDestino}.${marcaDestinoNorm}`] =
+      arrayDestino;
 
     console.log("💾 Moviendo perfume (1 operación atómica)...");
     await updateDoc(docRef, updateData);

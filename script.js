@@ -3,6 +3,7 @@ const NUMERO_WHATSAPP = "+18298070599";
 // Variables globales
 let todosLosPerfumes = [];
 let perfumesFiltrados = [];
+let perfumesFiltradosSinBusqueda = []; // Backup para restaurar cuando se borra la búsqueda
 let catalogoData = null;
 let paginaActual = 1;
 const perfumesPorPagina = 20;
@@ -143,13 +144,32 @@ function procesarDatos() {
     if (!data) return;
 
     for (const [marca, perfumes] of Object.entries(data)) {
-      for (const perfume of perfumes) {
-        todosLosPerfumes.push({
-          ...perfume,
-          categoria,
-          marca: categoria === "sets" ? `Set ${marca}` : marca,
-          tipo,
-        });
+      // Manejar diferentes estructuras de datos
+      let arrayPerfumes;
+
+      if (Array.isArray(perfumes)) {
+        // Caso normal: es un array directo
+        arrayPerfumes = perfumes;
+      } else if (typeof perfumes === "object" && perfumes !== null) {
+        // Caso especial: es un objeto, convertir valores a array
+        arrayPerfumes = Object.values(perfumes);
+      } else {
+        console.warn(
+          `⚠️ "${marca}" en "${categoria}" tiene formato inválido, omitiendo...`
+        );
+        continue;
+      }
+
+      for (const perfume of arrayPerfumes) {
+        // Asegurar que perfume sea un objeto válido
+        if (perfume && typeof perfume === "object") {
+          todosLosPerfumes.push({
+            ...perfume,
+            categoria,
+            marca: categoria === "sets" ? `Set ${marca}` : marca,
+            tipo,
+          });
+        }
       }
     }
   };
@@ -776,6 +796,10 @@ function mostrarSubfiltros(categoria) {
 
 // Filtrar por marca específica
 function filtrarPorMarca(marca, categoria) {
+  // Limpiar búsqueda y su backup
+  searchInput.value = "";
+  perfumesFiltradosSinBusqueda = [];
+
   const filtrados = todosLosPerfumes.filter(
     (p) => p.categoria === categoria && p.marca === marca
   );
@@ -789,22 +813,38 @@ function filtrarPorMarca(marca, categoria) {
   mostrarPerfumes(perfumesFiltrados);
 }
 
-// Buscar perfumes por nombre
+// Buscar perfumes por nombre (búsqueda en tiempo real)
 function buscarPerfumes() {
   const termino = searchInput.value.toLowerCase().trim();
 
   if (termino === "") {
-    // Si no hay término de búsqueda, restaurar los filtros actuales
-    // (ya sea por categoría, marca o género)
+    // Restaurar el estado de filtros previo a la búsqueda
+    if (perfumesFiltradosSinBusqueda.length > 0) {
+      perfumesFiltrados = [...perfumesFiltradosSinBusqueda];
+    }
     mostrarPerfumes(perfumesFiltrados);
     return;
   }
 
-  const resultados = perfumesFiltrados.filter(
-    (perfume) =>
-      perfume.nombre.toLowerCase().includes(termino) ||
-      perfume.marca.toLowerCase().includes(termino)
-  );
+  // Guardar el estado actual si es la primera búsqueda
+  if (
+    perfumesFiltradosSinBusqueda.length === 0 ||
+    searchInput.value.length === 1
+  ) {
+    perfumesFiltradosSinBusqueda = [...perfumesFiltrados];
+  }
+
+  // Buscar en el backup (no en perfumesFiltrados para evitar búsqueda incremental incorrecta)
+  const baseParaBuscar =
+    perfumesFiltradosSinBusqueda.length > 0
+      ? perfumesFiltradosSinBusqueda
+      : perfumesFiltrados;
+
+  const resultados = baseParaBuscar.filter((perfume) => {
+    const nombre = perfume.nombre?.toLowerCase() || "";
+    const marca = perfume.marca?.toLowerCase() || "";
+    return nombre.includes(termino) || marca.includes(termino);
+  });
 
   // Actualizar el array global para que la paginación funcione correctamente
   perfumesFiltrados = resultados;
@@ -1038,6 +1078,10 @@ function aplicarFiltroCategoria(categoria) {
   if (generoSubfiltersDiv) {
     generoSubfiltersDiv.innerHTML = "";
   }
+
+  // Limpiar búsqueda y su backup
+  searchInput.value = "";
+  perfumesFiltradosSinBusqueda = [];
 
   // Filtrar por categoría
   let filtrados = [];

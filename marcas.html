@@ -278,12 +278,25 @@
           if (data.perfumes.disenador) {
             Object.entries(data.perfumes.disenador).forEach(
               ([marca, perfumes]) => {
-                perfumes.forEach((perfume) => {
-                  todosLosPerfumes.push({
-                    ...perfume,
-                    marca: marca,
-                    categoria: "disenador",
-                  });
+                // Manejar arrays y objetos
+                let arrayPerfumes;
+                if (Array.isArray(perfumes)) {
+                  arrayPerfumes = perfumes;
+                } else if (typeof perfumes === "object" && perfumes !== null) {
+                  arrayPerfumes = Object.values(perfumes);
+                } else {
+                  console.warn(`⚠️ Marca "${marca}" tiene formato inválido`);
+                  return;
+                }
+
+                arrayPerfumes.forEach((perfume) => {
+                  if (perfume && typeof perfume === "object") {
+                    todosLosPerfumes.push({
+                      ...perfume,
+                      marca: marca,
+                      categoria: "disenador",
+                    });
+                  }
                 });
               }
             );
