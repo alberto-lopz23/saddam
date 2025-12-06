@@ -319,7 +319,7 @@ function mostrarPerfumes(lista, resetearPagina = true) {
       // Usar firebaseId si está disponible, sino usar formato viejo
       if (perfume.id || perfume.firebaseId) {
         const id = perfume.id || perfume.firebaseId;
-        const url = `detalle-perfume.html?id=${encodeURIComponent(id)}`;
+        const url = `detalle-perfume?id=${encodeURIComponent(id)}`;
         console.log("URL generada (Firebase):", url);
         window.location.href = url;
       } else {
@@ -327,7 +327,7 @@ function mostrarPerfumes(lista, resetearPagina = true) {
         const marcaParaURL = perfume.marcaOriginal || perfume.marca;
         const indexParaURL =
           perfume.indexOriginal !== undefined ? perfume.indexOriginal : index;
-        const url = `detalle-perfume.html?categoria=${encodeURIComponent(
+        const url = `detalle-perfume?categoria=${encodeURIComponent(
           perfume.categoria
         )}&marca=${encodeURIComponent(marcaParaURL)}&index=${indexParaURL}`;
         console.log("URL generada (formato viejo):", url);
@@ -872,7 +872,7 @@ function mostrarSubfiltros(categoria) {
     const btnMas = document.createElement("button");
     btnMas.className = "subfilter-btn subfilter-btn-mas";
     btnMas.textContent = "✨ Más marcas";
-    const url = categoria === "arabes" ? "marcas-arabes.html" : "marcas.html";
+    const url = categoria === "arabes" ? "marcas-arabes" : "marcas";
     btnMas.onclick = () => (window.location.href = url);
     subfiltersDiv.appendChild(btnMas);
   }
@@ -1182,7 +1182,7 @@ function mostrarSubfiltrosMobile(categoria) {
       const btnMas = document.createElement("button");
       btnMas.className = "mobile-subfilter-btn mobile-subfilter-btn-mas";
       btnMas.textContent = "✨ Más marcas";
-      const url = categoria === "arabes" ? "marcas-arabes.html" : "marcas.html";
+      const url = categoria === "arabes" ? "marcas-arabes" : "marcas";
       btnMas.onclick = () => (window.location.href = url);
       subfilterSection.appendChild(btnMas);
     }
