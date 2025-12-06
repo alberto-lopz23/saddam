@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Detalle del Perfume</title>
+    <link rel="stylesheet" href="style.css" />
+
+    <!-- Firebase SDK -->
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+      import {
+        getDatabase,
+        ref,
+        get,
+      } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyASMM00t5QjjTiIUtvTEsN62VUR9TQAW5E",
+        authDomain: "sadam-f9276.firebaseapp.com",
+        databaseURL: "https://sadam-f9276-default-rtdb.firebaseio.com",
+        projectId: "sadam-f9276",
+        storageBucket: "sadam-f9276.firebasestorage.app",
+        messagingSenderId: "277794745714",
+        appId: "1:277794745714:web:ed4df2dfc9287945a541eb",
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const database = getDatabase(app);
+
+      window.firebaseDB = database;
+      window.firebaseRef = ref;
+      window.firebaseGet = get;
+      window.firebaseReady = true;
+      window.dispatchEvent(new Event("firebaseReady"));
+      console.log("✅ Firebase inicializado en detalle-perfume.html");
+    </script>
+    <style>
+      body {
+        background-color: #272727;
+      }
+
+      .detalle-container {
+        max-width: 1200px;
+        margin: 40px auto;
+        padding: 20px;
+      }
+
+      .detalle-card {
+        background: #3a3a3a;
+        border-radius: 20px;
+        padding: 40px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+      }
+
+      .detalle-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+        margin-bottom: 30px;
+      }
+
+      .detalle-imagen {
+        width: 100%;
+        border-radius: 15px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+      }
+
+      .detalle-info h1 {
+        font-size: 32px;
+        margin-bottom: 10px;
+        color: #ffffff;
+      }
+
+      .detalle-marca {
+        font-size: 18px;
+        color: #667eea;
+        font-weight: 600;
+        margin-bottom: 20px;
+      }
+
+      .detalle-precio {
+        font-size: 36px;
+        font-weight: bold;
+        color: #667eea;
+        margin: 20px 0;
+      }
+
+      .detalle-genero {
+        display: inline-block;
+        padding: 8px 16px;
+        background: #2a2a2a;
+        color: #e0e0e0;
+        border-radius: 20px;
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 20px;
+      }
+
+      .detalle-descripcion {
+        line-height: 1.8;
+        color: #e0e0e0;
+        margin-bottom: 30px;
+      }
+
+      .notas-section {
+        margin-top: 30px;
+      }
+
+      .notas-section h3 {
+        font-size: 20px;
+        margin-bottom: 15px;
+        color: #ffffff;
+      }
+
+      .nota-item {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 15px 20px;
+        border-radius: 10px;
+        margin-bottom: 10px;
+      }
+
+      .nota-item strong {
+        display: block;
+        margin-bottom: 5px;
+        font-size: 14px;
+        opacity: 0.9;
+      }
+
+      .tamanos-section {
+        margin-top: 30px;
+      }
+
+      .tamanos-section h3 {
+        font-size: 20px;
+        margin-bottom: 15px;
+        color: #ffffff;
+      }
+
+      .tamanos-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 15px;
+      }
+
+      .tamano-item {
+        background: #2a2a2a;
+        padding: 15px;
+        border-radius: 10px;
+        text-align: center;
+        border: 2px solid #4a4a4a;
+        transition: all 0.3s;
+      }
+
+      .tamano-item:hover {
+        border-color: #667eea;
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+      }
+
+      .tamano-ml {
+        font-size: 24px;
+        font-weight: bold;
+        color: #667eea;
+      }
+
+      .tamano-precio {
+        font-size: 16px;
+        color: #e0e0e0;
+        margin-top: 5px;
+      }
+
+      .btn-volver {
+        display: inline-block;
+        padding: 12px 30px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        text-decoration: none;
+        border-radius: 25px;
+        font-weight: 600;
+        transition: transform 0.3s;
+        margin-top: 30px;
+      }
+
+      .btn-volver:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+      }
+
+      @media (max-width: 768px) {
+        .detalle-content {
+          grid-template-columns: 1fr;
+        }
+
+        .detalle-info h1 {
+          font-size: 24px;
+        }
+
+        .detalle-precio {
+          font-size: 28px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="detalle-container">
+      <div class="detalle-card">
+        <div class="detalle-content">
+          <div>
+            <img
+              id="perfumeImagen"
+              class="detalle-imagen"
+              src=""
+              alt="Perfume"
+            />
+          </div>
+          <div class="detalle-info">
+            <h1 id="perfumeNombre">Cargando...</h1>
+            <div class="detalle-marca" id="perfumeMarca"></div>
+            <div class="detalle-genero" id="perfumeGenero"></div>
+            <div
+              class="detalle-ml"
+              id="perfumeMl"
+              style="font-size: 1.1em; color: #666; margin: 10px 0"
+            ></div>
+            <div class="detalle-precio" id="perfumePrecio"></div>
+            <div class="detalle-descripcion" id="perfumeDescripcion"></div>
+
+            <div class="notas-section" id="notasSection" style="display: none">
+              <h3>🌸 Notas Olfativas</h3>
+              <div class="nota-item" id="notaSalida" style="display: none">
+                <strong>SALIDA</strong>
+                <span id="notaSalidaTexto"></span>
+              </div>
+              <div class="nota-item" id="notaCorazon" style="display: none">
+                <strong>CORAZÓN</strong>
+                <span id="notaCorazonTexto"></span>
+              </div>
+              <div class="nota-item" id="notaFondo" style="display: none">
+                <strong>FONDO</strong>
+                <span id="notaFondoTexto"></span>
+              </div>
+            </div>
+
+            <div
+              class="tamanos-section"
+              id="tamanosSection"
+              style="display: none"
+            >
+              <h3>📦 Tamaños Disponibles</h3>
+              <div class="tamanos-grid" id="tamanosGrid"></div>
+            </div>
+          </div>
+        </div>
+
+        <a href="javascript:history.back()" class="btn-volver"
+          >⬅️ Volver al catálogo</a
+        >
+      </div>
+    </div>
+
+    <script>
+      // Obtener parámetros de la URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const firebaseId = urlParams.get("id"); // Nuevo parámetro
+      let categoria = urlParams.get("categoria");
+      let marca = urlParams.get("marca");
+      let index = urlParams.get("index");
+
+      async function cargarDetalle() {
+        // NUEVO: Fallback para cargar desde sessionStorage
+        if (!firebaseId && (!categoria || !marca || index === null)) {
+          const perfumeGuardado = sessionStorage.getItem("perfumeDetail");
+          if (perfumeGuardado) {
+            try {
+              const perfume = JSON.parse(perfumeGuardado);
+              console.log("📦 Cargando desde sessionStorage:", perfume);
+              mostrarPerfume(perfume);
+              sessionStorage.removeItem("perfumeDetail"); // Limpiar después de usar
+              return;
+            } catch (e) {
+              console.error("Error al parsear perfume guardado:", e);
+            }
+          }
+        }
+
+        try {
+          // Cargar desde Firebase
+          console.log("🔥 Cargando desde Firebase...");
+          const dbRef = window.firebaseRef(window.firebaseDB, "perfumes");
+          const snapshot = await window.firebaseGet(dbRef);
+
+          if (!snapshot.exists()) {
+            throw new Error("No hay datos en Firebase");
+          }
+
+          const firebaseData = snapshot.val();
+          console.log(
+            "✅ Datos cargados desde Firebase:",
+            Object.keys(firebaseData).length,
+            "perfumes"
+          );
+
+          let perfume;
+
+          // Buscar por firebaseId primero (más eficiente y confiable)
+          if (firebaseId) {
+            console.log("🔍 Buscando por Firebase ID:", firebaseId);
+            perfume = firebaseData[firebaseId]; // Acceso directo por ID
+
+            if (!perfume) {
+              // Buscar en los valores si no está en las keys
+              perfume = Object.values(firebaseData).find(
+                (p) => p.id === firebaseId || p.firebaseId === firebaseId
+              );
+            }
+          } else if (categoria && marca && index !== null) {
+            // Fallback: buscar por categoria/marca/index (formato viejo)
+            console.log("🔍 Buscando por categoria/marca/index:", {
+              categoria,
+              marca,
+              index,
+            });
+
+            const perfumesArray = Object.values(firebaseData);
+            perfume = perfumesArray.find(
+              (p) =>
+                p.categoria === categoria &&
+                p.marca === marca &&
+                (p.indexOriginal === parseInt(index) ||
+                  p.index === parseInt(index))
+            );
+
+            // Fallback: buscar por ID construido
+            if (!perfume) {
+              const constructedId = `${categoria}_${marca}_${index}`.replace(
+                /[.#$[\]\/\s]/g,
+                "_"
+              );
+              perfume = perfumesArray.find((p) => p.id === constructedId);
+              console.log(
+                "🔍 Fallback: Buscando por ID construido:",
+                constructedId
+              );
+            }
+          }
+
+          if (!perfume) {
+            document.getElementById("perfumeNombre").textContent =
+              "❌ No se encontró el perfume";
+            console.log(
+              "❌ Perfume no encontrado. Total perfumes:",
+              Object.keys(firebaseData).length
+            );
+            return;
+          }
+
+          console.log("✅ Perfume encontrado:", perfume);
+
+          // Mostrar datos
+          document.getElementById("perfumeNombre").textContent =
+            perfume.nombre || "Sin nombre";
+          document.getElementById("perfumeMarca").textContent = (
+            perfume.marca || ""
+          ).toUpperCase();
+          document.getElementById("perfumeImagen").src =
+            perfume.imagen || "https://via.placeholder.com/400";
+          document.getElementById("perfumeImagen").alt = perfume.nombre;
+          document.getElementById("perfumeGenero").textContent =
+            perfume.genero || "unisex";
+
+          // Mostrar ml si existe
+          const mlElement = document.getElementById("perfumeMl");
+          if (perfume.ml) {
+            mlElement.textContent = `📦 ${perfume.ml} ml`;
+            mlElement.style.display = "block";
+          } else {
+            mlElement.style.display = "none";
+          }
+
+          // SIEMPRE mostrar precio de 100ml
+          let precioMostrar = "N/A";
+
+          // PRIORIDAD 1: Precio de 100ml en preciosPersonalizados
+          if (perfume.preciosPersonalizados) {
+            const precio100 =
+              perfume.preciosPersonalizados[100] ||
+              perfume.preciosPersonalizados["100"];
+            if (precio100) {
+              precioMostrar = precio100;
+            }
+          }
+
+          // PRIORIDAD 2: Si el perfume es de 100ml, usar precio base
+          if (precioMostrar === "N/A" && perfume.ml === 100 && perfume.precio) {
+            precioMostrar = perfume.precio;
+          }
+
+          // PRIORIDAD 3: Si nada más funciona, usar precio base
+          if (precioMostrar === "N/A" && perfume.precio) {
+            precioMostrar = perfume.precio;
+          }
+
+          document.getElementById(
+            "perfumePrecio"
+          ).textContent = `RD$ ${precioMostrar}`;
+          document.getElementById("perfumeDescripcion").textContent =
+            perfume.descripcion || "Sin descripción disponible.";
+
+          // Actualizar título de la página
+          document.title = perfume.nombre || "Detalle del Perfume";
+
+          // Mostrar notas si existen
+          if (perfume.notas) {
+            const notasSection = document.getElementById("notasSection");
+            let tieneNotas = false;
+
+            if (perfume.notas.salida) {
+              document.getElementById("notaSalida").style.display = "block";
+              document.getElementById("notaSalidaTexto").textContent =
+                perfume.notas.salida;
+              tieneNotas = true;
+            }
+
+            if (perfume.notas.corazon) {
+              document.getElementById("notaCorazon").style.display = "block";
+              document.getElementById("notaCorazonTexto").textContent =
+                perfume.notas.corazon;
+              tieneNotas = true;
+            }
+
+            if (perfume.notas.fondo) {
+              document.getElementById("notaFondo").style.display = "block";
+              document.getElementById("notaFondoTexto").textContent =
+                perfume.notas.fondo;
+              tieneNotas = true;
+            }
+
+            if (tieneNotas) {
+              notasSection.style.display = "block";
+            }
+          }
+
+          // Mostrar tamaños si existen
+          if (
+            perfume.preciosPersonalizados &&
+            Object.keys(perfume.preciosPersonalizados).length > 0
+          ) {
+            const tamanosGrid = document.getElementById("tamanosGrid");
+            const tamanosSection = document.getElementById("tamanosSection");
+
+            // Limpiar contenido previo
+            tamanosGrid.innerHTML = "";
+
+            // Obtener y ordenar los tamaños
+            const tamanosOrdenados = Object.keys(perfume.preciosPersonalizados)
+              .map((t) => parseInt(t))
+              .sort((a, b) => a - b);
+
+            tamanosOrdenados.forEach((tamano) => {
+              const div = document.createElement("div");
+              div.className = "tamano-item";
+
+              const precio = perfume.preciosPersonalizados[tamano];
+
+              div.innerHTML = `
+                                <div class="tamano-ml">${tamano} ML</div>
+                                <div class="tamano-precio">RD$ ${precio}</div>
+                            `;
+
+              tamanosGrid.appendChild(div);
+            });
+
+            tamanosSection.style.display = "block";
+          }
+        } catch (error) {
+          console.error("Error cargando perfume:", error);
+          document.getElementById("perfumeNombre").textContent =
+            "Error al cargar el perfume";
+        }
+      }
+
+      // Función para mostrar perfume desde objeto directo (sessionStorage)
+      function mostrarPerfume(perfume) {
+        document.getElementById("perfumeNombre").textContent =
+          perfume.nombre || "Sin nombre";
+        document.getElementById("perfumeMarca").textContent = (
+          perfume.marca ||
+          perfume.marcaOriginal ||
+          ""
+        ).toUpperCase();
+        document.getElementById("perfumeImagen").src =
+          perfume.imagen || "https://via.placeholder.com/400";
+        document.getElementById("perfumeImagen").alt = perfume.nombre;
+        document.getElementById("perfumeGenero").textContent =
+          perfume.genero || "unisex";
+
+        // Determinar precio a mostrar: si tiene 100ml personalizado, usar ese
+        let precioMostrar = perfume.precio || "N/A";
+        if (
+          perfume.preciosPersonalizados &&
+          perfume.preciosPersonalizados["100"]
+        ) {
+          precioMostrar = perfume.preciosPersonalizados["100"];
+        }
+
+        document.getElementById(
+          "perfumePrecio"
+        ).textContent = `RD$ ${precioMostrar}`;
+        document.getElementById("perfumeDescripcion").textContent =
+          perfume.descripcion || "Sin descripción disponible.";
+
+        document.title = perfume.nombre || "Detalle del Perfume";
+
+        // Mostrar notas
+        if (perfume.notas) {
+          const notasSection = document.getElementById("notasSection");
+          let tieneNotas = false;
+
+          if (perfume.notas.salida) {
+            document.getElementById("notaSalida").style.display = "block";
+            document.getElementById("notaSalidaTexto").textContent =
+              perfume.notas.salida;
+            tieneNotas = true;
+          }
+
+          if (perfume.notas.corazon) {
+            document.getElementById("notaCorazon").style.display = "block";
+            document.getElementById("notaCorazonTexto").textContent =
+              perfume.notas.corazon;
+            tieneNotas = true;
+          }
+
+          if (perfume.notas.fondo) {
+            document.getElementById("notaFondo").style.display = "block";
+            document.getElementById("notaFondoTexto").textContent =
+              perfume.notas.fondo;
+            tieneNotas = true;
+          }
+
+          if (tieneNotas) {
+            notasSection.style.display = "block";
+          }
+        }
+
+        // Mostrar tamaños
+        if (
+          perfume.preciosPersonalizados &&
+          Object.keys(perfume.preciosPersonalizados).length > 0
+        ) {
+          const tamanosGrid = document.getElementById("tamanosGrid");
+          const tamanosSection = document.getElementById("tamanosSection");
+
+          // Limpiar contenido previo
+          tamanosGrid.innerHTML = "";
+
+          // Obtener y ordenar los tamaños
+          const tamanosOrdenados = Object.keys(perfume.preciosPersonalizados)
+            .map((t) => parseInt(t))
+            .sort((a, b) => a - b);
+
+          tamanosOrdenados.forEach((tamano) => {
+            const div = document.createElement("div");
+            div.className = "tamano-item";
+
+            const precio = perfume.preciosPersonalizados[tamano];
+
+            div.innerHTML = `
+              <div class="tamano-ml">${tamano} ML</div>
+              <div class="tamano-precio">RD$ ${precio}</div>
+            `;
+
+            tamanosGrid.appendChild(div);
+          });
+
+          tamanosSection.style.display = "block";
+        }
+      }
+
+      // Esperar a que Firebase esté listo
+      if (window.firebaseReady) {
+        cargarDetalle();
+      } else {
+        window.addEventListener("firebaseReady", () => {
+          cargarDetalle();
+        });
+      }
+    </script>
+  </body>
+</html>

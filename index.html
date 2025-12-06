@@ -10,6 +10,37 @@
     <link rel="stylesheet" href="style.css" />
     <link rel="icon" type="image/png" href="logo2.jpeg" />
 
+    <!-- Firebase SDK -->
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+      import {
+        getDatabase,
+        ref,
+        get,
+      } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyASMM00t5QjjTiIUtvTEsN62VUR9TQAW5E",
+        authDomain: "sadam-f9276.firebaseapp.com",
+        databaseURL: "https://sadam-f9276-default-rtdb.firebaseio.com",
+        projectId: "sadam-f9276",
+        storageBucket: "sadam-f9276.firebasestorage.app",
+        messagingSenderId: "277794745714",
+        appId: "1:277794745714:web:ed4df2dfc9287945a541eb",
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const database = getDatabase(app);
+
+      // Exponer funciones globalmente
+      window.firebaseDB = database;
+      window.firebaseRef = ref;
+      window.firebaseGet = get;
+      window.firebaseReady = true;
+      window.dispatchEvent(new Event("firebaseReady"));
+      console.log("✅ Firebase inicializado en index.html");
+    </script>
+
     <!-- SEO / Open Graph -->
     <meta
       name="description"
@@ -455,7 +486,7 @@
 
     <!-- Botón de Admin (invisible al final) -->
     <a
-      href="admin-firebase.html"
+      href="admin.html"
       class="admin-btn-invisible"
       title="Panel de Administración"
     >

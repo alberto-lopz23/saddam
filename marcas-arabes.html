@@ -7,6 +7,37 @@
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
     <title>Perfumes Árabes - PerfumParadiseRD</title>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+      import {
+        getDatabase,
+        ref,
+        get,
+      } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyASMM00t5QjjTiIUtvTEsN62VUR9TQAW5E",
+        authDomain: "sadam-f9276.firebaseapp.com",
+        databaseURL: "https://sadam-f9276-default-rtdb.firebaseio.com",
+        projectId: "sadam-f9276",
+        storageBucket: "sadam-f9276.firebasestorage.app",
+        messagingSenderId: "277794745714",
+        appId: "1:277794745714:web:ed4df2dfc9287945a541eb",
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const database = getDatabase(app);
+
+      window.firebaseDB = database;
+      window.firebaseRef = ref;
+      window.firebaseGet = get;
+      window.firebaseReady = true;
+      window.dispatchEvent(new Event("firebaseReady"));
+      console.log("✅ Firebase inicializado en marcas-arabes.html");
+    </script>
+
     <style>
       * {
         margin: 0;
@@ -247,7 +278,11 @@
     <div class="main-content">
       <aside class="sidebar">
         <h3>Marcas</h3>
-        <button class="marca-filter-btn active" onclick="filtrarMarca('todas')">
+        <button
+          class="marca-filter-btn active"
+          data-marca="todas"
+          onclick="filtrarMarca('todas')"
+        >
           Todas las marcas
         </button>
         <div id="marcasList"></div>
@@ -263,8 +298,6 @@
     </div>
 
     <script type="module">
-      import { obtenerPerfumes } from "./firebase-config.js";
-
       let todosLosPerfumes = [];
       let perfumesFiltrados = [];
       let marcaActual = "todas";
@@ -272,29 +305,26 @@
       // Cargar datos desde Firebase
       async function cargarPerfumes() {
         try {
-          const data = await obtenerPerfumes();
+          console.log("🔥 Cargando desde Firebase...");
+          const dbRef = window.firebaseRef(window.firebaseDB, "perfumes");
+          const snapshot = await window.firebaseGet(dbRef);
 
-          // Procesar perfumes árabes
-          if (data.perfumes.arabes) {
-            Object.entries(data.perfumes.arabes).forEach(
-              ([marca, perfumes]) => {
-                // Manejar arrays y objetos
-                let arrayPerfumes;
-                if (Array.isArray(perfumes)) {
-                  arrayPerfumes = perfumes;
-                } else if (typeof perfumes === "object" && perfumes !== null) {
-                  arrayPerfumes = Object.values(perfumes);
-                } else {
-                  console.warn(`⚠️ Marca "${marca}" tiene formato inválido`);
-                  return;
-                }
+          if (!snapshot.exists()) {
+            throw new Error("No hay datos en Firebase");
+          }
 
-                arrayPerfumes.forEach((perfume) => {
-                  if (perfume && typeof perfume === "object") {
-                    todosLosPerfumes.push({
+          const firebaseData = snapshot.val();
+          console.log("✅ Datos cargados desde Firebase:", Object.keys(firebaseData).length, "perfumes");
+
+          // Convertir a array y filtrar por categoría árabes
+          Object.values(firebaseData).forEach((perfume) => {
+            if (perfume && perfume.categoria === "arabes") {
+              todosLosPerfumes.push(perfume);
                       ...perfume,
                       marca: marca,
                       categoria: "arabes",
+                      indexOriginal: index,
+                      marcaOriginal: marca,
                     });
                   }
                 });
@@ -315,15 +345,15 @@
             const btn = document.createElement("button");
             btn.className = "marca-filter-btn";
             btn.textContent = marca;
+            btn.setAttribute("data-marca", marca);
             btn.onclick = () => filtrarMarca(marca);
             marcasList.appendChild(btn);
           });
 
-          // Verificar si hay un filtro guardado
-          const filtroGuardado = sessionStorage.getItem("filtroMarcaMarcas");
+          // Verificar si hay un filtro guardado específico para árabes
+          const filtroGuardado = sessionStorage.getItem("filtroMarcaArabes");
           if (filtroGuardado) {
             filtrarMarca(filtroGuardado);
-            sessionStorage.removeItem("filtroMarcaMarcas");
           } else {
             // Mostrar todos los perfumes inicialmente
             mostrarPerfumes(perfumesFiltrados);
@@ -333,23 +363,27 @@
         }
       }
 
-      // Iniciar carga
-      cargarPerfumes();
+      // Iniciar carga - esperar a Firebase
+      if (window.firebaseReady) {
+        cargarPerfumes();
+      } else {
+        window.addEventListener('firebaseReady', () => {
+          cargarPerfumes();
+        });
+      }
 
       // Filtrar por marca
       function filtrarMarca(marca) {
         marcaActual = marca;
 
-        // Guardar filtro en sessionStorage
-        sessionStorage.setItem("filtroMarcaMarcas", marca);
+        // Guardar filtro en sessionStorage con clave específica para árabes
+        sessionStorage.setItem("filtroMarcaArabes", marca);
 
         // Actualizar botones activos
         document.querySelectorAll(".marca-filter-btn").forEach((btn) => {
           btn.classList.remove("active");
-          if (
-            btn.textContent === marca ||
-            (marca === "todas" && btn.onclick.toString().includes("'todas'"))
-          ) {
+          const btnMarca = btn.getAttribute("data-marca");
+          if (btnMarca === marca) {
             btn.classList.add("active");
           }
         });
@@ -388,10 +422,24 @@
           card.className = "perfume-card";
           card.onclick = () => abrirDetallePerfume(perfume);
 
-          // Calcular precio final con incremento
-          const precioBase = parseInt(perfume.precio) || 0;
-          const incremento = 1800; // Árabes +1800
-          const precioFinal = precioBase + incremento;
+          // PRIORIDAD 1: Precio personalizado de 100ml
+          let precioFinal = 0;
+          if (perfume.preciosPersonalizados && perfume.preciosPersonalizados["100"]) {
+            precioFinal = perfume.preciosPersonalizados["100"];
+          }
+          // PRIORIDAD 2: Si el perfume es de 100ml, usar su precio directo
+          else if (perfume.ml === 100 && perfume.precio) {
+            precioFinal = perfume.precio;
+          }
+          // PRIORIDAD 3: Buscar precio de 100ml en preciosPersonalizados
+          else if (perfume.preciosPersonalizados) {
+            const precio100 = perfume.preciosPersonalizados[100] || perfume.preciosPersonalizados["100"];
+            if (precio100) precioFinal = precio100;
+          }
+          // FALLBACK: Usar precio base
+          if (!precioFinal) {
+            precioFinal = parseInt(perfume.precio) || 0;
+          }
 
           // Icono de género con símbolos y colores
           let generoIcono = "";
@@ -409,10 +457,11 @@
           card.innerHTML = `
             <img src="${perfume.imagen}" alt="${
             perfume.nombre
-          }" class="perfume-image" 
+          }" class="perfume-image"
                  onerror="this.src='https://via.placeholder.com/200x200?text=Sin+Imagen'">
             <div class="perfume-info">
               <div class="perfume-name">${perfume.nombre} ${generoIcono}</div>
+              <div style="font-size: 0.9em; color: #666; margin: 5px 0;">📦 100 ml</div>
               <div class="perfume-price">RD$ ${precioFinal.toLocaleString()}</div>
             </div>
           `;
@@ -423,10 +472,19 @@
 
       // Abrir página de detalle del perfume
       function abrirDetallePerfume(perfume) {
-        // Guardar datos del perfume en sessionStorage
-        sessionStorage.setItem("perfumeDetail", JSON.stringify(perfume));
-        // Navegar a la página de detalles
-        window.location.href = "detalle-perfume.html";
+        // Usar firebaseId si está disponible
+        if (perfume.id || perfume.firebaseId) {
+          const id = perfume.id || perfume.firebaseId;
+          window.location.href = `detalle-perfume.html?id=${encodeURIComponent(id)}`;
+        } else {
+          // Fallback al formato viejo
+          const url = `detalle-perfume.html?categoria=${encodeURIComponent(
+            perfume.categoria
+          )}&marca=${encodeURIComponent(perfume.marcaOriginal || perfume.marca)}&index=${
+            perfume.indexOriginal !== undefined ? perfume.indexOriginal : 0
+          }`;
+          window.location.href = url;
+        }
       }
     </script>
   </body>

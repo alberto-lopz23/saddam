@@ -1,0 +1,24 @@
+# Dependencias
+node_modules/
+package-lock.json
+
+# Vercel
+.vercel
+
+# Backups
+backups/
+
+# Archivos temporales
+*.log
+.DS_Store
+.env
+.env.local
+
+# IDEs
+.vscode/
+.idea/
+
+# Firebase (ya no se usa)
+.firebase/
+firebase-debug.log
+.env*.local
