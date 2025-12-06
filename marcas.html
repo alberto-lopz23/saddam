@@ -480,7 +480,9 @@
         // Usar firebaseId si está disponible
         if (perfume.id || perfume.firebaseId) {
           const id = perfume.id || perfume.firebaseId;
-          window.location.href = `detalle-perfume?id=${encodeURIComponent(id)}`;
+          window.location.href = `detalle-perfume.html?id=${encodeURIComponent(
+            id
+          )}`;
         } else {
           // Fallback al formato viejo
           const url = `detalle-perfume.html?categoria=${encodeURIComponent(
