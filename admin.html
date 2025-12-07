@@ -89,11 +89,18 @@
               📂 Cargar Backup
             </button>
             <button
+              onclick="abrirGestionModal()"
+              class="btn-secondary"
+              title="Gestionar marcas y categorías"
+            >
+              ⚙️ Gestionar Marcas
+            </button>
+            <button
               onclick="location.reload()"
               class="btn-secondary"
               title="Recargar datos desde Firebase"
             >
-              📋 Ver Archivos Blob
+              🔄 Recargar
             </button>
           </div>
           <input
@@ -121,10 +128,7 @@
           <div class="filter-box">
             <select id="categoriaFiltro" onchange="filtrarTabla()">
               <option value="">Todas las categorías</option>
-              <option value="arabes">Árabes</option>
-              <option value="disenador">Diseñador</option>
-              <option value="nichos">Nichos</option>
-              <option value="sets">Sets</option>
+              <!-- Las opciones se cargan dinámicamente -->
             </select>
             <button onclick="abrirModalAgregar()" class="btn-add">
               ➕ Agregar Perfume
@@ -141,22 +145,7 @@
             <div class="stat-number" id="totalPerfumes">0</div>
             <div class="stat-label">Total Perfumes</div>
           </div>
-          <div class="stat-card">
-            <div class="stat-number" id="totalArabes">0</div>
-            <div class="stat-label">Árabes</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-number" id="totalDisenador">0</div>
-            <div class="stat-label">Diseñador</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-number" id="totalNichos">0</div>
-            <div class="stat-label">Nichos</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-number" id="totalSets">0</div>
-            <div class="stat-label">Sets</div>
-          </div>
+          <!-- Las tarjetas de categorías se generan dinámicamente -->
         </div>
 
         <!-- Tabla de perfumes -->
@@ -459,6 +448,15 @@
       </div>
     </div>
 
+    <!-- Indicador de carga global -->
+    <div id="loadingOverlay" class="loading-overlay" style="display: none">
+      <div class="loading-content">
+        <div class="loading-spinner"></div>
+        <p class="loading-text">Actualizando datos...</p>
+        <p class="loading-subtext">Por favor espera un momento</p>
+      </div>
+    </div>
+
     <!-- Modal de Gestión de Marcas/Categorías -->
     <div id="gestionModal" class="modal">
       <div class="modal-overlay" onclick="cerrarGestionModal()"></div>
@@ -569,16 +567,77 @@
       function actualizarEstadisticas() {
         document.getElementById("totalPerfumes").textContent =
           todosLosPerfumes.length;
-        document.getElementById("totalArabes").textContent =
-          todosLosPerfumes.filter((p) => p.categoria === "arabes").length;
-        document.getElementById("totalDisenador").textContent =
-          todosLosPerfumes.filter((p) => p.categoria === "disenador").length;
-        document.getElementById("totalNichos").textContent =
-          todosLosPerfumes.filter(
-            (p) => p.categoria === "nichos" || p.categoria === "nicho"
+
+        // Obtener categorías únicas
+        const categorias = [
+          ...new Set(todosLosPerfumes.map((p) => p.categoria)),
+        ].sort();
+
+        // Generar tarjetas de estadísticas dinámicamente
+        const container = document.querySelector(".stats-container");
+
+        // Eliminar tarjetas anteriores excepto la de Total Perfumes
+        const tarjetasAnteriores = container.querySelectorAll(
+          ".stat-card:not(:first-child)"
+        );
+        tarjetasAnteriores.forEach((tarjeta) => tarjeta.remove());
+
+        // Mapeo de nombres amigables
+        const nombresAmigables = {
+          arabes: "Árabes",
+          arabe: "Árabe",
+          disenador: "Diseñador",
+          nichos: "Nichos",
+          nicho: "Nicho",
+          sets: "Sets",
+        };
+
+        categorias.forEach((categoria) => {
+          const cantidad = todosLosPerfumes.filter(
+            (p) => p.categoria === categoria
           ).length;
-        document.getElementById("totalSets").textContent =
-          todosLosPerfumes.filter((p) => p.categoria === "sets").length;
+          const nombreAmigable =
+            nombresAmigables[categoria] ||
+            categoria.charAt(0).toUpperCase() + categoria.slice(1);
+
+          const statCard = document.createElement("div");
+          statCard.className = "stat-card";
+          statCard.innerHTML = `
+            <div class="stat-number">${cantidad}</div>
+            <div class="stat-label">${nombreAmigable}</div>
+          `;
+          container.appendChild(statCard);
+        });
+
+        // Actualizar dropdown de filtros
+        actualizarDropdownCategorias();
+      }
+
+      // Actualizar dropdown de categorías dinámicamente
+      function actualizarDropdownCategorias() {
+        const select = document.getElementById("categoriaFiltro");
+        const valorActual = select.value;
+
+        // Obtener categorías únicas
+        const categorias = [
+          ...new Set(todosLosPerfumes.map((p) => p.categoria)),
+        ].sort();
+
+        // Limpiar y regenerar opciones
+        select.innerHTML = '<option value="">Todas las categorías</option>';
+
+        categorias.forEach((categoria) => {
+          const option = document.createElement("option");
+          option.value = categoria;
+          option.textContent =
+            categoria.charAt(0).toUpperCase() + categoria.slice(1);
+          select.appendChild(option);
+        });
+
+        // Restaurar valor si todavía existe
+        if (categorias.includes(valorActual)) {
+          select.value = valorActual;
+        }
       }
 
       // Mostrar perfumes en tabla
@@ -1094,7 +1153,29 @@
 
       // ===== GESTIÓN DE MARCAS Y CATEGORÍAS =====
 
+      // Funciones para mostrar/ocultar loading
+      function mostrarLoading(
+        texto = "Actualizando datos...",
+        subtexto = "Por favor espera un momento"
+      ) {
+        const overlay = document.getElementById("loadingOverlay");
+        const textElement = overlay.querySelector(".loading-text");
+        const subtextElement = overlay.querySelector(".loading-subtext");
+
+        textElement.textContent = texto;
+        subtextElement.textContent = subtexto;
+        overlay.style.display = "flex";
+      }
+
+      function ocultarLoading() {
+        const overlay = document.getElementById("loadingOverlay");
+        overlay.style.display = "none";
+      }
+
       function abrirGestionModal() {
+        // Cerrar menú desplegable
+        document.getElementById("buttonGrid").style.display = "none";
+
         document.getElementById("gestionModal").style.display = "block";
         cargarCategorias();
         cargarCategoriasSelect();
@@ -1127,7 +1208,12 @@
         const lista = document.getElementById("listaCategorias");
         lista.innerHTML = "";
 
-        Object.keys(perfumesData.perfumes).forEach((categoria) => {
+        // Obtener categorías únicas desde los perfumes
+        const categorias = [
+          ...new Set(todosLosPerfumes.map((p) => p.categoria)),
+        ];
+
+        categorias.forEach((categoria) => {
           const item = document.createElement("div");
           item.className = "item-gestion";
           item.innerHTML = `
@@ -1145,7 +1231,12 @@
         const select = document.getElementById("categoriaParaMarcas");
         select.innerHTML = '<option value="">Seleccionar categoría...</option>';
 
-        Object.keys(perfumesData.perfumes).forEach((categoria) => {
+        // Obtener categorías únicas desde los perfumes
+        const categorias = [
+          ...new Set(todosLosPerfumes.map((p) => p.categoria)),
+        ];
+
+        categorias.forEach((categoria) => {
           const option = document.createElement("option");
           option.value = categoria;
           option.textContent = categoria;
@@ -1160,8 +1251,13 @@
 
         if (!categoria) return;
 
-        const marcas = perfumesData.perfumes[categoria];
-        Object.keys(marcas).forEach((marca) => {
+        // Filtrar perfumes por categoría y obtener marcas únicas
+        const perfumesCategoria = todosLosPerfumes.filter(
+          (p) => p.categoria === categoria
+        );
+        const marcas = [...new Set(perfumesCategoria.map((p) => p.marca))];
+
+        marcas.forEach((marca) => {
           const item = document.createElement("div");
           item.className = "item-gestion";
           item.innerHTML = `
@@ -1188,43 +1284,66 @@
 
         console.log("✏️ Renombrando:", categoriaVieja, "→", nuevaCategoria);
 
-        // Mover la categoría
-        perfumesData.perfumes[nuevaCategoria] =
-          perfumesData.perfumes[categoriaVieja];
-        delete perfumesData.perfumes[categoriaVieja];
-
-        // IMPORTANTE: Actualizar la propiedad 'categoria' dentro de cada perfume
-        Object.keys(perfumesData.perfumes[nuevaCategoria]).forEach((marca) => {
-          Object.keys(perfumesData.perfumes[nuevaCategoria][marca]).forEach(
-            (nombrePerfume) => {
-              if (
-                perfumesData.perfumes[nuevaCategoria][marca][nombrePerfume]
-                  .categoria === categoriaVieja
-              ) {
-                perfumesData.perfumes[nuevaCategoria][marca][
-                  nombrePerfume
-                ].categoria = nuevaCategoria;
-              }
-            }
-          );
-        });
-
-        console.log(
-          "📊 Categorías después de editar:",
-          Object.keys(perfumesData.perfumes)
+        // Mostrar loading
+        mostrarLoading(
+          "Editando categoría...",
+          `Actualizando de "${categoriaVieja}" a "${nuevaCategoria}"`
         );
 
         // Guardar estado actual de filtros
         const filtroActual = document.getElementById("categoriaFiltro").value;
         const busquedaActual = document.getElementById("searchBox").value;
 
-        // Guardar primero
-        console.log("💾 Guardando cambios...");
-        const guardado = await guardarEnLocalStorage();
-        console.log("💾 Resultado del guardado:", guardado);
+        // Actualizar todos los perfumes de esta categoría en Firebase
+        const dbRef = window.firebaseRef(window.firebaseDB, "perfumes");
+        const perfumesAActualizar = [];
 
-        // Recargar desde la nube para tener los datos frescos
-        console.log("🔄 Recargando datos desde la nube...");
+        Object.keys(perfumesData).forEach((firebaseId) => {
+          const perfume = perfumesData[firebaseId];
+          if (perfume.categoria === categoriaVieja) {
+            perfumesAActualizar.push({ firebaseId, perfume });
+          }
+        });
+
+        console.log(
+          `💾 Actualizando ${perfumesAActualizar.length} perfumes...`
+        );
+
+        // Procesar cada perfume: crear con nuevo ID y eliminar el viejo
+        for (const { firebaseId, perfume } of perfumesAActualizar) {
+          const nuevoId = firebaseId.replace(categoriaVieja, nuevaCategoria);
+
+          if (nuevoId !== firebaseId) {
+            // Crear el perfume con el nuevo ID y categoría actualizada
+            const perfumeRef = window.firebaseRef(
+              window.firebaseDB,
+              `perfumes/${nuevoId}`
+            );
+            await window.firebaseSet(perfumeRef, {
+              ...perfume,
+              categoria: nuevaCategoria,
+            });
+
+            // Eliminar el perfume con el ID viejo
+            const viejoRef = window.firebaseRef(
+              window.firebaseDB,
+              `perfumes/${firebaseId}`
+            );
+            await window.firebaseRemove(viejoRef);
+          } else {
+            // Solo actualizar la categoría
+            const perfumeRef = window.firebaseRef(
+              window.firebaseDB,
+              `perfumes/${firebaseId}/categoria`
+            );
+            await window.firebaseSet(perfumeRef, nuevaCategoria);
+          }
+        }
+
+        console.log("✅ Cambios guardados en Firebase");
+
+        // Recargar desde Firebase
+        console.log("🔄 Recargando datos desde Firebase...");
         await cargarJSON(false);
 
         // Restaurar filtros
@@ -1239,10 +1358,12 @@
           mostrarPerfumes();
         }
 
-        console.log(
-          "✅ Datos recargados. Categorías:",
-          Object.keys(perfumesData.perfumes)
-        );
+        // Actualizar modal
+        cargarCategorias();
+        cargarCategoriasSelect();
+
+        // Ocultar loading
+        ocultarLoading();
       }
 
       async function eliminarCategoria(categoria) {
@@ -1253,16 +1374,40 @@
         )
           return;
 
+        // Mostrar loading
+        mostrarLoading(
+          "Eliminando categoría...",
+          `Eliminando todos los perfumes de "${categoria}"`
+        );
+
         // Guardar estado actual de filtros
         const filtroActual = document.getElementById("categoriaFiltro").value;
         const busquedaActual = document.getElementById("searchBox").value;
 
-        delete perfumesData.perfumes[categoria];
+        // Eliminar todos los perfumes de esta categoría en Firebase
+        console.log("💾 Eliminando categoría en Firebase...");
 
-        // Guardar primero
-        await guardarEnLocalStorage();
+        const perfumesAEliminar = [];
+        Object.keys(perfumesData).forEach((firebaseId) => {
+          const perfume = perfumesData[firebaseId];
+          if (perfume.categoria === categoria) {
+            perfumesAEliminar.push(firebaseId);
+          }
+        });
 
-        // Recargar desde la nube para tener los datos frescos
+        console.log(`🗑️ Eliminando ${perfumesAEliminar.length} perfumes...`);
+
+        for (const firebaseId of perfumesAEliminar) {
+          const perfumeRef = window.firebaseRef(
+            window.firebaseDB,
+            `perfumes/${firebaseId}`
+          );
+          await window.firebaseRemove(perfumeRef);
+        }
+
+        console.log("✅ Categoría eliminada de Firebase");
+
+        // Recargar desde Firebase
         await cargarJSON(false);
 
         // Restaurar filtros (limpiar si era la categoría eliminada)
@@ -1276,6 +1421,13 @@
           document.getElementById("categoriaFiltro").value = "";
           filtrarTabla();
         }
+
+        // Actualizar modal
+        cargarCategorias();
+        cargarCategoriasSelect();
+
+        // Ocultar loading
+        ocultarLoading();
       }
       async function editarMarca(categoria, marcaVieja) {
         const nuevaMarca = prompt(
@@ -1284,33 +1436,70 @@
         );
         if (!nuevaMarca || nuevaMarca === marcaVieja) return;
 
-        // Mover la marca
-        perfumesData.perfumes[categoria][nuevaMarca] =
-          perfumesData.perfumes[categoria][marcaVieja];
-        delete perfumesData.perfumes[categoria][marcaVieja];
+        console.log("✏️ Renombrando marca:", marcaVieja, "→", nuevaMarca);
 
-        // IMPORTANTE: Actualizar la propiedad 'marca' dentro de cada perfume
-        Object.keys(perfumesData.perfumes[categoria][nuevaMarca]).forEach(
-          (nombrePerfume) => {
-            if (
-              perfumesData.perfumes[categoria][nuevaMarca][nombrePerfume]
-                .marca === marcaVieja
-            ) {
-              perfumesData.perfumes[categoria][nuevaMarca][
-                nombrePerfume
-              ].marca = nuevaMarca;
-            }
-          }
+        // Mostrar loading
+        mostrarLoading(
+          "Editando marca...",
+          `Actualizando de "${marcaVieja}" a "${nuevaMarca}"`
         );
 
         // Guardar estado actual de filtros
         const filtroActual = document.getElementById("categoriaFiltro").value;
         const busquedaActual = document.getElementById("searchBox").value;
 
-        // Guardar primero
-        await guardarEnLocalStorage();
+        // Actualizar todos los perfumes de esta marca en Firebase
+        const dbRef = window.firebaseRef(window.firebaseDB, "perfumes");
+        const perfumesAActualizar = [];
 
-        // Recargar desde la nube para tener los datos frescos
+        Object.keys(perfumesData).forEach((firebaseId) => {
+          const perfume = perfumesData[firebaseId];
+          if (perfume.categoria === categoria && perfume.marca === marcaVieja) {
+            perfumesAActualizar.push({ firebaseId, perfume });
+          }
+        });
+
+        console.log(
+          `💾 Actualizando ${perfumesAActualizar.length} perfumes...`
+        );
+
+        // Procesar cada perfume: crear con nuevo ID y eliminar el viejo
+        for (const { firebaseId, perfume } of perfumesAActualizar) {
+          const nuevoId = firebaseId.replace(
+            `_${marcaVieja}_`,
+            `_${nuevaMarca}_`
+          );
+
+          if (nuevoId !== firebaseId) {
+            // Crear el perfume con el nuevo ID y marca actualizada
+            const perfumeRef = window.firebaseRef(
+              window.firebaseDB,
+              `perfumes/${nuevoId}`
+            );
+            await window.firebaseSet(perfumeRef, {
+              ...perfume,
+              marca: nuevaMarca,
+            });
+
+            // Eliminar el perfume con el ID viejo
+            const viejoRef = window.firebaseRef(
+              window.firebaseDB,
+              `perfumes/${firebaseId}`
+            );
+            await window.firebaseRemove(viejoRef);
+          } else {
+            // Solo actualizar la marca
+            const perfumeRef = window.firebaseRef(
+              window.firebaseDB,
+              `perfumes/${firebaseId}/marca`
+            );
+            await window.firebaseSet(perfumeRef, nuevaMarca);
+          }
+        }
+
+        console.log("✅ Cambios guardados en Firebase");
+
+        // Recargar desde Firebase
         await cargarJSON(false);
 
         // Restaurar filtros
@@ -1323,22 +1512,52 @@
         } else {
           mostrarPerfumes();
         }
+
+        // Actualizar modal
+        cargarMarcasDeCategoria();
+
+        // Ocultar loading
+        ocultarLoading();
       }
 
       async function eliminarMarca(categoria, marca) {
         if (!confirm(`¿Eliminar la marca "${marca}" y TODOS sus perfumes?`))
           return;
 
+        // Mostrar loading
+        mostrarLoading(
+          "Eliminando marca...",
+          `Eliminando todos los perfumes de "${marca}"`
+        );
+
         // Guardar estado actual de filtros
         const filtroActual = document.getElementById("categoriaFiltro").value;
         const busquedaActual = document.getElementById("searchBox").value;
 
-        delete perfumesData.perfumes[categoria][marca];
+        // Eliminar todos los perfumes de esta marca en Firebase
+        console.log("💾 Eliminando marca en Firebase...");
 
-        // Guardar primero
-        await guardarEnLocalStorage();
+        const perfumesAEliminar = [];
+        Object.keys(perfumesData).forEach((firebaseId) => {
+          const perfume = perfumesData[firebaseId];
+          if (perfume.categoria === categoria && perfume.marca === marca) {
+            perfumesAEliminar.push(firebaseId);
+          }
+        });
 
-        // Recargar desde la nube para tener los datos frescos
+        console.log(`🗑️ Eliminando ${perfumesAEliminar.length} perfumes...`);
+
+        for (const firebaseId of perfumesAEliminar) {
+          const perfumeRef = window.firebaseRef(
+            window.firebaseDB,
+            `perfumes/${firebaseId}`
+          );
+          await window.firebaseRemove(perfumeRef);
+        }
+
+        console.log("✅ Marca eliminada de Firebase");
+
+        // Recargar desde Firebase
         await cargarJSON(false);
 
         // Restaurar filtros
@@ -1351,6 +1570,12 @@
         } else {
           mostrarPerfumes();
         }
+
+        // Actualizar modal
+        cargarMarcasDeCategoria();
+
+        // Ocultar loading
+        ocultarLoading();
       }
 
       // Toggle menú de botones

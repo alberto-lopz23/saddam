@@ -150,35 +150,12 @@
       <div class="mobile-menu-content">
         <div class="mobile-filter-section">
           <h4>Categorías</h4>
+          <!-- Botones generados dinámicamente desde Firebase -->
           <button
             class="mobile-filter-btn active"
             onclick="filtrarCategoriaMobile('todos', this)"
           >
             Todos
-          </button>
-          <button
-            class="mobile-filter-btn"
-            onclick="filtrarCategoriaMobile('arabes', this)"
-          >
-            Árabes
-          </button>
-          <button
-            class="mobile-filter-btn"
-            onclick="filtrarCategoriaMobile('disenador', this)"
-          >
-            Diseñador
-          </button>
-          <button
-            class="mobile-filter-btn"
-            onclick="filtrarCategoriaMobile('sets', this)"
-          >
-            Sets
-          </button>
-          <button
-            class="mobile-filter-btn"
-            onclick="filtrarCategoriaMobile('nichos', this)"
-          >
-            Nichos
           </button>
         </div>
         <div class="mobile-filter-section">
@@ -374,20 +351,9 @@
 
       <!-- Filtros desktop (ocultos en móvil) -->
       <div class="buttons desktop-filters">
+        <!-- Botones generados dinámicamente desde Firebase -->
         <button class="btn active" onclick="filtrarCategoria('todos', this)">
           Todos
-        </button>
-        <button class="btn" onclick="filtrarCategoria('arabes', this)">
-          Árabes
-        </button>
-        <button class="btn" onclick="filtrarCategoria('disenador', this)">
-          Diseñador
-        </button>
-        <button class="btn" onclick="filtrarCategoria('sets', this)">
-          Sets
-        </button>
-        <button class="btn" onclick="filtrarCategoria('nichos', this)">
-          Nichos
         </button>
         <button class="btn btn-genero" onclick="mostrarFiltrosGenero(this)">
           Género

@@ -69,23 +69,36 @@ async function cargarCatalogo() {
 
     if (filtroCategoria) {
       // Restaurar filtro de categoría
+      // Normalizar el filtro guardado
+      const categoriaNormalizada = filtroCategoria
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, ""); // Eliminar acentos
+
       const btnCategoria = Array.from(document.querySelectorAll(".btn")).find(
-        (b) => b.textContent.toLowerCase().trim() === filtroCategoria
+        (b) => {
+          const textoBtn = b.textContent
+            .toLowerCase()
+            .trim()
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "");
+          return textoBtn === categoriaNormalizada;
+        }
       );
+
       if (btnCategoria) {
         btnCategoria.classList.add("active");
+        // Usar el filtro directamente si no es "todos"
         const categoria =
           filtroCategoria === "todos"
             ? "todos"
-            : filtroCategoria === "árabes"
-            ? "arabes"
-            : filtroCategoria === "diseñador"
-            ? "disenador"
-            : filtroCategoria === "nichos"
-            ? "nichos"
-            : filtroCategoria === "sets"
-            ? "sets"
-            : "todos";
+            : todosLosPerfumes.find((p) => {
+                const catNorm = p.categoria
+                  .toLowerCase()
+                  .normalize("NFD")
+                  .replace(/[\u0300-\u036f]/g, "");
+                return catNorm === categoriaNormalizada;
+              })?.categoria || "todos";
         aplicarFiltroCategoria(categoria);
 
         // Si hay filtro de marca, aplicarlo
@@ -222,6 +235,68 @@ function procesarDatos() {
   perfumesFiltrados = [...todosLosPerfumes];
 
   console.log(`✅ ${todosLosPerfumes.length} perfumes procesados`);
+
+  // Generar botones de categorías dinámicamente
+  generarBotonesCategorias();
+}
+
+// Generar botones de categorías dinámicamente desde los datos
+function generarBotonesCategorias() {
+  // Obtener categorías únicas desde los perfumes
+  const categorias = [
+    ...new Set(todosLosPerfumes.map((p) => p.categoria)),
+  ].sort();
+
+  console.log("📂 Categorías encontradas:", categorias);
+
+  // Mapeo de nombres amigables
+  const nombresAmigables = {
+    arabes: "Árabes",
+    arabe: "Árabe",
+    disenador: "Diseñador",
+    nichos: "Nichos",
+    nicho: "Nicho",
+    sets: "Sets",
+  };
+
+  // Generar botones desktop
+  const desktopFilters = document.querySelector(".desktop-filters");
+  const btnGenero = desktopFilters.querySelector(".btn-genero");
+
+  if (desktopFilters) {
+    categorias.forEach((categoria) => {
+      const btn = document.createElement("button");
+      btn.className = "btn";
+      btn.textContent =
+        nombresAmigables[categoria] ||
+        categoria.charAt(0).toUpperCase() + categoria.slice(1);
+      btn.onclick = function () {
+        filtrarCategoria(categoria, this);
+      };
+
+      // Insertar antes del botón de Género
+      desktopFilters.insertBefore(btn, btnGenero);
+    });
+  }
+
+  // Generar botones mobile
+  const mobileFilters = document.querySelector(".mobile-filter-scroll");
+  const btnTodosMobile = mobileFilters?.querySelector(".mobile-filter-btn");
+
+  if (mobileFilters && btnTodosMobile) {
+    categorias.forEach((categoria) => {
+      const btn = document.createElement("button");
+      btn.className = "mobile-filter-btn";
+      btn.textContent =
+        nombresAmigables[categoria] ||
+        categoria.charAt(0).toUpperCase() + categoria.slice(1);
+      btn.onclick = function () {
+        filtrarCategoriaMobile(categoria, this);
+      };
+
+      mobileFilters.appendChild(btn);
+    });
+  }
 }
 
 // Calcular precio final - SIEMPRE mostrar precio de 100ml
@@ -821,12 +896,15 @@ function mostrarSubfiltros(categoria) {
 
   let subfiltros = [];
 
-  if (categoria === "arabes") {
+  // Detectar si es categoría de tipo árabes (puede ser "arabes" o "arabe")
+  const esArabes = categoria.toLowerCase().includes("arabe");
+
+  if (esArabes) {
     // Obtener marcas árabes únicas
     const marcas = [
       ...new Set(
         todosLosPerfumes
-          .filter((p) => p.categoria === "arabes")
+          .filter((p) => p.categoria === categoria)
           .map((p) => p.marca)
       ),
     ];
@@ -841,18 +919,27 @@ function mostrarSubfiltros(categoria) {
       ),
     ];
     subfiltros = marcas.slice(0, 8); // Mostrar solo 8 marcas
-  } else if (categoria === "nichos") {
+  } else if (categoria === "nichos" || categoria === "nicho") {
     // Obtener marcas nicho únicas
     const marcas = [
       ...new Set(
         todosLosPerfumes
-          .filter((p) => p.categoria === "nichos")
+          .filter((p) => p.categoria === categoria)
           .map((p) => p.marca)
       ),
     ];
     subfiltros = marcas;
   } else if (categoria === "sets") {
-    subfiltros = ["Set arabes", "Set disenador"];
+    // Generar subfiltros dinámicamente desde los sets disponibles
+    const categoriasSets = [
+      ...new Set(
+        todosLosPerfumes.filter((p) => p.tipo === "set").map((p) => p.categoria)
+      ),
+    ];
+    subfiltros = categoriasSets.map((cat) => {
+      const nombre = cat.charAt(0).toUpperCase() + cat.slice(1);
+      return `Set ${nombre}`;
+    });
   }
 
   // Crear botones de subfiltros
@@ -865,14 +952,12 @@ function mostrarSubfiltros(categoria) {
   });
 
   // Agregar botón "Más marcas" para diseñador y árabes
-  if (
-    (categoria === "disenador" || categoria === "arabes") &&
-    subfiltros.length === 8
-  ) {
+  const esArabesBtn = categoria.toLowerCase().includes("arabe");
+  if ((categoria === "disenador" || esArabesBtn) && subfiltros.length === 8) {
     const btnMas = document.createElement("button");
     btnMas.className = "subfilter-btn subfilter-btn-mas";
     btnMas.textContent = "✨ Más marcas";
-    const url = categoria === "arabes" ? "marcas-arabes.html" : "marcas.html";
+    const url = esArabesBtn ? "marcas-arabes.html" : "marcas.html";
     btnMas.onclick = () => (window.location.href = url);
     subfiltersDiv.appendChild(btnMas);
   }
@@ -1326,15 +1411,29 @@ function filtrarGeneroMobile(genero, boton) {
     )
   ).find((b) => b.classList.contains("active"));
   if (categoriaActual) {
-    const categoria = categoriaActual.textContent.toLowerCase().trim();
-    const categoriaMap = {
-      todos: "todos",
-      árabes: "arabes",
-      diseñador: "disenador",
-      sets: "sets",
-      nichos: "nichos",
-    };
-    aplicarFiltroCategoria(categoriaMap[categoria] || "todos");
+    const textoCategoria = categoriaActual.textContent.toLowerCase().trim();
+
+    // Buscar la categoría real desde los perfumes basándose en el texto del botón
+    const categoriaNormalizada = textoCategoria
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, ""); // Eliminar acentos
+
+    let categoriaReal = "todos";
+    if (textoCategoria !== "todos") {
+      const perfumeEncontrado = todosLosPerfumes.find((p) => {
+        const catNorm = p.categoria
+          .toLowerCase()
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "");
+        return (
+          catNorm === categoriaNormalizada ||
+          p.categoria.toLowerCase() === textoCategoria
+        );
+      });
+      categoriaReal = perfumeEncontrado?.categoria || textoCategoria;
+    }
+
+    aplicarFiltroCategoria(categoriaReal);
   } else {
     aplicarFiltroCategoria("todos");
   }
