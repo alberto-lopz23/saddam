@@ -279,11 +279,23 @@ function generarBotonesCategorias() {
     });
   }
 
-  // Generar botones mobile
-  const mobileFilters = document.querySelector(".mobile-filter-scroll");
-  const btnTodosMobile = mobileFilters?.querySelector(".mobile-filter-btn");
+  // Generar botones mobile (menú lateral)
+  const mobileMenuSections = document.querySelectorAll(
+    ".mobile-filter-section"
+  );
 
-  if (mobileFilters && btnTodosMobile) {
+  // Buscar la sección de Categorías (la primera)
+  let categoriasSection = null;
+  mobileMenuSections.forEach((section) => {
+    const h4 = section.querySelector("h4");
+    if (h4 && h4.textContent.trim() === "Categorías") {
+      categoriasSection = section;
+    }
+  });
+
+  if (categoriasSection) {
+    console.log("✅ Generando botones móviles de categorías...");
+    // Insertar después del botón "Todos"
     categorias.forEach((categoria) => {
       const btn = document.createElement("button");
       btn.className = "mobile-filter-btn";
@@ -294,8 +306,11 @@ function generarBotonesCategorias() {
         filtrarCategoriaMobile(categoria, this);
       };
 
-      mobileFilters.appendChild(btn);
+      categoriasSection.appendChild(btn);
     });
+    console.log("✅ Botones móviles generados:", categorias.length);
+  } else {
+    console.error("❌ No se encontró la sección de Categorías en móvil");
   }
 }
 
