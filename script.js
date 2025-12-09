@@ -945,16 +945,15 @@ function mostrarSubfiltros(categoria) {
     ];
     subfiltros = marcas;
   } else if (categoria === "sets") {
-    // Generar subfiltros dinámicamente desde los sets disponibles
-    const categoriasSets = [
+    // Para sets, mostrar marcas únicas (no subfiltros por categoría)
+    const marcas = [
       ...new Set(
-        todosLosPerfumes.filter((p) => p.tipo === "set").map((p) => p.categoria)
+        todosLosPerfumes
+          .filter((p) => p.categoria === "sets")
+          .map((p) => p.marca)
       ),
-    ];
-    subfiltros = categoriasSets.map((cat) => {
-      const nombre = cat.charAt(0).toUpperCase() + cat.slice(1);
-      return `Set ${nombre}`;
-    });
+    ].sort();
+    subfiltros = marcas.slice(0, 8); // Mostrar solo 8 marcas
   }
 
   // Crear botones de subfiltros
@@ -1255,7 +1254,15 @@ function mostrarSubfiltrosMobile(categoria) {
     ];
     subfiltros = marcas;
   } else if (categoria === "sets") {
-    subfiltros = ["Set arabes", "Set disenador"];
+    // Para sets, mostrar marcas únicas (no subfiltros por categoría)
+    const marcas = [
+      ...new Set(
+        todosLosPerfumes
+          .filter((p) => p.categoria === "sets")
+          .map((p) => p.marca)
+      ),
+    ].sort();
+    subfiltros = marcas.slice(0, 8); // Mostrar solo 8 marcas
   }
 
   if (subfiltros.length > 0) {

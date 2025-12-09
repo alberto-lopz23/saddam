@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Detalle del Perfume</title>
     <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
 
     <!-- Firebase SDK -->
     <script type="module">
@@ -159,8 +163,8 @@
       }
 
       .tamano-ml {
-        font-size: 24px;
-        font-weight: bold;
+        font-size: 16px;
+        font-weight: 600;
         color: #667eea;
       }
 
@@ -187,6 +191,30 @@
         box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
       }
 
+      .btn-whatsapp {
+        display: inline-block;
+        background: #25d366;
+        color: white;
+        padding: 15px 30px;
+        border-radius: 50px;
+        text-decoration: none;
+        font-weight: bold;
+        text-align: center;
+        margin-top: 130px;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+      }
+
+      .btn-whatsapp:hover {
+        background: #128c7e;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+      }
+
+      .btn-whatsapp i {
+        margin-right: 8px;
+      }
+
       @media (max-width: 768px) {
         .detalle-content {
           grid-template-columns: 1fr;
@@ -198,6 +226,11 @@
 
         .detalle-precio {
           font-size: 28px;
+        }
+
+        .btn-whatsapp {
+          width: 100%;
+          padding: 12px 20px;
         }
       }
     </style>
@@ -213,6 +246,13 @@
               src=""
               alt="Perfume"
             />
+            <a
+              href="https://wa.me/18097158215"
+              target="_blank"
+              class="btn-whatsapp"
+            >
+              <i class="fab fa-whatsapp"></i> Ordenar por WhatsApp
+            </a>
           </div>
           <div class="detalle-info">
             <h1 id="perfumeNombre">Cargando...</h1>
@@ -224,6 +264,16 @@
               style="font-size: 1.1em; color: #666; margin: 10px 0"
             ></div>
             <div class="detalle-precio" id="perfumePrecio"></div>
+
+            <div
+              class="tamanos-section"
+              id="tamanosSection"
+              style="display: none"
+            >
+              <h3>📦 Tamaños Disponibles</h3>
+              <div class="tamanos-grid" id="tamanosGrid"></div>
+            </div>
+
             <div class="detalle-descripcion" id="perfumeDescripcion"></div>
 
             <div class="notas-section" id="notasSection" style="display: none">
@@ -240,15 +290,6 @@
                 <strong>FONDO</strong>
                 <span id="notaFondoTexto"></span>
               </div>
-            </div>
-
-            <div
-              class="tamanos-section"
-              id="tamanosSection"
-              style="display: none"
-            >
-              <h3>📦 Tamaños Disponibles</h3>
-              <div class="tamanos-grid" id="tamanosGrid"></div>
             </div>
           </div>
         </div>
@@ -464,8 +505,8 @@
               const precio = perfume.preciosPersonalizados[tamano];
 
               div.innerHTML = `
-                                <div class="tamano-ml">${tamano} ML</div>
                                 <div class="tamano-precio">RD$ ${precio}</div>
+                                <div class="tamano-ml">${tamano} ML</div>
                             `;
 
               tamanosGrid.appendChild(div);
@@ -566,8 +607,8 @@
             const precio = perfume.preciosPersonalizados[tamano];
 
             div.innerHTML = `
-              <div class="tamano-ml">${tamano} ML</div>
               <div class="tamano-precio">RD$ ${precio}</div>
+              <div class="tamano-ml">${tamano} ML</div>
             `;
 
             tamanosGrid.appendChild(div);

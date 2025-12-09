@@ -197,10 +197,7 @@
                 onchange="actualizarMarcas()"
               >
                 <option value="">Seleccionar categoría existente</option>
-                <option value="arabes">Árabes</option>
-                <option value="disenador">Diseñador</option>
-                <option value="nichos">Nichos</option>
-                <option value="sets">Sets</option>
+                <!-- Las opciones se cargan dinámicamente -->
                 <option value="__NUEVA__">➕ Agregar nueva categoría</option>
               </select>
             </div>
@@ -716,6 +713,49 @@
         mostrarPerfumes();
       }
 
+      // Cargar categorías dinámicamente en el select
+      function cargarCategoriasModal() {
+        const categoriaSelect = document.getElementById("categoriaSelect");
+        const opcionNueva = categoriaSelect.querySelector(
+          'option[value="__NUEVA__"]'
+        );
+
+        // Limpiar opciones excepto la primera y la de "nueva"
+        categoriaSelect.innerHTML =
+          '<option value="">Seleccionar categoría existente</option>';
+
+        // Obtener categorías únicas desde los perfumes
+        const categorias = [
+          ...new Set(todosLosPerfumes.map((p) => p.categoria)),
+        ].sort();
+
+        // Mapeo de nombres amigables
+        const nombresAmigables = {
+          arabes: "Árabes",
+          arabe: "Árabe",
+          disenador: "Diseñador",
+          nichos: "Nichos",
+          nicho: "Nicho",
+          sets: "Sets",
+        };
+
+        // Agregar cada categoría
+        categorias.forEach((categoria) => {
+          const option = document.createElement("option");
+          option.value = categoria;
+          option.textContent =
+            nombresAmigables[categoria] ||
+            categoria.charAt(0).toUpperCase() + categoria.slice(1);
+          categoriaSelect.appendChild(option);
+        });
+
+        // Volver a agregar la opción de nueva categoría al final
+        const nuevaOption = document.createElement("option");
+        nuevaOption.value = "__NUEVA__";
+        nuevaOption.textContent = "➕ Agregar nueva categoría";
+        categoriaSelect.appendChild(nuevaOption);
+      }
+
       // Actualizar lista de marcas según categoría
       function actualizarMarcas() {
         const categoriaSelect = document.getElementById("categoriaSelect");
@@ -803,6 +843,10 @@
         document.getElementById("marcaInputGroup").style.display = "none";
         document.getElementById("preciosPersonalizadosCheck").checked = false;
         togglePreciosPersonalizados();
+
+        // Cargar categorías dinámicamente
+        cargarCategoriasModal();
+
         actualizarMarcas();
         document.getElementById("modal").style.display = "block";
       }
@@ -825,6 +869,10 @@
 
         document.getElementById("modalTitle").textContent = "Editar Perfume";
         document.getElementById("nombre").value = perfume.nombre || "";
+
+        // Cargar categorías dinámicamente antes de seleccionar
+        cargarCategoriasModal();
+
         document.getElementById("categoriaSelect").value = perfume.categoria;
         actualizarMarcas();
         document.getElementById("marcaSelect").value = perfume.marca;
