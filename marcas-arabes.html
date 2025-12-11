@@ -35,7 +35,6 @@
       window.firebaseGet = get;
       window.firebaseReady = true;
       window.dispatchEvent(new Event("firebaseReady"));
-      console.log("✅ Firebase inicializado en marcas-arabes.html");
     </script>
 
     <style>
@@ -305,7 +304,6 @@
       // Cargar datos desde Firebase
       async function cargarPerfumes() {
         try {
-          console.log("🔥 Cargando desde Firebase...");
           const dbRef = window.firebaseRef(window.firebaseDB, "perfumes");
           const snapshot = await window.firebaseGet(dbRef);
 
@@ -314,8 +312,6 @@
           }
 
           const firebaseData = snapshot.val();
-          console.log("✅ Datos cargados desde Firebase:", Object.keys(firebaseData).length, "perfumes");
-
           // Convertir a array y filtrar por categoría árabes
           Object.values(firebaseData).forEach((perfume) => {
             if (perfume && perfume.categoria === "arabes") {
@@ -359,7 +355,6 @@
             mostrarPerfumes(perfumesFiltrados);
           }
         } catch (error) {
-          console.error("Error al cargar perfumes:", error);
         }
       }
 
@@ -461,7 +456,7 @@
                  onerror="this.src='https://via.placeholder.com/200x200?text=Sin+Imagen'">
             <div class="perfume-info">
               <div class="perfume-name">${perfume.nombre} ${generoIcono}</div>
-              <div style="font-size: 0.9em; color: #666; margin: 5px 0;">📦 100 ml</div>
+              <div style="font-size: 0.9em; color: #666; margin: 5px 0;">🧴 100 ml</div>
               <div class="perfume-price">RD$ ${precioFinal.toLocaleString()}</div>
             </div>
           `;

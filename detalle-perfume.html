@@ -37,7 +37,6 @@
       window.firebaseGet = get;
       window.firebaseReady = true;
       window.dispatchEvent(new Event("firebaseReady"));
-      console.log("✅ Firebase inicializado en detalle-perfume.html");
     </script>
     <style>
       body {
@@ -270,7 +269,7 @@
               id="tamanosSection"
               style="display: none"
             >
-              <h3>📦 Tamaños Disponibles</h3>
+              <h3>🧴 Tamaños Disponibles</h3>
               <div class="tamanos-grid" id="tamanosGrid"></div>
             </div>
 
@@ -315,19 +314,15 @@
           if (perfumeGuardado) {
             try {
               const perfume = JSON.parse(perfumeGuardado);
-              console.log("📦 Cargando desde sessionStorage:", perfume);
               mostrarPerfume(perfume);
               sessionStorage.removeItem("perfumeDetail"); // Limpiar después de usar
               return;
-            } catch (e) {
-              console.error("Error al parsear perfume guardado:", e);
-            }
+            } catch (e) {}
           }
         }
 
         try {
           // Cargar desde Firebase
-          console.log("🔥 Cargando desde Firebase...");
           const dbRef = window.firebaseRef(window.firebaseDB, "perfumes");
           const snapshot = await window.firebaseGet(dbRef);
 
@@ -336,17 +331,10 @@
           }
 
           const firebaseData = snapshot.val();
-          console.log(
-            "✅ Datos cargados desde Firebase:",
-            Object.keys(firebaseData).length,
-            "perfumes"
-          );
-
           let perfume;
 
           // Buscar por firebaseId primero (más eficiente y confiable)
           if (firebaseId) {
-            console.log("🔍 Buscando por Firebase ID:", firebaseId);
             perfume = firebaseData[firebaseId]; // Acceso directo por ID
 
             if (!perfume) {
@@ -357,12 +345,6 @@
             }
           } else if (categoria && marca && index !== null) {
             // Fallback: buscar por categoria/marca/index (formato viejo)
-            console.log("🔍 Buscando por categoria/marca/index:", {
-              categoria,
-              marca,
-              index,
-            });
-
             const perfumesArray = Object.values(firebaseData);
             perfume = perfumesArray.find(
               (p) =>
@@ -379,25 +361,14 @@
                 "_"
               );
               perfume = perfumesArray.find((p) => p.id === constructedId);
-              console.log(
-                "🔍 Fallback: Buscando por ID construido:",
-                constructedId
-              );
             }
           }
 
           if (!perfume) {
             document.getElementById("perfumeNombre").textContent =
               "❌ No se encontró el perfume";
-            console.log(
-              "❌ Perfume no encontrado. Total perfumes:",
-              Object.keys(firebaseData).length
-            );
             return;
           }
-
-          console.log("✅ Perfume encontrado:", perfume);
-
           // Mostrar datos
           document.getElementById("perfumeNombre").textContent =
             perfume.nombre || "Sin nombre";
@@ -407,13 +378,20 @@
           document.getElementById("perfumeImagen").src =
             perfume.imagen || "https://via.placeholder.com/400";
           document.getElementById("perfumeImagen").alt = perfume.nombre;
-          document.getElementById("perfumeGenero").textContent =
-            perfume.genero || "unisex";
+
+          // Transformar género
+          let generoMostrar = perfume.genero || "unisex";
+          if (generoMostrar.toLowerCase() === "hombre")
+            generoMostrar = "masculino";
+          if (generoMostrar.toLowerCase() === "mujer")
+            generoMostrar = "femenino";
+
+          document.getElementById("perfumeGenero").textContent = generoMostrar;
 
           // Mostrar ml si existe
           const mlElement = document.getElementById("perfumeMl");
           if (perfume.ml) {
-            mlElement.textContent = `📦 ${perfume.ml} ml`;
+            mlElement.textContent = `🧴 ${perfume.ml} ml`;
             mlElement.style.display = "block";
           } else {
             mlElement.style.display = "none";
@@ -515,7 +493,6 @@
             tamanosSection.style.display = "block";
           }
         } catch (error) {
-          console.error("Error cargando perfume:", error);
           document.getElementById("perfumeNombre").textContent =
             "Error al cargar el perfume";
         }
@@ -533,8 +510,14 @@
         document.getElementById("perfumeImagen").src =
           perfume.imagen || "https://via.placeholder.com/400";
         document.getElementById("perfumeImagen").alt = perfume.nombre;
-        document.getElementById("perfumeGenero").textContent =
-          perfume.genero || "unisex";
+
+        // Transformar género
+        let generoMostrar = perfume.genero || "unisex";
+        if (generoMostrar.toLowerCase() === "hombre")
+          generoMostrar = "masculino";
+        if (generoMostrar.toLowerCase() === "mujer") generoMostrar = "femenino";
+
+        document.getElementById("perfumeGenero").textContent = generoMostrar;
 
         // Determinar precio a mostrar: si tiene 100ml personalizado, usar ese
         let precioMostrar = perfume.precio || "N/A";

@@ -1,7 +1,5 @@
 const NUMERO_WHATSAPP = "+18298070599";
 
-console.log("🔧 Script cargado correctamente");
-
 // Variables globales
 let todosLosPerfumes = [];
 let perfumesFiltrados = [];
@@ -28,8 +26,6 @@ async function cargarCatalogo() {
   `;
 
   try {
-    console.time("🔥 Carga desde Firebase");
-
     // Cargar desde Firebase
     const dbRef = window.firebaseRef(window.firebaseDB, "perfumes");
     const snapshot = await window.firebaseGet(dbRef);
@@ -45,18 +41,7 @@ async function cargarCatalogo() {
     catalogoData = {
       perfumes: Object.values(firebaseData), // Convertir objeto a array
     };
-
-    console.timeEnd("🔥 Carga desde Firebase");
-    console.log(
-      "✅ Datos cargados desde Firebase:",
-      catalogoData.perfumes.length,
-      "perfumes"
-    );
-
-    console.time("⚡ Procesamiento de datos");
     procesarDatos();
-    console.timeEnd("⚡ Procesamiento de datos");
-
     // SIEMPRE restaurar filtros guardados (no solo en navegación interna)
     const filtroCategoria = sessionStorage.getItem("filtroCategoria");
     const filtroMarca = sessionStorage.getItem("filtroMarca");
@@ -118,8 +103,6 @@ async function cargarCatalogo() {
       mostrarPerfumes(todosLosPerfumes);
     }
   } catch (error) {
-    console.error("❌ Error cargando catálogo:", error);
-
     // Mostrar mensaje de error más amigable
     galeria.innerHTML = `
       <div style="grid-column: 1/-1; text-align: center; padding: 60px 20px; color: #666;">
@@ -159,8 +142,6 @@ function procesarDatos() {
   // Detectar si es formato nuevo (array) o viejo (objeto anidado)
   if (Array.isArray(catalogoData.perfumes)) {
     // FORMATO NUEVO: Array directo
-    console.log("📦 Usando formato nuevo (array)");
-
     catalogoData.perfumes.forEach((perfume, index) => {
       if (perfume && typeof perfume === "object") {
         todosLosPerfumes.push({
@@ -178,8 +159,6 @@ function procesarDatos() {
     });
   } else {
     // FORMATO VIEJO: Objeto anidado por categoria/marca
-    console.log("📦 Usando formato viejo (objeto anidado)");
-
     // Helper para procesar cada categoría de forma optimizada
     const procesarCategoria = (categoria, data, tipo = "unisex") => {
       if (!data) return;
@@ -195,9 +174,6 @@ function procesarDatos() {
           // Caso especial: es un objeto, convertir valores a array
           arrayPerfumes = Object.values(perfumes);
         } else {
-          console.warn(
-            `⚠️ "${marca}" en "${categoria}" tiene formato inválido, omitiendo...`
-          );
           continue;
         }
 
@@ -228,14 +204,7 @@ function procesarDatos() {
       "nicho"
     );
   }
-
-  console.log("✅ Perfumes cargados:", todosLosPerfumes.length);
-  console.log("📝 Primer perfume:", todosLosPerfumes[0]);
-
   perfumesFiltrados = [...todosLosPerfumes];
-
-  console.log(`✅ ${todosLosPerfumes.length} perfumes procesados`);
-
   // Generar botones de categorías dinámicamente
   generarBotonesCategorias();
 }
@@ -246,9 +215,6 @@ function generarBotonesCategorias() {
   const categorias = [
     ...new Set(todosLosPerfumes.map((p) => p.categoria)),
   ].sort();
-
-  console.log("📂 Categorías encontradas:", categorias);
-
   // Mapeo de nombres amigables
   const nombresAmigables = {
     arabes: "Árabes",
@@ -294,7 +260,6 @@ function generarBotonesCategorias() {
   });
 
   if (categoriasSection) {
-    console.log("✅ Generando botones móviles de categorías...");
     // Insertar después del botón "Todos"
     categorias.forEach((categoria) => {
       const btn = document.createElement("button");
@@ -308,9 +273,7 @@ function generarBotonesCategorias() {
 
       categoriasSection.appendChild(btn);
     });
-    console.log("✅ Botones móviles generados:", categorias.length);
   } else {
-    console.error("❌ No se encontró la sección de Categorías en móvil");
   }
 }
 
@@ -398,19 +361,16 @@ function mostrarPerfumes(lista, resetearPagina = true) {
       <img loading="lazy" src="${perfume.imagen}" alt="${perfume.nombre}" onerror="this.src='https://placehold.co/400x500?text=Perfume'">
       <h3>${perfume.nombre}</h3>
       <p class="marca">${perfume.marca} ${generoIcono}</p>
-      <p class="ml" style="font-size: 0.9em; color: #666; margin: 5px 0;">📦 ${mlMostrar} ml</p>
+      <p class="ml" style="font-size: 0.9em; color: #666; margin: 5px 0;">🧴 ${mlMostrar} ml</p>
       <p class="precio">${precio}</p>
     `;
 
     // Hacer la card clickeable para abrir página de detalle
     card.addEventListener("click", () => {
-      console.log("Perfume clickeado:", perfume);
-
       // Usar firebaseId si está disponible, sino usar formato viejo
       if (perfume.id || perfume.firebaseId) {
         const id = perfume.id || perfume.firebaseId;
         const url = `detalle-perfume.html?id=${encodeURIComponent(id)}`;
-        console.log("URL generada (Firebase):", url);
         window.location.href = url;
       } else {
         // Fallback al formato viejo
@@ -420,7 +380,6 @@ function mostrarPerfumes(lista, resetearPagina = true) {
         const url = `detalle-perfume.html?categoria=${encodeURIComponent(
           perfume.categoria
         )}&marca=${encodeURIComponent(marcaParaURL)}&index=${indexParaURL}`;
-        console.log("URL generada (formato viejo):", url);
         window.location.href = url;
       }
     });
@@ -477,9 +436,6 @@ function mostrarPerfumes(lista, resetearPagina = true) {
 function cargarPaginaAnterior() {
   if (paginaActual > 1) {
     paginaActual--;
-    console.log(
-      `📄 Cargando página ${paginaActual}, filtrados: ${perfumesFiltrados.length}`
-    );
     mostrarPerfumes(perfumesFiltrados, false);
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
@@ -491,13 +447,9 @@ function cargarSiguientePagina() {
 
   if (paginaActual < totalPaginas) {
     paginaActual++;
-    console.log(
-      `📄 Cargando página ${paginaActual} de ${totalPaginas}, filtrados: ${perfumesFiltrados.length}`
-    );
     mostrarPerfumes(perfumesFiltrados, false);
     window.scrollTo({ top: 0, behavior: "smooth" });
   } else {
-    console.warn("⚠️ Ya estás en la última página");
   }
 }
 
@@ -980,12 +932,6 @@ function mostrarSubfiltros(categoria) {
 // Filtrar por marca específica
 function filtrarPorMarca(marca, categoria) {
   // Guardar estado del filtro
-  console.log(
-    "💾 Guardando filtro de marca:",
-    marca,
-    "en categoría:",
-    categoria
-  );
   sessionStorage.setItem("filtroCategoria", categoria);
   sessionStorage.setItem("filtroMarca", marca);
 
@@ -1077,15 +1023,7 @@ document.addEventListener("click", function (e) {
 });
 
 // Diagnóstico de caché simple
-function diagnosticarCache() {
-  console.log("🔍 === DIAGNÓSTICO DE CACHÉ ===");
-  console.log("🌐 Conexión:", navigator.onLine ? "✅ Online" : "❌ Offline");
-  console.log(
-    "💾 LocalStorage disponible:",
-    typeof Storage !== "undefined" ? "✅ Sí" : "❌ No"
-  );
-  console.log("================================");
-}
+function diagnosticarCache() {}
 
 // Hacer disponible globalmente para debugging
 window.diagnosticarCache = diagnosticarCache;
@@ -1105,15 +1043,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   setTimeout(() => {
     const filtroCategoriaSaved = sessionStorage.getItem("filtroCategoria");
     const filtroMarcaSaved = sessionStorage.getItem("filtroMarca");
-
-    console.log("🔍 Restaurando filtros:", {
-      categoria: filtroCategoriaSaved,
-      marca: filtroMarcaSaved,
-    });
-
     if (filtroMarcaSaved && filtroCategoriaSaved) {
       // Restaurar filtro de marca
-      console.log("✅ Restaurando filtro de marca:", filtroMarcaSaved);
       filtrarPorMarca(filtroMarcaSaved, filtroCategoriaSaved);
 
       // Actualizar botones activos
@@ -1128,7 +1059,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
     } else if (filtroCategoriaSaved && filtroCategoriaSaved !== "todos") {
       // Restaurar filtro de categoría
-      console.log("✅ Restaurando filtro de categoría:", filtroCategoriaSaved);
       aplicarFiltroCategoria(filtroCategoriaSaved);
 
       // Actualizar botones activos
@@ -1301,7 +1231,6 @@ function mostrarSubfiltrosMobile(categoria) {
 // Función compartida para aplicar filtro de categoría
 function aplicarFiltroCategoria(categoria) {
   // Guardar estado del filtro
-  console.log("💾 Guardando filtro de categoría:", categoria);
   sessionStorage.setItem("filtroCategoria", categoria);
   sessionStorage.removeItem("filtroMarca"); // Limpiar filtro de marca
 

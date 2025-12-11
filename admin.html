@@ -21,6 +21,10 @@
         orderByChild,
         equalTo,
       } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+      import {
+        getAuth,
+        signInWithEmailAndPassword,
+      } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
       const firebaseConfig = {
         apiKey: "AIzaSyASMM00t5QjjTiIUtvTEsN62VUR9TQAW5E",
@@ -34,11 +38,12 @@
 
       const app = initializeApp(firebaseConfig);
       const database = getDatabase(app);
-
-      console.log("✅ Firebase inicializado correctamente");
+      const auth = getAuth(app);
 
       // Exponer database y funciones globalmente
       window.firebaseDB = database;
+      window.firebaseAuth = auth;
+      window.firebaseSignIn = signInWithEmailAndPassword;
       window.firebaseRef = ref;
       window.firebaseGet = get;
       window.firebaseSet = set;
@@ -55,8 +60,31 @@
     </script>
   </head>
   <body>
+    <!-- Pantalla de Login -->
+    <div id="loginScreen" class="login-screen">
+      <div class="login-box">
+        <h2>🔐 Acceso Admin</h2>
+        <input
+          type="email"
+          id="emailInput"
+          placeholder="Correo electrónico"
+          onkeypress="if(event.key==='Enter') document.getElementById('passwordInput').focus()"
+        />
+        <input
+          type="password"
+          id="passwordInput"
+          placeholder="Contraseña"
+          onkeypress="if(event.key==='Enter') verificarLogin()"
+        />
+        <button onclick="verificarLogin()" class="btn-primary">Ingresar</button>
+        <p id="errorMsg" class="error-msg" style="display: none">
+          ❌ Credenciales incorrectas
+        </p>
+      </div>
+    </div>
+
     <!-- Panel de Administración -->
-    <div id="adminPanel" class="admin-panel">
+    <div id="adminPanel" class="admin-panel" style="display: none">
       <!-- Header -->
       <header class="admin-header">
         <div class="admin-header-left">
@@ -502,6 +530,50 @@
     </div>
 
     <script>
+      // Sistema de Login con Firebase (Email + Password)
+      async function verificarLogin() {
+        const email = document.getElementById("emailInput").value.trim();
+        const password = document.getElementById("passwordInput").value;
+
+        if (!email || !password) {
+          document.getElementById("errorMsg").textContent =
+            "⚠️ Completa todos los campos";
+          document.getElementById("errorMsg").style.display = "block";
+          return;
+        }
+
+        try {
+          // Usar Firebase Authentication
+          const userCredential = await window.firebaseSignIn(
+            window.firebaseAuth,
+            email,
+            password
+          );
+
+          // Login exitoso
+          document.getElementById("loginScreen").style.display = "none";
+          document.getElementById("adminPanel").style.display = "block";
+          cargarJSON();
+        } catch (error) {
+          let errorMsg = "❌ Credenciales incorrectas";
+
+          // Mensajes de error más específicos
+          if (error.code === "auth/invalid-email") {
+            errorMsg = "❌ Email inválido";
+          } else if (error.code === "auth/user-not-found") {
+            errorMsg = "❌ Usuario no encontrado";
+          } else if (error.code === "auth/wrong-password") {
+            errorMsg = "❌ Contraseña incorrecta";
+          } else if (error.code === "auth/invalid-credential") {
+            errorMsg = "❌ Credenciales inválidas";
+          }
+
+          document.getElementById("errorMsg").textContent = errorMsg;
+          document.getElementById("errorMsg").style.display = "block";
+          document.getElementById("passwordInput").value = "";
+        }
+      }
+
       let perfumesData = {};
       let todosLosPerfumes = [];
       let perfumesFiltrados = [];
@@ -511,8 +583,6 @@
       // Cargar JSON desde Firebase SOLAMENTE
       async function cargarJSON(mostrarDespues = true) {
         try {
-          console.log("🔄 [FIREBASE] Cargando datos...");
-
           const dbRef = window.firebaseRef(window.firebaseDB, "perfumes");
           const snapshot = await window.firebaseGet(dbRef);
 
@@ -523,11 +593,6 @@
           }
 
           perfumesData = snapshot.val();
-          console.log("✅ [FIREBASE] Datos cargados exitosamente");
-          console.log(
-            "📊 [FIREBASE] Claves encontradas:",
-            Object.keys(perfumesData).length
-          );
 
           procesarDatos();
           actualizarEstadisticas();
@@ -536,7 +601,6 @@
             mostrarPerfumes();
           }
         } catch (error) {
-          console.error("❌ Error al cargar datos:", error);
           alert("❌ Error al cargar datos: " + error.message);
         }
       }
@@ -557,7 +621,6 @@
         });
 
         perfumesFiltrados = [...todosLosPerfumes];
-        console.log("📦 Total perfumes procesados:", todosLosPerfumes.length);
       }
 
       // Actualizar estadísticas
@@ -852,20 +915,15 @@
       }
 
       function editarPerfume(firebaseId) {
-        console.log("🔍 Editando perfume con ID:", firebaseId);
-
         modoEdicion = true;
         perfumeEditando = firebaseId;
 
         const perfume = perfumesData[firebaseId];
 
         if (!perfume) {
-          console.error("❌ No se encontró el perfume");
           alert("❌ No se pudo encontrar el perfume para editar");
           return;
         }
-
-        console.log("✅ Perfume encontrado:", perfume.nombre);
 
         document.getElementById("modalTitle").textContent = "Editar Perfume";
         document.getElementById("nombre").value = perfume.nombre || "";
@@ -921,9 +979,6 @@
           e.preventDefault();
 
           try {
-            console.log("🔵 GUARDANDO EN FIREBASE...");
-            console.log("🔵 Modo edición:", modoEdicion);
-
             const usaPreciosPersonalizados = document.getElementById(
               "preciosPersonalizadosCheck"
             ).checked;
@@ -1010,7 +1065,6 @@
               // EDITAR: Usar el firebaseId existente
               firebaseId = perfumeEditando;
               perfume.id = firebaseId;
-              console.log("✏️ Editando perfume ID:", firebaseId);
             } else {
               // AGREGAR: Crear nuevo ID
               // Contar perfumes existentes con misma categoria/marca para el índice
@@ -1024,7 +1078,6 @@
                 "_"
               );
               perfume.id = firebaseId;
-              console.log("➕ Creando perfume ID:", firebaseId);
             }
 
             // Guardar en Firebase
@@ -1033,8 +1086,6 @@
               `perfumes/${firebaseId}`
             );
             await window.firebaseSet(dbRef, perfume);
-
-            console.log("✅ Perfume guardado en Firebase");
 
             // Actualizar datos locales
             perfumesData[firebaseId] = perfume;
@@ -1050,7 +1101,6 @@
                 : "✅ Perfume agregado exitosamente"
             );
           } catch (error) {
-            console.error("❌ Error al guardar:", error);
             alert("❌ Error al guardar: " + error.message);
           }
         });
@@ -1060,16 +1110,12 @@
         if (!confirm(`¿Eliminar "${nombre}"?`)) return;
 
         try {
-          console.log("🗑️ Eliminando perfume ID:", firebaseId);
-
           // Eliminar de Firebase
           const dbRef = window.firebaseRef(
             window.firebaseDB,
             `perfumes/${firebaseId}`
           );
           await window.firebaseRemove(dbRef);
-
-          console.log("✅ Perfume eliminado de Firebase");
 
           // Actualizar datos locales
           delete perfumesData[firebaseId];
@@ -1081,7 +1127,6 @@
 
           alert("✅ Perfume eliminado correctamente!");
         } catch (error) {
-          console.error("❌ Error al eliminar:", error);
           alert("❌ Error al eliminar: " + error.message);
         }
       }
@@ -1099,11 +1144,6 @@
           new Date().toISOString().split("T")[0]
         }.json`;
         a.click();
-        console.log(
-          "💾 Backup descargado:",
-          Object.keys(perfumesData).length,
-          "perfumes"
-        );
       }
 
       // Cargar backup y subir a Firebase
@@ -1124,8 +1164,6 @@
           const text = await file.text();
           const data = JSON.parse(text);
 
-          console.log("📄 Archivo cargado:", data);
-
           if (!data.perfumes) {
             throw new Error("El archivo no contiene la propiedad 'perfumes'");
           }
@@ -1139,10 +1177,8 @@
           ) {
             // Ya está en formato Firebase (objeto con IDs)
             perfumesObj = data.perfumes;
-            console.log("✅ Formato Firebase detectado");
           } else if (Array.isArray(data.perfumes)) {
             // Formato array: convertir a Firebase
-            console.log("🔄 Convirtiendo array a formato Firebase...");
             data.perfumes.forEach((perfume, index) => {
               const categoria = perfume.categoria || "sin_categoria";
               const marca = perfume.marca || "sin_marca";
@@ -1154,7 +1190,6 @@
             });
           } else {
             // Formato viejo anidado: convertir
-            console.log("🔄 Convirtiendo formato viejo...");
             Object.keys(data.perfumes).forEach((categoria) => {
               Object.keys(data.perfumes[categoria]).forEach((marca) => {
                 const perfumes = data.perfumes[categoria][marca];
@@ -1174,13 +1209,9 @@
             throw new Error("El archivo no contiene perfumes válidos");
           }
 
-          console.log(`📤 Subiendo ${totalPerfumes} perfumes a Firebase...`);
-
           // Subir a Firebase
           const dbRef = window.firebaseRef(window.firebaseDB, "perfumes");
           await window.firebaseSet(dbRef, perfumesObj);
-
-          console.log("✅ Datos subidos a Firebase");
 
           // Actualizar datos locales
           perfumesData = perfumesObj;
@@ -1192,7 +1223,6 @@
             `✅ Backup cargado exitosamente\n\n${totalPerfumes} perfumes subidos a Firebase`
           );
         } catch (error) {
-          console.error("❌ Error al cargar backup:", error);
           alert(`❌ Error al cargar backup:\n${error.message}`);
         } finally {
           event.target.value = "";
@@ -1320,17 +1350,13 @@
       }
 
       async function editarCategoria(categoriaVieja) {
-        console.log("🎯 Iniciando edición de categoría:", categoriaVieja);
         const nuevaCategoria = prompt(
           `Editar categoría "${categoriaVieja}".\nNuevo nombre:`,
           categoriaVieja
         );
         if (!nuevaCategoria || nuevaCategoria === categoriaVieja) {
-          console.log("❌ Edición cancelada");
           return;
         }
-
-        console.log("✏️ Renombrando:", categoriaVieja, "→", nuevaCategoria);
 
         // Mostrar loading
         mostrarLoading(
@@ -1352,10 +1378,6 @@
             perfumesAActualizar.push({ firebaseId, perfume });
           }
         });
-
-        console.log(
-          `💾 Actualizando ${perfumesAActualizar.length} perfumes...`
-        );
 
         // Procesar cada perfume: crear con nuevo ID y eliminar el viejo
         for (const { firebaseId, perfume } of perfumesAActualizar) {
@@ -1388,10 +1410,7 @@
           }
         }
 
-        console.log("✅ Cambios guardados en Firebase");
-
         // Recargar desde Firebase
-        console.log("🔄 Recargando datos desde Firebase...");
         await cargarJSON(false);
 
         // Restaurar filtros
@@ -1433,8 +1452,6 @@
         const busquedaActual = document.getElementById("searchBox").value;
 
         // Eliminar todos los perfumes de esta categoría en Firebase
-        console.log("💾 Eliminando categoría en Firebase...");
-
         const perfumesAEliminar = [];
         Object.keys(perfumesData).forEach((firebaseId) => {
           const perfume = perfumesData[firebaseId];
@@ -1443,8 +1460,6 @@
           }
         });
 
-        console.log(`🗑️ Eliminando ${perfumesAEliminar.length} perfumes...`);
-
         for (const firebaseId of perfumesAEliminar) {
           const perfumeRef = window.firebaseRef(
             window.firebaseDB,
@@ -1452,8 +1467,6 @@
           );
           await window.firebaseRemove(perfumeRef);
         }
-
-        console.log("✅ Categoría eliminada de Firebase");
 
         // Recargar desde Firebase
         await cargarJSON(false);
@@ -1484,8 +1497,6 @@
         );
         if (!nuevaMarca || nuevaMarca === marcaVieja) return;
 
-        console.log("✏️ Renombrando marca:", marcaVieja, "→", nuevaMarca);
-
         // Mostrar loading
         mostrarLoading(
           "Editando marca...",
@@ -1506,10 +1517,6 @@
             perfumesAActualizar.push({ firebaseId, perfume });
           }
         });
-
-        console.log(
-          `💾 Actualizando ${perfumesAActualizar.length} perfumes...`
-        );
 
         // Procesar cada perfume: crear con nuevo ID y eliminar el viejo
         for (const { firebaseId, perfume } of perfumesAActualizar) {
@@ -1544,8 +1551,6 @@
             await window.firebaseSet(perfumeRef, nuevaMarca);
           }
         }
-
-        console.log("✅ Cambios guardados en Firebase");
 
         // Recargar desde Firebase
         await cargarJSON(false);
@@ -1583,8 +1588,6 @@
         const busquedaActual = document.getElementById("searchBox").value;
 
         // Eliminar todos los perfumes de esta marca en Firebase
-        console.log("💾 Eliminando marca en Firebase...");
-
         const perfumesAEliminar = [];
         Object.keys(perfumesData).forEach((firebaseId) => {
           const perfume = perfumesData[firebaseId];
@@ -1593,8 +1596,6 @@
           }
         });
 
-        console.log(`🗑️ Eliminando ${perfumesAEliminar.length} perfumes...`);
-
         for (const firebaseId of perfumesAEliminar) {
           const perfumeRef = window.firebaseRef(
             window.firebaseDB,
@@ -1602,8 +1603,6 @@
           );
           await window.firebaseRemove(perfumeRef);
         }
-
-        console.log("✅ Marca eliminada de Firebase");
 
         // Recargar desde Firebase
         await cargarJSON(false);
@@ -1654,14 +1653,8 @@
         }
       });
 
-      // Cargar al inicio - esperar a que Firebase esté listo
-      if (window.firebaseReady) {
-        cargarJSON();
-      } else {
-        window.addEventListener("firebaseReady", () => {
-          cargarJSON();
-        });
-      }
+      // NO cargar automáticamente, solo cuando se haga login
+      // El cargarJSON() se llama desde verificarPassword()
     </script>
   </body>
 </html>

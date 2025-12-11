@@ -45,9 +45,6 @@ export default async function handler(req, res) {
         contentType: "application/json",
       }
     );
-
-    console.log("📦 Backup manual creado:", backupBlob.url);
-
     return res.status(200).json({
       success: true,
       message: "Backup creado exitosamente",
@@ -57,7 +54,6 @@ export default async function handler(req, res) {
       },
     });
   } catch (error) {
-    console.error("❌ Error al crear backup:", error);
     return res.status(500).json({
       error: "Error al crear backup",
       message: error.message,
